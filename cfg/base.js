@@ -40,5 +40,12 @@ module.exports = {
       'react/lib/ReactMount': 'react-dom/lib/ReactMount'
     }
   },
-  module: {}
+  module: {},
+  postcss: function () {
+    return [
+      require('autoprefixer')({
+        browsers: ['last 2 versions', 'ie >= 8']
+      })
+    ];
+  }
 };
