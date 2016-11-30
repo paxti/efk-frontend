@@ -12,7 +12,8 @@ let config = Object.assign({}, baseConfig, {
   entry: [
     'webpack-dev-server/client?http://127.0.0.1:' + defaultSettings.port,
     'webpack/hot/only-dev-server',
-    './src/index'
+    './src/index',
+    './node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.css'
   ],
   cache: true,
   devtool: 'eval-source-map',
