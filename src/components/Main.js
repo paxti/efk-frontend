@@ -2,6 +2,9 @@ require('normalize.css/normalize.css');
 require('styles/App.css');
 
 import React from 'react';
+import MainMenu from './MainMenu.js'
+import MenuItem from './MenuItem.js'
+
 
 let yeomanImage = require('../images/yeoman.png');
 
@@ -9,8 +12,14 @@ class AppComponent extends React.Component {
   render() {
     return (
       <div className="index">
-        <img src={yeomanImage} alt="Yeoman Generator" />
-        <div className="notice">Please edit <code>src/components/Main.js</code> to get started!</div>
+        <MainMenu appName="EFK">
+          <MenuItem name="Home" title="Home" />
+          <MenuItem name="Configurations" title="Configurations" />
+          <MenuItem name="Orders" title="Orders" path="/orders"/>
+          <MenuItem name="Inventory" title="Inventory" path="/inventory" />
+        </MainMenu>
+
+        <div className="main-area"> {this.props.children} </div>
       </div>
     );
   }
