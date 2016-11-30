@@ -8,6 +8,7 @@ let defaultSettings = require('./defaults');
 
 // Add needed plugins here
 let BowerWebpackPlugin = require('bower-webpack-plugin');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 let config = Object.assign({}, baseConfig, {
   entry: path.join(__dirname, '../src/index'),
@@ -24,7 +25,13 @@ let config = Object.assign({}, baseConfig, {
     new webpack.optimize.UglifyJsPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(__dirname,'../node_modules/@salesforce-ux/design-system/assets/icons'),
+        to: 'icons'
+      }
+    ])
   ],
   module: defaultSettings.getDefaultModules()
 });

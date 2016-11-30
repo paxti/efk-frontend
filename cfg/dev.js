@@ -7,6 +7,7 @@ let defaultSettings = require('./defaults');
 
 // Add needed plugins here
 let BowerWebpackPlugin = require('bower-webpack-plugin');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 let config = Object.assign({}, baseConfig, {
   entry: [
@@ -22,7 +23,13 @@ let config = Object.assign({}, baseConfig, {
     new webpack.NoErrorsPlugin(),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
-    })
+    }),
+    new CopyWebpackPlugin([
+      {
+        from: path.join(__dirname,'../node_modules/@salesforce-ux/design-system/assets/icons'),
+        to: 'icons'
+      }
+    ])
   ],
   module: defaultSettings.getDefaultModules()
 });
