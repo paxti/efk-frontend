@@ -16,7 +16,8 @@
     "serve:dist": "node server.js --env=dist",
     "start": "node server.js --env=dev",
     "test": "karma start",
-    "test:watch": "karma start --autoWatch=true --singleRun=false"
+    "test:watch": "karma start --autoWatch=true --singleRun=false",
+    "heroku-postbuild": "node server.js --env=dist"
   },
   "repository": "",
   "keywords": [],
@@ -61,9 +62,7 @@
     "rimraf": "^2.4.3",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.0",
-    "url-loader": "^0.5.6",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.12.0"
+    "url-loader": "^0.5.6"
   },
   "dependencies": {
     "@salesforce-ux/design-system": "^2.1.4",
@@ -77,6 +76,8 @@
     "auth0-js": "^7.0.2",
     "jwt-decode": "^2.0.1",
     "flux": "^3.1.0",
-    "when": "^3.7.2"
+    "when": "^3.7.2",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.12.0"
   }
 }
