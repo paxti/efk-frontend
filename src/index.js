@@ -1,19 +1,39 @@
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { browserHistory, Router, Route, Link } from 'react-router'
+import { browserHistory, IndexRoute, IndexRedirect, Router, Route, Link } from 'react-router'
+
+import AuthService from './utils/AuthService'
+import LoginStore from './stores/LoginStore';
+
+const auth = new AuthService('OaaRzsLcJSodX1LoyCLLkaMaKSwGpxkC', 'app52272635.auth0.com');
+
+const requireAuth = (nextState, replace) => {
+  if (!auth.loggedIn()) {
+    replace({ pathname: '/login' })
+  }
+}
+
+const parseAuthHash = (nextState, replace) => {
+  if (nextState.location.hash) {
+    auth.parseHash(nextState.location.hash)
+    replace({ pathname: '/' })
+  }
+}
 
 import App from './components/Main';
-import OrdersList from './components/OrdersList';
-import Inventory from './components/Inventory';
+import Home from './components/Home';
+import LoginContainer from './components/LoginContainer';
+// import OrdersList from './components/OrdersList';
+// import Inventory from './components/Inventory';
 
-// Render the main component into the dom
 ReactDOM.render(
   <Router history={browserHistory}>
-    <Route path="/" component={App}>
-      <Route path="/orders" component={OrdersList} />
-      <Route path="/inventory" component={Inventory} />
-      <Route path="*" component={App}/>
+    <Route path="/login" component={LoginContainer} auth={auth} onEnter={parseAuthHash}/>
+    <Route path="/" component={App} onEnter={requireAuth}>
+      <IndexRedirect to="/home" />
+      <IndexRoute component={Home} />
+      <Route path="/home" component={Home} onEnter={requireAuth}/>
     </Route>
   </Router>
   , document.getElementById('app'));
