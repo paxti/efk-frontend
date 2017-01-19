@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "EFK frontend",
   "main": "",
+  "engines": {
+    "node": "~6.2.2"
+  },
   "scripts": {
     "clean": "rimraf dist/*",
     "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist",
