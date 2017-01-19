@@ -32,8 +32,8 @@ class Login extends React.Component {
     }, function(err) {
       this.state.hasError = true;
       if (err) alert("something went wrong: " + err.message);
-    );
-   }
+    })
+  }
 
   render() {
 

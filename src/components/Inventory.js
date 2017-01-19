@@ -14,6 +14,7 @@ class Inventory extends React.Component {
 }
 
 Inventory.displayName = 'Inventory';
+Inventory.className = 'Inventory';
 
 // Uncomment properties you need
 // InventoryComponent.propTypes = {};
