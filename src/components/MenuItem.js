@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 
-require('styles//MenuItem.css');
+import '../styles/MenuItem.css'
 
 class MenuItem extends React.Component {
   render() {

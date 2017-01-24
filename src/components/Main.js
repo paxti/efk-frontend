@@ -6,8 +6,8 @@ import MenuItem from './MenuItem.js'
 
 import LoginStore from '../stores/LoginStore'
 
-require('normalize.css/normalize.css');
-require('styles/App.css');
+// require('normalize.css/normalize.css');
+// require('styles/App.css');
 
 class AppComponent extends React.Component {
 

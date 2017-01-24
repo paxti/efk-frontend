@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-require('styles//MainMenu.css');
+import '../styles/MainMenu.css'
 
 class MainMenu extends React.Component {
 

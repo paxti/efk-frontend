@@ -6,7 +6,10 @@ import {
 } from 'react-lightning-design-system';
 
 function LoginView(props) {
+
   return (
+
+
     <div>
       <Main {...props} />
     </div>
@@ -22,7 +25,6 @@ function getLoginData() {
 
 function Main(props) {
 
-
   const login = (event) => props.onSaveUser(getLoginData(), '');
 
   const error = true && 'The input has an error';
@@ -36,7 +38,7 @@ function Main(props) {
             <div className="slds-grid slds-grid--vertical-stretch slds-grid--vertical-align-center full-height slds-grid--vertical">
               <div className="slds-col slds-align-top"></div>
               <div className="slds-col slds-align-middle slds-grid--vertical-align-center ">
-                <img src="../images/logo.png" />
+                <img src="{logoUrl}" />
                 <div className="slds-form-element slds-box ">
 
                   <Form>

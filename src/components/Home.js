@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 
-require('styles//Home.css');
+import '../styles/Home.css'
 
 class Home extends React.Component {
   render() {

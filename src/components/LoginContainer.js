@@ -5,7 +5,8 @@ import {Container} from 'flux/utils';
 import LoginActions from '../actions/LoginActions';
 import LoginStore from '../stores/LoginStore';
 
-require('styles/Login.css');
+import logoUrl from '../images/logo.png';
+import '../styles/Login.css'
 
 function getStores() {
   return [

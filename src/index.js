@@ -24,12 +24,13 @@ const parseAuthHash = (nextState, replace) => {
 import App from './components/Main';
 import Home from './components/Home';
 import LoginContainer from './components/LoginContainer';
+import Login from './components/Login';
 // import OrdersList from './components/OrdersList';
 // import Inventory from './components/Inventory';
 
 ReactDOM.render(
   <Router history={browserHistory}>
-    <Route path="/login" component={LoginContainer} auth={auth} onEnter={parseAuthHash}/>
+    <Route path="/login" component={Login} auth={auth} onEnter={parseAuthHash}/>
     <Route path="/" component={App} onEnter={requireAuth}>
       <IndexRedirect to="/home" />
       <IndexRoute component={Home} />
