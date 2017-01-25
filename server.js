@@ -6,7 +6,7 @@ module.exports = {
     const app = express()
     const indexPath = path.join(__dirname, 'index.html')
     const publicPath = express.static(path.join(__dirname, 'public'))
-    const lighningPath = express.static(path.join(__dirname, 'assets'))
+    const lighningPath = express.static(path.join(__dirname, './node_modules/@salesforce-ux/design-system/assets'))
 
     app.use('/public', publicPath)
     app.use('/assets', lighningPath)

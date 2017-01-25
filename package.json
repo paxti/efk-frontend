@@ -7,8 +7,10 @@
     "node": "~6.2.2"
   },
   "scripts": {
-    "build": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors",
-    "start": "node ./app.js"
+    "build-analize": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors --json | webpack-bundle-size-analyzer",
+    "start": "node ./app.js",
+    "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.prod.config.js --progress --colors",
+    "test": "karma start"
   },
   "repository": "",
   "keywords": [],
@@ -16,12 +18,14 @@
   "devDependencies": {
     "babel-preset-react-hmre": "^1.1.1",
     "chai": "^3.2.0",
+    "copy-webpack-plugin": "^4.0.1",
     "copyfiles": "^1.0.0",
     "css-loader": "^0.23.0",
     "dotenv": "^2.0.0",
     "eslint": "^3.0.0",
     "eslint-loader": "^1.0.0",
     "eslint-plugin-react": "^6.0.0",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "glob": "^7.0.0",
     "immutable": "^3.8.1",
@@ -42,13 +46,17 @@
     "phantomjs-prebuilt": "^2.0.0",
     "react-addons-test-utils": "^15.0.0",
     "react-hot-loader": "^1.2.9",
+    "react-lightning-design-system": "2.0.2",
     "rimraf": "^2.4.3",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
-    "url-loader": "^0.5.6"
+    "url-loader": "^0.5.6",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.12.0",
+    "webpack-hot-middleware": "^2.15.0",
+    "@salesforce-ux/design-system": "^2.1.4"
   },
   "dependencies": {
-    "@salesforce-ux/design-system": "^2.1.4",
     "auth0-js": "^7.0.2",
     "auth0-lock": "^10.2.2",
     "babel-core": "^6.0.0",
@@ -59,7 +67,6 @@
     "babel-preset-react": "^6.0.15",
     "babel-preset-stage-0": "^6.5.0",
     "bower-webpack-plugin": "^0.1.9",
-    "copy-webpack-plugin": "^4.0.1",
     "core-js": "^2.0.0",
     "cross-env": "^3.1.4",
     "flux": "^3.1.0",
@@ -69,11 +76,7 @@
     "normalize.css": "^4.0.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
-    "react-lightning-design-system": "2.0.2",
     "react-router": "^3.0.0",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.12.0",
-    "webpack-hot-middleware": "^2.15.0",
     "when": "^3.7.2"
   }
 }

@@ -1,11 +1,9 @@
 'use strict';
 
 import React, { PropTypes as T } from 'react'
-import { Link } from 'react-router'
-import {
-  Button, Form, Input, FieldSet,
-} from 'react-lightning-design-system';
-
+import Button from 'react-lightning-design-system/lib/scripts/Button'
+import Form from 'react-lightning-design-system/lib/scripts/Form'
+import Input from 'react-lightning-design-system/lib/scripts/Input'
 // import AuthService from '../utils/AuthService'
 // import LoginStore from '../stores/LoginStore'
 
@@ -86,7 +84,6 @@ class Login extends React.Component {
             </div>
             <div className="slds-col slds-medium-size--1-of-6 slds-large-size--3-of-12"></div>
           </div>
-
         </div>
         <div className="slds-col slds-medium-size--3-of-6 slds-large-size--6-of-12 slds-large-show login-page-right">
           <div className="top">have you heard of gateway exhibit services?</div>
@@ -94,8 +91,8 @@ class Login extends React.Component {
           <div className="bottom">
             <button type="button" className="slds-button slds-button--brand">Send</button>
           </div>
-          </div>
         </div>
+      </div>
     )
   }
 }

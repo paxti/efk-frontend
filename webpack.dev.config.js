@@ -32,7 +32,6 @@ module.exports = {
         include: path.join(__dirname, 'src', 'styles') },
       {  test: /\.(jpg|png)$/,
         loader: 'url-loader' },
-
       { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
         loader: 'file'}
       // { test: /\.js?$/,
