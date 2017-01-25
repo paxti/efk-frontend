@@ -10,7 +10,8 @@
     "build-analize": "cross-env NODE_ENV=production webpack --config ./webpack.prod.config.js --progress --colors --json | webpack-bundle-size-analyzer",
     "start": "node ./app.js",
     "build": "cross-env NODE_ENV=production webpack -p --config ./webpack.prod.config.js --progress --colors",
-    "test": "karma start"
+    "test": "karma start",
+    "serve:prod": "npm run build & cross-env NODE_ENV=production node ./app.js"
   },
   "repository": "",
   "keywords": [],
