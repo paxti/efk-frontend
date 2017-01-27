@@ -6,7 +6,7 @@ import { browserHistory, IndexRoute, IndexRedirect, Router, Route, Link } from '
 import AuthService from './utils/AuthService'
 import LoginStore from './stores/LoginStore';
 
-const auth = new AuthService('OaaRzsLcJSodX1LoyCLLkaMaKSwGpxkC', 'app52272635.auth0.com');
+const auth = new AuthService('Nixjergdebr8vH7eRYni7MXK3gQSKtTK', 'gatewayexhibits.auth0.com');
 
 const requireAuth = (nextState, replace) => {
   if (!auth.loggedIn()) {

@@ -38,14 +38,9 @@ class Login extends React.Component {
 
   render() {
 
-    // const logoUrl = required('../images/logo.png');
     const styles = { padding: '12px' };
     const required = false;
-    // const error = LoginStore.error && 'The input has an error';
-
-    // const login = () => alert("sdfsdf");
-    //
-    // const click = () => console.log('Clicked');
+    const login = () => this.login.bind(this);
 
     return (
       <div className="slds-grid slds-grid--frame">
@@ -75,7 +70,7 @@ class Login extends React.Component {
                         required={ false }
                       />
 
-                      <Button type="brand" onClick={ ()=> browserHistory.push('/home/dashboard')}>Login</Button>
+                      <Button type="brand" onClick={ this.login.bind(this) }>Login</Button>
 
                     </Form>
 
