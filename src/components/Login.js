@@ -1,38 +1,40 @@
 'use strict';
 
 import React, { PropTypes as T } from 'react'
+import ReactDOM from 'react-dom'
+import { browserHistory } from 'react-router';
 import Button from 'react-lightning-design-system/lib/scripts/Button'
 import Form from 'react-lightning-design-system/lib/scripts/Form'
 import Input from 'react-lightning-design-system/lib/scripts/Input'
-// import AuthService from '../utils/AuthService'
+import AuthService from '../utils/AuthService'
 // import LoginStore from '../stores/LoginStore'
-
-// import logoUrl from '../images/logo.png';
 
 import '../styles/Login.css'
 
 
 class Login extends React.Component {
 
-  // componentDidMount() {
-  //   LoginStore.addChangeListener(this.onChange);
-  // }
-  //
-  // componentWillUnmount() {
-  //   LoginStore.removeChangeListener(this.onChange);
-  // }
-  //
-  // handleLogin() {
-  //   this.props.route.auth.login({
-  //     connection: 'Username-Password-Authentication',
-  //     responseType: 'token',
-  //     email: document.getElementById("username").value,
-  //     password: document.getElementById("password").value
-  //   }, function(err) {
-  //     this.state.hasError = true;
-  //     if (err) alert("something went wrong: " + err.message);
-  //   })
-  // }
+  static contextTypes = {
+    router: T.object
+  }
+
+  static propTypes = {
+    location: T.object,
+    auth: T.instanceOf(AuthService)
+  }
+
+  getAuthParams() {
+    return {
+      email: ReactDOM.findDOMNode(this.refs.email).value,
+      password: ReactDOM.findDOMNode(this.refs.password).value
+    }
+  }
+
+  login(e) {
+    e.preventDefault()
+    const { email, password } = this.getAuthParams()
+    this.props.auth.login(email, password)
+  }
 
   render() {
 
@@ -40,6 +42,10 @@ class Login extends React.Component {
     const styles = { padding: '12px' };
     const required = false;
     // const error = LoginStore.error && 'The input has an error';
+
+    // const login = () => alert("sdfsdf");
+    //
+    // const click = () => console.log('Clicked');
 
     return (
       <div className="slds-grid slds-grid--frame">
@@ -58,16 +64,19 @@ class Login extends React.Component {
                         id='username'
                         label='Username'
                         type='email'
+                        ref='email'
                         required={ false }
                       />
                       <Input
                         id='password'
                         label='Password'
                         type='password'
+                        ref='password'
                         required={ false }
                       />
 
-                      <Button type='brand' >Submit</Button>
+                      <Button type="brand" onClick={ ()=> browserHistory.push('/home/dashboard')}>Login</Button>
+
                     </Form>
 
                       <div className="slds-form-element slds-m-top--medium">

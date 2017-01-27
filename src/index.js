@@ -15,26 +15,26 @@ const requireAuth = (nextState, replace) => {
 }
 
 const parseAuthHash = (nextState, replace) => {
-  if (nextState.location.hash) {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
     auth.parseHash(nextState.location.hash)
-    replace({ pathname: '/' })
   }
 }
 
-import App from './components/Main';
+import Main from './components/Main';
 import Home from './components/Home';
-import LoginContainer from './components/LoginContainer';
 import Login from './components/Login';
-// import OrdersList from './components/OrdersList';
-// import Inventory from './components/Inventory';
+import MainApp from './components/MainApp';
+
 
 ReactDOM.render(
+
   <Router history={browserHistory}>
-    <Route path="/login" component={Login} auth={auth} onEnter={parseAuthHash}/>
-    <Route path="/" component={App} onEnter={requireAuth}>
-      <IndexRedirect to="/home" />
-      <IndexRoute component={Home} />
-      <Route path="/home" component={Home} onEnter={requireAuth}/>
+    <Route path="/" component={Main} auth={auth}>
+      <IndexRedirect to="/login" />
+      <Route path="/login" component={Login} />
+      <Route path="/home" component={MainApp} >
+        <Route path="/home/dashboard" name="Home" component={Home} />
+      </Route>
     </Route>
   </Router>
   , document.getElementById('app'));
