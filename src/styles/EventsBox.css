@@ -1,0 +1,40 @@
+.event-box-border {
+	position: relative;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 5px;
+	height: 250px;
+	margin: 15px;
+}
+
+.event-box-header-container div, svg {
+  float: left;
+}
+
+.event-box-header {
+	margin: 10px 15px 10px;
+	font-size: 14px;
+}
+
+.event-box-title {
+	margin-bottom: 5px;
+}
+
+.event-box-sub-title {
+	font-size: 12px;
+}
+
+.event-box-body {
+  margin: 10px 15px 10px;
+}
+
+.event-box-body ul {
+  margin-left: 45px;
+}
+
+.event-box-footer {
+	position: absolute;
+  bottom: 0;
+  margin: 15px;
+  font-size: 12px;
+}

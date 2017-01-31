@@ -10,8 +10,8 @@ module.exports = {
     const assetsPath = express.static(path.join(__dirname, 'assets'))
 
     app.use('/public', publicPath)
-    app.use('/lightning', lighningPath)
-    app.use('/assets', assetsPath)
+    app.use('/assets', lighningPath)
+    app.use('/assets/static', assetsPath)
     app.get('/', function (_, res) { res.sendFile(indexPath); })
 
     return app

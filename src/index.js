@@ -24,16 +24,25 @@ import Main from './components/Main';
 import Home from './components/Home';
 import Login from './components/Login';
 import MainApp from './components/MainApp';
-
+import ThreeColumnsWrapper from './components/ThreeColumnsWrapper'
+import Sidebar from './components/Sidebar'
+import MainGraphicDashboard from './components/MainGraphicDashboard'
+import EventsBox from './components/EventsBox'
 
 ReactDOM.render(
-
   <Router history={browserHistory}>
     <Route path="/" component={Main} auth={auth}>
       <IndexRedirect to="/login" />
       <Route path="/login" component={Login} />
       <Route path="/home" component={MainApp} >
-        <Route path="/home/dashboard" name="Home" component={Home} />
+        <Route component={ThreeColumnsWrapper}>
+          <Route path="/home/dashboard" components={{
+            right: Sidebar,
+            middle: MainGraphicDashboard,
+            left: EventsBox
+          }}
+          />
+        </Route>
       </Route>
     </Route>
   </Router>

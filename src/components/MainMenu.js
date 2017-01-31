@@ -8,6 +8,30 @@ class MainMenu extends React.Component {
 
   render() {
     return (
+
+      <header id="main-header" className="slds-global-header_container">
+        <a href="javascript:void(0);" className="slds-assistive-text slds-assistive-text--focus">Skip to Navigation</a>
+        <a href="javascript:void(0);" className="slds-assistive-text slds-assistive-text--focus">Skip to Main Content</a>
+        <div className="slds-global-header slds-grid slds-grid--align-spread">
+        <div className="slds-global-header__item">
+          <div className="slds-global-header__logo">
+            <img src={require('../images/logo.png')} />
+          </div>
+        </div>
+
+        <ul className="slds-global-header__item slds-grid slds-grid--vertical-align-center">
+
+          <li className="slds-dropdown-trigger slds-dropdown-trigger--click slds-m-left--x-small">
+            <button className="slds-button" title="person name" aria-haspopup="true">
+              <span className="slds-avatar slds-avatar--circle slds-avatar--medium">
+                <img src="/assets/images/avatar2.jpg" alt="person name" />
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+
       <div className="slds-context-bar">
         <div className="slds-context-bar__primary slds-context-bar__item--divider-right">
           <div className="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger--click slds-no-hover">
@@ -38,7 +62,7 @@ class MainMenu extends React.Component {
           </ul>
         </nav>
       </div>
-    );
+</header>    );
   }
 }
 
