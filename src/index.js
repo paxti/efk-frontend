@@ -28,21 +28,24 @@ import ThreeColumnsWrapper from './components/ThreeColumnsWrapper'
 import Sidebar from './components/Sidebar'
 import MainGraphicDashboard from './components/MainGraphicDashboard'
 import EventsBox from './components/EventsBox'
+import DataTable from './components/DataTable'
+import MainSectionContainer from './components/MainSectionContainer'
+import Orders from './components/Orders'
+import Dashboard from './components/Dashboard'
+import Inventory from './components/Inventory'
+import Configurations from './components/Configurations'
+
 
 ReactDOM.render(
   <Router history={browserHistory}>
     <Route path="/" component={Main} auth={auth}>
       <IndexRedirect to="/login" />
       <Route path="/login" component={Login} />
-      <Route path="/home" component={MainApp} >
-        <Route component={ThreeColumnsWrapper}>
-          <Route path="/home/dashboard" components={{
-            right: Sidebar,
-            middle: MainGraphicDashboard,
-            left: EventsBox
-          }}
-          />
-        </Route>
+      <Route path="/home" component={MainApp}>
+        <Route path="/home/dashboard" component={Dashboard} />
+        <Route path="/home/configurations" component={Configurations} />
+        <Route path="/home/orders" component={Orders} />
+        <Route path="/home/inventory" component={Inventory} />
       </Route>
     </Route>
   </Router>

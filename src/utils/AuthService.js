@@ -23,7 +23,7 @@ export default class AuthService extends EventEmitter {
       realm: 'Username-Password-Authentication',
       username,
       password,
-      scope: 'openid profile'
+      scope: 'openid profile sf_id'
     }, (err, authResult) => {
       if (err) {
         alert('Error: ' + err.description)
@@ -31,6 +31,16 @@ export default class AuthService extends EventEmitter {
       }
       if (authResult && authResult.idToken && authResult.accessToken) {
         this.setToken(authResult.accessToken, authResult.idToken)
+
+        // var auth0M = new auth0.Management({
+        //   domain: "gatewayexhibits.auth0.com",
+        //   token: authResult.accessToken
+        // });
+        //
+        // auth0M.getUser("auth0|588b3016aa03fb78b0e550ca", function(res){
+        //   console.log(res);
+        // })
+
         browserHistory.replace('/home/dashboard')
       }
     })
@@ -40,14 +50,19 @@ export default class AuthService extends EventEmitter {
     this.auth0.parseHash({ hash }, (err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setToken(authResult.accessToken, authResult.idToken)
-        browserHistory.replace('/home/dashboard')
+
+        console.log("Step 1")
+
         this.auth0.client.userInfo(authResult.accessToken, (error, profile) => {
           if (error) {
             console.log('Error loading the Profile', error)
           } else {
-            this.setProfile(profile)
+            // this.setProfile(profile);
+            console.log("sdfsdfsdfsd")
+            // console.log(profile)
           }
         })
+        // browserHistory.replace('/home/dashboard')
       } else if (authResult && authResult.error) {
         alert('Error: ' + authResult.error)
       }

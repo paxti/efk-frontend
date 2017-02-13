@@ -26,10 +26,10 @@ class MainApp extends React.Component {
     return (
       <div className="index">
         <MainMenu appName="EFK">
-          <MenuItem name="Home" title="Home" path="/home" />
-          <MenuItem name="Configurations" title="Configurations" />
-          <MenuItem name="Orders" title="Orders" path="/orders"/>
-          <MenuItem name="Inventory" title="Inventory" path="/inventory" />
+          <MenuItem name="Home" title="Home" path="/home/dashboard" />
+          <MenuItem name="Configurations" title="Configurations" path="/home/configurations" />
+          <MenuItem name="Orders" title="Orders" path="/home/orders"/>
+          <MenuItem name="Inventory" title="Inventory" path="/home/inventory" />
         </MainMenu>
 
         <div className="main-area"> {children} </div>

@@ -4,7 +4,7 @@ import React from 'react'
 
 import Sidebar from './Sidebar'
 import DataTable from './DataTable'
-import Home from './Home'
+import EventsBox from './EventsBox'
 import PageHeaderContainer from './PageHeaderContainer'
 
 import {
@@ -15,36 +15,32 @@ import {
   Icon, DropdownButton, MenuItem, Grid
 } from 'react-lightning-design-system'
 
-import '../styles/Inventory.css'
+import '../styles/Configurations.css'
 
-class Inventory extends React.Component {
+class Configurations extends React.Component {
   render() {
     return (
       <div className="slds-grid slds-grid--vertical-stretch">
         <div className="slds-col slds-large-size--2-of-12">
           <Sidebar  />
         </div>
-        <div className="slds-col slds-large-size--6-of-12">
+        <div className="slds-col slds-large-size--10-of-12">
           <PageHeaderContainer
             legend="Test legend"
-            header="Inventory"
+            header="Configurations"
             info="some info here (3)">
               <DataTable />
             </PageHeaderContainer>
-        </div>
-        <div className="slds-col slds-large-size--4-of-12">
-          <Home content="Something here" />
         </div>
       </div>
     );
   }
 }
 
-Inventory.displayName = 'Inventory';
-Inventory.className = 'Inventory';
+Configurations.displayName = 'Configurations';
 
 // Uncomment properties you need
-// InventoryComponent.propTypes = {};
-// InventoryComponent.defaultProps = {};
+// MenuItemComponent.propTypes = {};
+// MenuItemComponent.defaultProps = {};
 
-export default Inventory;
+export default Configurations;
