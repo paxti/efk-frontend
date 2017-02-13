@@ -1,39 +1,24 @@
+'use strict';
+
 import AppDispatcher from '../dispatchers/AppDispatcher.js';
-import LoginActionTypes from '../constants/LoginActionTypes.js';
-import RouterContainer from '../utils/RouterContainer'
+import LoginActions from '../constants/LoginActions'
 
 const Actions = {
 
-  saveUser(user, jwt) {
+  loginUser(profile, token) {
+
     AppDispatcher.dispatch({
-      type: LoginActionTypes.SAVE_USER,
-      user: user,
-      jwt: jwt
-    })
+      actionType: LoginActions.LOG_IN,
+      token: token,
+      profile: profile
+    });
+  },
+
+  logoutUser() {
+    AppDispatcher.dispatch({
+      actionType: LOG_OUT
+    });
   }
-
-
-  // loginUser(jwt) {
-  //   // var savedJwt = localStorage.getItem('jwt');
-  //   AppDispatcher.dispatch({
-  //     actionType: LOG_IN,
-  //     jwt: jwt
-  //   });
-  // },
-  //
-  // logoutUser() {
-  //   RouterContainer.get().transitionTo('/login');
-  //   localStorage.removeItem('jwt');
-  //   AppDispatcher.dispatch({
-  //     actionType: LOG_OUT
-  //   });
-  // },
-  //
-  // authontificationError(error) {
-  //   AppDispatcher.dispatch({
-  //     actionType: ERROR
-  //   });
-  // }
 
 };
 

@@ -1,36 +1,71 @@
 'use strict';
 
-import {ReduceStore} from 'flux/utils';
-import Immutable from 'immutable';
-import LoginActionTypes from '../constants/LoginActionTypes.js';
 import AppDispatcher from '../dispatchers/AppDispatcher';
+import LoginActions from '../constants/LoginActions';
+import { EventEmitter } from 'events';
 
-class LoginStore extends ReduceStore {
-  constructor() {
-    super(AppDispatcher);
-  }
+const CHANGE_EVENT = 'change';
 
-  getInitialState() {
-    return Immutable.Map({
-      user: null,
-      jwt: null,
-      error: null
-    });
-  }
-
-  reduce(state, action): string {
-
-    switch (action.type) {
-      case LoginActionTypes.SAVE_USER:
-        return state
-        .set('user', action.user)
-        .set('jwt', action.jwt)
-        .set('error', action.error);
-
-      default:
-        return state;
-    }
+function setUser(profile, token) {
+  if (!localStorage.getItem('id_token')) {
+    localStorage.setItem('profile', JSON.stringify(profile));
+    localStorage.setItem('id_token', token);
   }
 }
 
-export default new LoginStore();
+function removeUser() {
+  localStorage.removeItem('profile');
+  localStorage.removeItem('id_token');
+}
+
+class LoginStoreClass extends EventEmitter {
+  emitChange() {
+    this.emit(CHANGE_EVENT);
+  }
+
+  addChangeListener(callback) {
+    this.on(CHANGE_EVENT, callback)
+  }
+
+  removeChangeListener(callback) {
+    this.removeListener(CHANGE_EVENT, callback)
+  }
+
+  isAuthenticated() {
+    if (localStorage.getItem('id_token')) {
+      return true;
+    }
+    return false;
+  }
+
+  getUser() {
+    return localStorage.getItem('profile');
+  }
+
+  getJwt() {
+    return localStorage.getItem('id_token');
+  }
+}
+
+const AuthStore = new LoginStoreClass();
+
+AuthStore.dispatchToken = AppDispatcher.register(action => {
+
+  switch(action.actionType) {
+
+    case LoginActions.LOG_IN:
+      setUser(action.profile, action.token);
+      AuthStore.emitChange();
+      break
+
+    case LoginActions.LOG_OUT:
+      removeUser();
+      AuthStore.emitChange();
+      break
+
+    default:
+  }
+
+});
+
+export default AuthStore;

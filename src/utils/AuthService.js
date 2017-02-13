@@ -4,6 +4,7 @@ import React, { PropTypes as T } from 'react'
 import { EventEmitter } from 'events'
 import auth0 from 'auth0-js'
 import LoginStore from '../stores/LoginStore'
+import LoginActions from '../actions/LoginActions'
 import { browserHistory } from 'react-router'
 
 export default class AuthService extends EventEmitter {
@@ -29,19 +30,9 @@ export default class AuthService extends EventEmitter {
         alert('Error: ' + err.description)
         return
       }
-      if (authResult && authResult.idToken && authResult.accessToken) {
-        this.setToken(authResult.accessToken, authResult.idToken)
-
-        // var auth0M = new auth0.Management({
-        //   domain: "gatewayexhibits.auth0.com",
-        //   token: authResult.accessToken
-        // });
-        //
-        // auth0M.getUser("auth0|588b3016aa03fb78b0e550ca", function(res){
-        //   console.log(res);
-        // })
-
-        browserHistory.replace('/home/dashboard')
+      if (authResult && authResult.idToken && authResult.accessToken){
+        LoginActions.loginUser( authResult.idToken, authResult.accessToken);
+        browserHistory.replace('/home/dashboard');
       }
     })
   }
