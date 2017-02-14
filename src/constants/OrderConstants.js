@@ -1,0 +1,10 @@
+'use strict';
+
+const ActionTypes = {
+  RECIEVE_ORDERS:       'RECIEVE_ORDERS',
+  RECIEVE_ORDERS_ERROR: 'RECIEVE_ORDERS_ERROR',
+  RECIEVE_ORDER:        'RECIEVE_ORDER',
+  RECIEVE_ORDER_ERROR:  'RECIEVE_ORDER_ERROR'
+};
+
+export default ActionTypes;

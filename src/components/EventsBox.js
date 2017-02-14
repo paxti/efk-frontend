@@ -2,16 +2,54 @@
 
 import React from 'react';
 
-import { Grid, Row, Col, Icon } from 'react-lightning-design-system'
+import { Grid, Row, Col, Icon, Spinner } from 'react-lightning-design-system'
 import EventsListItem from './EventsListItem'
+import EventActions from '../actions/EventActions';
+import EventStore from '../stores/EventStore';
 
 import styles from '../styles/EventsBox.css'
 
 
 class EventsBox extends React.Component {
 
+  constructor() {
+    super();
+    this.state = {
+      events: [],
+      isPending: false
+    }
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount() {
+    EventStore.addChangeListener(this.onChange);
+  }
+
+  componentDidMount() {
+    EventActions.recieveEvents();
+  }
+
+  componentWillUnmount() {
+    EventStore.removeChangeListener(this.onChange);
+  }
+
+  onChange() {
+    this.setState({
+      events: EventStore.getEvents(),
+      isPending: EventStore.isRequestPending()
+    });
+  }
 
   render() {
+
+
+    let spinner = null;
+    if (this.state.isPending) {
+      spinner = <div><Spinner type='brand' size='medium' /></div>;
+    } else {
+      spinner = "";
+    }
+
     return (
       <div className="event-box-border">
         <Grid>
@@ -20,7 +58,7 @@ class EventsBox extends React.Component {
               <div className="event-box-header">
                 <div className="event-box-header-container">
                    <Icon category='standard' icon='event' className='slds-m-right--small' />
-                   <div className="event-box-title">Current Events (2)</div>
+                   <div className="event-box-title">Current Events ({this.state.events.length})</div>
                 </div>
               </div>
             </Col>
@@ -29,8 +67,9 @@ class EventsBox extends React.Component {
             <Col>
               <div className="event-box-body">
                 <ul>
-                  <EventsListItem />
-                  <EventsListItem />
+                  {this.state.events.slice(0, 2).map(function(event, index){
+                    return  <EventsListItem key={event["id"]} name={event["city"]} info={event["venue"]} date={event["endDate"]} />;
+                  })}
                 </ul>
               </div>
             </Col>
@@ -41,10 +80,8 @@ class EventsBox extends React.Component {
             </Col>
           </Row>
         </Grid>
+        {spinner}
       </div>
-
-
-
     );
   }
 }

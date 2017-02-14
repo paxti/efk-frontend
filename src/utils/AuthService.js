@@ -24,7 +24,7 @@ export default class AuthService extends EventEmitter {
       realm: 'Username-Password-Authentication',
       username,
       password,
-      scope: 'openid profile sf_id'
+      scope: 'openid user_metadata'
     }, (err, authResult) => {
       if (err) {
         alert('Error: ' + err.description)

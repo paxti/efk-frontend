@@ -20,26 +20,31 @@ import '../styles/DataTable.css'
 class DataTable extends React.Component {
   render() {
 
+    // console.log(this.props.data);
+
     return (
       <div>
         <Table bordered >
           <TableHeader>
             <TableRow>
-              <TableHeaderColumn>OPPORTUNITY NAME</TableHeaderColumn>
-              <TableHeaderColumn>ACCOUNT NAME</TableHeaderColumn>
+              {this.props.titles.map(function(title, index){
+                return  <TableHeaderColumn>{title}</TableHeaderColumn>;
+              })}
             </TableRow>
           </TableHeader>
 
           <TableBody>
-            <TableRow>
-              <TableRowColumn>jhkjhkj</TableRowColumn>
-              <TableRowColumn>Cloudhub</TableRowColumn>
-            </TableRow>
-            <TableRow>
-              <TableRowColumn>iliuoiu</TableRowColumn>
-              <TableRowColumn>Cloudhub</TableRowColumn>
-            </TableRow>
+
+            {this.props.data.map(function(order, index){
+              return
+                <TableRow key={order["id"]}>
+                  <TableRowColumn>{order["sfid"]}</TableRowColumn>
+                  <TableRowColumn>{order["id"]}</TableRowColumn>
+                </TableRow>;
+            })}
+
           </TableBody>
+
         </Table>
       </div>
     );

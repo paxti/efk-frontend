@@ -13,9 +13,9 @@ class EventsListItem extends React.Component {
   render() {
     return (
       <li className="event-list-item">
-        <div className="event-list-item-event-name">Event name</div>
-        <div>01/01/2017</div>
-        <div>Additional info</div>
+        <div className="event-list-item-event-name">{this.props.name}</div>
+        <div>{this.props.date}</div>
+        <div>{this.props.info}</div>
       </li>
     );
   }
