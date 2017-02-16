@@ -22,6 +22,14 @@ function setEvent(event, status) {
   _isPending = status;
 }
 
+function addParams(event) {
+  event.icon = "standard:account";
+  event.label = event.name + ' @ ' + event.venue;
+  event.scope = "Account";
+  event.value = event.sfid;
+  return event;
+}
+
 class EventStoreClass extends EventEmitter {
 
   emitChange() {
@@ -38,6 +46,10 @@ class EventStoreClass extends EventEmitter {
 
   getEvents() {
     return _events;
+  }
+
+  getEventForLookup(){
+    return _events.map( (event) => addParams(event) )
   }
 
   getEvent() {

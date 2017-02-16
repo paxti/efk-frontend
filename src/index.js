@@ -34,6 +34,7 @@ import Orders from './components/Orders'
 import Dashboard from './components/Dashboard'
 import Inventory from './components/Inventory'
 import Configurations from './components/Configurations'
+import OrderWizzard from './components/OrderWizzard'
 
 
 ReactDOM.render(
@@ -43,6 +44,7 @@ ReactDOM.render(
       <Route path="/login" component={Login} />
       <Route path="/home" component={MainApp}>
         <Route path="/home/dashboard" component={Dashboard} />
+        <Route path="/home/make-order" component={OrderWizzard} />
         <Route path="/home/configurations" component={Configurations} />
         <Route path="/home/orders" component={Orders} />
         <Route path="/home/inventory" component={Inventory} />

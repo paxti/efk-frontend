@@ -1,0 +1,8 @@
+'use strict';
+
+const ActionTypes = {
+  ORDER_WIZZARD_SELECT_EVENT: 'ORDER_WIZZARD_SELECT_EVENT',
+  ORDER_WIZZARD_REMOVE_SELECT_EVENT: 'ORDER_WIZZARD_REMOVE_SELECT_EVENT'
+};
+
+export default ActionTypes;
