@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import '../styles/ThreeColumnsWrapper.css'
+import styles from '../styles/ThreeColumnsWrapper.css'
 
 class ThreeColumnsWrapper extends React.Component {
   render() {
@@ -31,11 +31,5 @@ class ThreeColumnsWrapper extends React.Component {
     )
   }
 }
-
-ThreeColumnsWrapper.displayName = 'ThreeColumnsWrapper';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default ThreeColumnsWrapper;

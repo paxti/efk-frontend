@@ -1,9 +1,8 @@
 'use strict';
 
 import React from 'react';
-import { Link } from 'react-router'
 
-import '../styles/Home.css'
+import styles from '../styles/Home.css'
 
 class Home extends React.Component {
   render() {
@@ -11,8 +10,8 @@ class Home extends React.Component {
     const { content } = this.props;
 
     return (
-      <div className="min-height slds-grid slds-grid--vertical-align-center slds-grid--align-center">
-        <div className="slds-box">
+      <div className={styles.min_height} className="slds-grid slds-grid--vertical-align-center slds-grid--align-center">
+        <div className={styles.slds_box}>
           <h1>{content}</h1>
         </div>
       </div>
@@ -21,9 +20,5 @@ class Home extends React.Component {
 }
 
 Home.displayName = 'Home';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default Home;

@@ -1,4 +1,4 @@
-.event-box-border {
+.event_box_border {
 	position: relative;
 	border-style: solid;
 	border-width: 1px;
@@ -7,32 +7,32 @@
 	margin: 15px;
 }
 
-.event-box-header-container div, svg {
+.event_box_header_container div, svg {
   float: left;
 }
 
-.event-box-header {
+.event_box_header {
 	margin: 10px 15px 10px;
 	font-size: 14px;
 }
 
-.event-box-title {
+.event_box_title {
 	margin-bottom: 5px;
 }
 
-.event-box-sub-title {
+.event_box_sub_title {
 	font-size: 12px;
 }
 
-.event-box-body {
+.event_box_body {
   margin: 10px 15px 10px;
 }
 
-.event-box-body ul {
+.event_box_body ul {
   margin-left: 45px;
 }
 
-.event-box-footer {
+.event_box_footer {
 	position: absolute;
   bottom: 0;
   margin: 15px;

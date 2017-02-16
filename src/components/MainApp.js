@@ -3,11 +3,7 @@
 import React, { PropTypes as T } from 'react'
 import MainMenu from './MainMenu.js'
 import MenuItem from './MenuItem.js'
-//
-// import LoginStore from '../stores/LoginStore'
 
-// require('normalize.css/normalize.css');
-// require('styles/App.css');
 
 class MainApp extends React.Component {
 
@@ -38,6 +34,5 @@ class MainApp extends React.Component {
     );
   }
 }
-
 
 export default MainApp;

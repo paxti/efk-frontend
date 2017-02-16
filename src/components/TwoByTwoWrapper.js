@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import '../styles/TwoByTwoWrapper.css'
+import styles from '../styles/TwoByTwoWrapper.css'
 
 import BoxFiller from './BoxFiller'
 
@@ -24,11 +24,5 @@ class TwoByTwoWrapper extends React.Component {
     )
   }
 }
-
-TwoByTwoWrapper.displayName = 'TwoByTwoWrapper';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default TwoByTwoWrapper;

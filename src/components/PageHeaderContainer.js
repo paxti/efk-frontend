@@ -10,7 +10,7 @@ import {
   Icon, DropdownButton, MenuItem, Grid
 } from 'react-lightning-design-system';
 
-import '../styles/PageHeaderContainer.css'
+import styles from '../styles/PageHeaderContainer.css'
 
 class PageHeaderContainer extends React.Component {
   render() {
@@ -43,11 +43,5 @@ class PageHeaderContainer extends React.Component {
     );
   }
 }
-
-PageHeaderContainer.displayName = 'PageHeaderContainer';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default PageHeaderContainer;

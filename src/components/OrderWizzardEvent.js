@@ -6,7 +6,7 @@ import {
   Col, Row, Grid, Lookup, Form, FieldSet, Button
 } from 'react-lightning-design-system';
 
-import '../styles/OrderWizzardEvent.css'
+import styles from '../styles/OrderWizzardEvent.css'
 
 class OrderWizzardEvent extends React.Component {
   render() {

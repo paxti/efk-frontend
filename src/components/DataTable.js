@@ -15,13 +15,10 @@ import {
   MenuItem,
 } from 'react-lightning-design-system';
 
-import '../styles/DataTable.css'
+import styles from '../styles/DataTable.css'
 
 class DataTable extends React.Component {
   render() {
-
-    // console.log(this.props.data);
-
     return (
       <div>
         <Table bordered >
@@ -32,9 +29,7 @@ class DataTable extends React.Component {
               })}
             </TableRow>
           </TableHeader>
-
           <TableBody>
-
             {this.props.data.map(function(order, index){
               return
                 <TableRow key={order["id"]}>
@@ -42,9 +37,7 @@ class DataTable extends React.Component {
                   <TableRowColumn>{order["id"]}</TableRowColumn>
                 </TableRow>;
             })}
-
           </TableBody>
-
         </Table>
       </div>
     );

@@ -2,19 +2,20 @@
 
 import React from 'react';
 
-import '../styles/MainMenu.css'
+import styles from '../styles/MainMenu.css'
 
 class MainMenu extends React.Component {
 
   render() {
+
     return (
 
-      <header id="main-header" className="slds-global-header_container">
+      <header className={`${styles.main_header} + slds-global-header_container`}>
         <a href="javascript:void(0);" className="slds-assistive-text slds-assistive-text--focus">Skip to Navigation</a>
         <a href="javascript:void(0);" className="slds-assistive-text slds-assistive-text--focus">Skip to Main Content</a>
         <div className="slds-global-header slds-grid slds-grid--align-spread">
         <div className="slds-global-header__item">
-          <div className="slds-global-header__logo">
+          <div className={`${styles.slds_global_logo} + slds-global-header__logo`}>
             <img src={require('../images/logo.png')} />
           </div>
         </div>
@@ -30,7 +31,6 @@ class MainMenu extends React.Component {
           </li>
         </ul>
       </div>
-
 
       <div className="slds-context-bar">
         <div className="slds-context-bar__primary slds-context-bar__item--divider-right">
@@ -62,14 +62,9 @@ class MainMenu extends React.Component {
           </ul>
         </nav>
       </div>
-</header>    );
+    </header>
+    );
   }
 }
-
-MainMenu.displayName = 'MainMenu';
-
-// Uncomment properties you need
-// MainMenuComponent.propTypes = {};
-// MainMenuComponent.defaultProps = {};
 
 export default MainMenu;

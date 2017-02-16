@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 
-import '../styles/MenuItem.css'
+import styles from '../styles/MenuItem.css'
 
 class MenuItem extends React.Component {
   render() {
@@ -17,10 +17,5 @@ class MenuItem extends React.Component {
   }
 }
 
-MenuItem.displayName = 'MenuItem';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default MenuItem;

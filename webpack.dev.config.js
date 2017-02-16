@@ -26,10 +26,20 @@ module.exports = {
         loader: 'babel',
         include: path.join(__dirname, 'src')
       },
-      { test: /\.css$/, loader: "style-loader!css-loader" },
-      { test: /\.scss?$/,
-        loader: 'style!css!sass',
-        include: path.join(__dirname, 'src', 'styles') },
+      {
+        test: /\.css$/,
+        loader: 'style-loader'
+      }, {
+        test: /\.css$/,
+        loader: 'css-loader',
+        query: {
+          modules: true,
+          localIdentName: '[name]__[local]___[hash:base64:5]'
+        }
+      },
+      // { test: /\.scss?$/,
+      //   loader: 'style!css!sass',
+      //   include: path.join(__dirname, 'src', 'styles') },
       {  test: /\.(jpg|png)$/,
         loader: 'url-loader' },
       { test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,

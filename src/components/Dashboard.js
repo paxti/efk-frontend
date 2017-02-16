@@ -7,7 +7,7 @@ import TwoByTwoWrapper from './TwoByTwoWrapper'
 import EventsBox from './EventsBox'
 import PageHeaderContainer from './PageHeaderContainer'
 
-import '../styles/Dashboard.css'
+import styles from '../styles/Dashboard.css'
 
 class Dashboard extends React.Component {
   render() {

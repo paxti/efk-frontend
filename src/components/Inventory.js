@@ -7,15 +7,7 @@ import DataTable from './DataTable'
 import Home from './Home'
 import PageHeaderContainer from './PageHeaderContainer'
 
-import {
-  PageHeader,
-  PageHeaderHeading,
-  PageHeaderHeadingTitle,
-  PageHeaderDetailLabel,
-  Icon, DropdownButton, MenuItem, Grid
-} from 'react-lightning-design-system'
-
-import '../styles/Inventory.css'
+import styles from '../styles/Inventory.css'
 
 class Inventory extends React.Component {
   render() {
@@ -39,12 +31,5 @@ class Inventory extends React.Component {
     );
   }
 }
-
-Inventory.displayName = 'Inventory';
-Inventory.className = 'Inventory';
-
-// Uncomment properties you need
-// InventoryComponent.propTypes = {};
-// InventoryComponent.defaultProps = {};
 
 export default Inventory;

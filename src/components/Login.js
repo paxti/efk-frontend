@@ -7,10 +7,8 @@ import Button from 'react-lightning-design-system/lib/scripts/Button'
 import Form from 'react-lightning-design-system/lib/scripts/Form'
 import Input from 'react-lightning-design-system/lib/scripts/Input'
 import AuthService from '../utils/AuthService'
-// import LoginStore from '../stores/LoginStore'
 
-import '../styles/Login.css'
-
+import styles from '../styles/Login.css'
 
 class Login extends React.Component {
 
@@ -38,7 +36,6 @@ class Login extends React.Component {
 
   render() {
 
-    const styles = { padding: '12px' };
     const required = false;
     const login = () => this.login.bind(this);
 
@@ -48,7 +45,7 @@ class Login extends React.Component {
           <div className="slds-grid slds-grid--vertical-stretch">
             <div className="slds-col slds-medium-size--1-of-6 slds-large-size--3-of-12"></div>
             <div className="slds-col slds-medium-size--4-of-6 slds-large-size--6-of-12 slds-grid--vertical">
-              <div className="slds-grid slds-grid--vertical-stretch slds-grid--vertical-align-center full-height slds-grid--vertical">
+              <div className={`${styles.full_height} + slds-grid slds-grid--vertical-stretch slds-grid--vertical-align-center slds-grid--vertical`}>
                 <div className="slds-col slds-align-top"></div>
                 <div className="slds-col slds-align-middle slds-grid--vertical-align-center ">
                   <img src={require('../images/logo.png')} />
@@ -81,7 +78,7 @@ class Login extends React.Component {
                       </div>
                   </div>
                 </div>
-                <div className="full-width slds-align-bottom slds-text-align--center">
+                <div className={`${styles.full_width} + slds-align-bottom slds-text-align--center`}>
                     © 2017 Gateway Exhibits Services. All rights reserved
                 </div>
               </div>
@@ -89,10 +86,10 @@ class Login extends React.Component {
             <div className="slds-col slds-medium-size--1-of-6 slds-large-size--3-of-12"></div>
           </div>
         </div>
-        <div className="slds-col slds-medium-size--3-of-6 slds-large-size--6-of-12 slds-large-show login-page-right">
-          <div className="top">have you heard of gateway exhibit services?</div>
-          <div className="middle">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the</div>
-          <div className="bottom">
+        <div className={`${styles.login_page_right} + slds-col slds-medium-size--3-of-6 slds-large-size--6-of-12 slds-large-show`}>
+          <div className={styles.top}>have you heard of gateway exhibit services?</div>
+          <div className={styles.middle}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the</div>
+          <div className={styles.bottom}>
             <button type="button" className="slds-button slds-button--brand">Send</button>
           </div>
         </div>
@@ -100,7 +97,5 @@ class Login extends React.Component {
     )
   }
 }
-
-Login.displayName = 'Login';
 
 export default Login;

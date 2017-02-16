@@ -15,7 +15,7 @@ import {
   Icon, DropdownButton, MenuItem, Grid
 } from 'react-lightning-design-system'
 
-import '../styles/Configurations.css'
+import styles from '../styles/Configurations.css'
 
 class Configurations extends React.Component {
   render() {

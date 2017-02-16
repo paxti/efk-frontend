@@ -1,27 +1,19 @@
 'use strict';
 
 import React from 'react';
-import { Link } from 'react-router'
 
 import {
   PageHeader,
   PageHeaderHeading,
   PageHeaderHeadingTitle,
-  PageHeaderDetailLabel,
-  Icon, DropdownButton, MenuItem, Grid
+  Grid
 } from 'react-lightning-design-system';
 
-import '../styles/MainSectionContainer.css'
+import styles from '../styles/MainSectionContainer.css'
 
 class MainSectionContainer extends React.Component {
-  render() {
 
-    // let children = null;
-    // if (this.props.middle_children) {
-    //   children = React.cloneElement(this.props.middle, {
-    //     children: this.props.middle_children
-    //   })
-    // }
+  render() {
 
     return (
       <div>
@@ -43,11 +35,5 @@ class MainSectionContainer extends React.Component {
     );
   }
 }
-
-MainSectionContainer.displayName = 'MainSectionContainer';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default MainSectionContainer;

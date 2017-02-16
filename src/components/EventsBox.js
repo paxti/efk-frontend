@@ -51,21 +51,21 @@ class EventsBox extends React.Component {
     }
 
     return (
-      <div className="event-box-border">
+      <div className={styles.event_box_border}>
         <Grid>
           <Row>
             <Col>
-              <div className="event-box-header">
-                <div className="event-box-header-container">
+              <div className={styles.event_box_header}>
+                <div className={styles.event_box_header_container}>
                    <Icon category='standard' icon='event' className='slds-m-right--small' />
-                   <div className="event-box-title">Current Events ({this.state.events.length})</div>
+                   <div className={styles.event_box_title}>Current Events ({this.state.events.length})</div>
                 </div>
               </div>
             </Col>
           </Row>
           <Row>
             <Col>
-              <div className="event-box-body">
+              <div className={styles.event_box_body}>
                 <ul>
                   {this.state.events.slice(0, 2).map(function(event, index){
                     return  <EventsListItem key={event["id"]} name={event["city"]} info={event["venue"]} date={event["endDate"]} />;
@@ -76,7 +76,7 @@ class EventsBox extends React.Component {
           </Row>
           <Row>
             <Col>
-              <div className="event-box-footer"><a href="#">View all</a></div>
+              <div className={styles.event_box_footer}><a href="#">View all</a></div>
             </Col>
           </Row>
         </Grid>
@@ -85,11 +85,5 @@ class EventsBox extends React.Component {
     );
   }
 }
-
-EventsBox.displayName = 'EventsBox';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default EventsBox;

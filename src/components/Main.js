@@ -2,11 +2,6 @@
 
 import React, { PropTypes as T } from 'react'
 
-// import LoginStore from '../stores/LoginStore'
-
-// require('normalize.css/normalize.css');
-// require('styles/App.css');
-
 class AppComponent extends React.Component {
 
   static contextTypes = {

@@ -1,4 +1,4 @@
-.login-page-right {
+.login_page_right {
   background-image: url(../images/background.png);
   background-size: cover;
 }
@@ -40,11 +40,11 @@
 	width: 160px;
 }
 
-.full-height {
+.full_height {
 	height: 100%;
 }
 
-.full-width {
+.full_width {
 	width: 100%;
 }
 

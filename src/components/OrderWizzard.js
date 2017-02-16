@@ -5,6 +5,7 @@ import React from 'react';
 import Stepzilla from 'react-stepzilla'
 
 import OrderWizzardEvent from './OrderWizzardEvent'
+import OrderWizzardConfiguration from '../components/OrderWizzardConfiguration'
 import Home from './Home'
 import OrderWizzardSidebar from '../components/OrderWizzardSidebar'
 
@@ -17,8 +18,6 @@ import EventActions from '../actions/EventActions'
 import {
   Col, Row, Grid, Lookup, Form, FieldSet, Button
 } from 'react-lightning-design-system';
-
-import '../styles/OrderWizzard.css'
 
 class OrderWizzard extends React.Component {
 
@@ -72,7 +71,12 @@ class OrderWizzard extends React.Component {
           events={ this.state.events }
         />
       },
-      {name: 'Select configuration', component: <Home content="Step 2" />},
+      {
+        name: 'Select configuration',
+        component: <OrderWizzardConfiguration
+          content="Step 2"
+        />
+      },
       {name: 'Options', component: <Home content="Step 3" />},
       {name: 'Rental', component: <Home content="Step 4" />},
       {name: 'Review', component: <Home content="Step 5" />}
@@ -95,7 +99,5 @@ class OrderWizzard extends React.Component {
     );
   }
 }
-
-OrderWizzard.displayName = 'OrderWizzard';
 
 export default OrderWizzard;

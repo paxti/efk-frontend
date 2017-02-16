@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import '../styles/Sidebar.css'
+import styles from '../styles/Sidebar.css'
 
 class Sidebar extends React.Component {
   render() {
@@ -18,11 +18,5 @@ class Sidebar extends React.Component {
     );
   }
 }
-
-Sidebar.displayName = 'Sidebar';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default Sidebar;

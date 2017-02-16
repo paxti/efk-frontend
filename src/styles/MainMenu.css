@@ -1,12 +1,12 @@
-.mainmenu-component {
+.mainmenu_component {
   border: 1px dashed #f00;
 }
 
-.slds-global-header__logo {
-  width: 6.2rem !important; 
+.slds_global_logo {
+  width: 6.2rem !important;
 }
 
-#main-header {
+.main_header {
   position: relative;
   margin-top: 20px;
 }

@@ -1,4 +1,4 @@
-.box-border {
+.box_border {
 	position: relative;
 	border-style: solid;
 	border-width: 1px;
@@ -7,23 +7,23 @@
 	margin: 10px 5px 10px;
 }
 
-.box-header {
+.box_header {
 	margin: 10px;
 	font-size: 14px;
 }
 
-.box-title {
+.box_title {
 	font-weight: bold;
 	margin-bottom: 5px;
 }
 
-.box-sub-title {
+.box_sub_title {
 	font-size: 12px;
 }
 
-.box-footer {
+.box_footer {
 	position: absolute;
-    bottom: 0;
-    margin: 10px;
-    font-size: 12px;
+  bottom: 0;
+  margin: 10px;
+  font-size: 12px;
 }

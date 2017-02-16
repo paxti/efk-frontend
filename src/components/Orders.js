@@ -24,7 +24,7 @@ import {
   Icon, DropdownButton, MenuItem, Grid
 } from 'react-lightning-design-system'
 
-import '../styles/Orders.css'
+import styles from '../styles/Orders.css'
 
 class Orders extends React.Component {
 
@@ -100,11 +100,5 @@ class Orders extends React.Component {
     );
   }
 }
-
-Orders.displayName = 'Orders';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default Orders;
