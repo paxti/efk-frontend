@@ -33,7 +33,8 @@ class OrderWizzard extends React.Component {
       stockAvailability: { entities: [] },
       stockAvalityProblems: [],
       isStockLoading: true,
-      rentals: []
+      rentals: [],
+      reservedFromInventory: []
     }
     this.onChange = this.onChange.bind(this);
     this.onEventChange = this.onEventChange.bind(this);
@@ -64,6 +65,7 @@ class OrderWizzard extends React.Component {
       stockAvailability: OrderWizzardStore.getStockAvailability(),
       stockAvalityProblems: OrderWizzardStore.getStockAvailabilityProblems(),
       isStockLoading: OrderWizzardStore.isStockLoading(),
+      reservedFromInventory: OrderWizzardStore.getReservedFromInventor(),
       rentals: OrderWizzardStore.getRentals()
     });
   }
@@ -97,7 +99,7 @@ class OrderWizzard extends React.Component {
    */
 
   onConfigurationSelect(selectedConfiguration, selectedEvent){
-    OrderWizzardActions.setConfiguration(selectedConfiguration, selectedEvent)
+    OrderWizzardActions.setConfiguration(selectedConfiguration, selectedEvent);
   }
 
   /**
@@ -155,7 +157,8 @@ class OrderWizzard extends React.Component {
           <OrderWizzardSidebar
             selectedEvent={ this.state.selectedEvent }
             selectedConfiguration={ this.state.configurationDetails}
-            rentals={ this.state.rentals } />
+            rentals={ this.state.rentals }
+            reservedFromInventory={ this.state.reservedFromInventory } />
         </Col>
       </Row>
     </Grid>

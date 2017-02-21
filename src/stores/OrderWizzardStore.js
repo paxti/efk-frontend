@@ -14,7 +14,13 @@ let _selectedConfiguration = null;
 let _rentedEntities = [];
 let _orderStockAvailability = { entities: [] };
 let _isStockLoading = true;
+let _reservedFromInventory = [];
 let _rentals = [];
+
+function emptySelection(){
+  _rentals.length = 0;
+  _reservedFromInventory.length = 0;
+}
 
 function setSelectedEvent(event) {
   _selectedEvent = event;
@@ -44,6 +50,12 @@ function setNecessaryToRent(stockAvalityProblems){
   _.map(stockAvalityProblems, (entity) => {
     _rentals.push({sfid: entity.item_sfid, name: entity.item_name, amount: entity.required_amount})
   })
+}
+
+function setReservedFromInventory(stockAvality){
+  _.map(_.filter(stockAvality.entities, (item) => { return item.avaliable_amount >= item.required_amount }), (entity) => {
+    _reservedFromInventory.push({sfid: entity.item_sfid, name: entity.item_name, amount: entity.avaliable_amount - entity.required_amount})
+  });
 }
 
 /**
@@ -114,8 +126,8 @@ class OrderWizzardStoreClass extends EventEmitter {
     return _rentals;
   }
 
-  removeAllRentails(){
-    _rentals = [];
+  getReservedFromInventor(){
+    return _reservedFromInventory;
   }
 
 }
@@ -131,6 +143,7 @@ OrderWizzardStore.dispatchToken = AppDispatcher.register(action => {
       break
 
     case OrderWizzardConstants.ORDER_WIZARD_RECIVE_CONFIGURATION_DETAILS:
+      emptySelection();
       setSelectedConfiguration(action.selectedConfiguration);
       OrderWizzardStore.emitChange();
       break
@@ -163,6 +176,7 @@ OrderWizzardStore.dispatchToken = AppDispatcher.register(action => {
     case OrderWizzardConstants.ORDER_WIZZARD_CHECK_AVAILABILITY_SUCCESS:
       setStockLoadingStatus(false);
       setOrderProblems(action.stockAvailability);
+      setReservedFromInventory(action.stockAvailability);
       OrderWizzardStore.emitChange();
       break
 

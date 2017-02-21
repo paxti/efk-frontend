@@ -35,11 +35,15 @@ class OrderWizzardConfigurationDetails extends React.Component {
     return (
       <div>
 
-        <Form type='horizontal' onSubmit={ () => console.log("sdfsdf") }>
-          <Picklist label='Picklist Label'>
-            <PicklistItem value='1' onClick={ () => console.log("selected") }>Picklist Item One</PicklistItem>
-            <PicklistItem value='2'>Picklist Item Two</PicklistItem>
-          </Picklist>
+        <Form type='horizontal'>
+          {
+            configuration.category_set.category_entities.map( (entity) => {
+                return  <Picklist label={entity.category.name} key={entity.id}>
+                          <PicklistItem value='1' onClick={ () => console.log("selected") }>Picklist Item One</PicklistItem>
+                          <PicklistItem value='2'>Picklist Item Two</PicklistItem>
+                        </Picklist>
+            })
+          }
         </Form>
 
         <ModalWrapper
