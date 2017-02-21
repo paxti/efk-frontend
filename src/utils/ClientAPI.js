@@ -3,12 +3,15 @@
 import request from 'superagent/lib/client';
 import LoginStore from '../stores/LoginStore'
 
+const basePath = "http://localhost:3000/api/v1";
+
 export default {
 
-  getInventory: (url) => {
+  sendGetRequest: (url, query = {}) => {
     return new Promise((resolve, reject) => {
       request
-        .get(url)
+        .get(basePath + url)
+        .query(query)
         .set('Authorization', 'Bearer ' + LoginStore.getJwt())
         .end((err, response) => {
           if (err) reject(err);
@@ -16,4 +19,5 @@ export default {
         })
     });
   }
+
 }

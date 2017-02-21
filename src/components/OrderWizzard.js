@@ -1,4 +1,3 @@
-
 'use strict';
 
 import React from 'react';
@@ -6,14 +5,17 @@ import Stepzilla from 'react-stepzilla'
 
 import OrderWizzardEvent from './OrderWizzardEvent'
 import OrderWizzardConfiguration from '../components/OrderWizzardConfiguration'
+import OrderWizzardConfigurationDetails from '../components/OrderWizzardConfigurationDetails'
 import Home from './Home'
 import OrderWizzardSidebar from '../components/OrderWizzardSidebar'
 
 import OrderWizzardStore from '../stores/OrderWizzardStore'
 import EventStore from '../stores/EventStore'
+import ConfigurationStore from '../stores/ConfigurationStore'
 
 import OrderWizzardActions from '../actions/OrderWizzardActions'
 import EventActions from '../actions/EventActions'
+import ConfigurationActions from '../actions/ConfigurationActions'
 
 import {
   Col, Row, Grid, Lookup, Form, FieldSet, Button
@@ -25,29 +27,44 @@ class OrderWizzard extends React.Component {
     super();
     this.state = {
       selectedEvent: null,
-      events: []
+      events: [],
+      configurations: [],
+      configurationDetails: null,
+      stockAvailability: { entities: [] },
+      stockAvalityProblems: [],
+      isStockLoading: true,
+      rentals: []
     }
     this.onChange = this.onChange.bind(this);
     this.onEventChange = this.onEventChange.bind(this);
+    this.onConfigurationChange = this.onConfigurationChange.bind(this);
   }
 
   componentWillMount() {
     OrderWizzardStore.addChangeListener(this.onChange);
     EventStore.addChangeListener(this.onEventChange);
+    ConfigurationStore.addChangeListener(this.onConfigurationChange);
   }
 
   componentDidMount() {
     EventActions.recieveEvents();
+    ConfigurationActions.recieveConfigurations();
   }
 
   componentWillUnmount() {
     OrderWizzardStore.removeChangeListener(this.onChange);
-    EventStore.addChangeListener(this.onEventChange);
+    EventStore.removeChangeListener(this.onEventChange);
+    ConfigurationStore.removeChangeListener(this.onConfigurationChange);
   }
 
   onChange() {
     this.setState({
-      selectedEvent: OrderWizzardStore.getSelectedEvent()
+      selectedEvent: OrderWizzardStore.getSelectedEvent(),
+      configurationDetails: OrderWizzardStore.getSelectedConfiguration(),
+      stockAvailability: OrderWizzardStore.getStockAvailability(),
+      stockAvalityProblems: OrderWizzardStore.getStockAvailabilityProblems(),
+      isStockLoading: OrderWizzardStore.isStockLoading(),
+      rentals: OrderWizzardStore.getRentals()
     });
   }
 
@@ -57,16 +74,47 @@ class OrderWizzard extends React.Component {
     });
   }
 
-  setSelectedEvent(selectedEvent){
+  onConfigurationChange() {
+    this.setState({
+      configurations: ConfigurationStore.getConfigurations(),
+    });
+  }
+
+  onShowDetails(id){
+    return "";
+  }
+
+  /**
+   * Callbacks for event page
+   */
+
+  onEventSelect(selectedEvent){
     OrderWizzardActions.setEvent(selectedEvent)
   }
+
+  /**
+   * Callbacks for configuration page
+   */
+
+  onConfigurationSelect(selectedConfiguration, selectedEvent){
+    OrderWizzardActions.setConfiguration(selectedConfiguration, selectedEvent)
+  }
+
+  /**
+   * Callback for availability page
+   */
+
+  onRentClick(stockAvalityProblems){
+    OrderWizzardActions.rentNecessary(stockAvalityProblems)
+  }
+
 
   render() {
 
     const steps = [
       {
         name: 'Select event', component: <OrderWizzardEvent
-          onEventSelect={ this.setSelectedEvent }
+          onEventSelect={ this.onEventSelect }
           selectedEvent={ this.state.selectedEvent }
           events={ this.state.events }
         />
@@ -74,30 +122,45 @@ class OrderWizzard extends React.Component {
       {
         name: 'Select configuration',
         component: <OrderWizzardConfiguration
-          content="Step 2"
+          configurations={ this.state.configurations }
+          setSelectedEvent={ this.state.selectedEvent }
+          onShowDetails={ this.onShowDetails }
+          onSelectConfiguration={ this.onConfigurationSelect }
         />
-      },
-      {name: 'Options', component: <Home content="Step 3" />},
-      {name: 'Rental', component: <Home content="Step 4" />},
-      {name: 'Review', component: <Home content="Step 5" />}
-    ];
+    },
+    {
+      name: 'Configuration availability',
+      component: <OrderWizzardConfigurationDetails
+        configuration={this.state.configurationDetails}
+        selectedEvent={ this.state.selectedEvent }
+        stockAvalityProblems={ this.state.stockAvalityProblems }
+        isStockLoading={ this.state.isStockLoading }
+        onRentClick={ this.onRentClick }
+      />
+    },
+    {name: 'Rental', component: <Home content="Step 4" />},
+    {name: 'Review', component: <Home content="Step 5" />}
+  ];
 
-    return (
-      <Grid>
-        <Row cols={7}>
-          <Col cols={1}>
-            <Home content="Test 1" />
-          </Col>
-          <Col cols={4}>
-            <Stepzilla steps={steps}/>
-          </Col>
-          <Col cols={2}>
-            <OrderWizzardSidebar selectedEvent={ this.state.selectedEvent } />
-          </Col>
-        </Row>
-      </Grid>
-    );
-  }
+  return (
+    <Grid color>
+      <Row cols={7}>
+        <Col cols={1}>
+          <Home content="Test 1" />
+        </Col>
+        <Col cols={4}>
+          <Stepzilla steps={steps}/>
+        </Col>
+        <Col cols={2}>
+          <OrderWizzardSidebar
+            selectedEvent={ this.state.selectedEvent }
+            selectedConfiguration={ this.state.configurationDetails}
+            rentals={ this.state.rentals } />
+        </Col>
+      </Row>
+    </Grid>
+  )}
 }
+
 
 export default OrderWizzard;

@@ -12,9 +12,7 @@ let _isPending = false;
 let _lastRequestTime = '1970-01-01 00:00:00'
 
 function setEvents(events, status) {
-  _events = events;
-  _isPending = status;
-  _lastRequestTime = new Date().toGMTString();
+  _events = events
 }
 
 function setEvent(event, status) {

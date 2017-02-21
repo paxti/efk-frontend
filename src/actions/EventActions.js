@@ -2,9 +2,7 @@
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import EventConstants from '../constants/EventConstants';
-import EventsAPI from '../utils/EventsAPI';
-
-const path = "http://localhost:3000/api/v1";
+import ClientAPI from '../utils/ClientAPI';
 
 export default {
 
@@ -15,8 +13,8 @@ export default {
       request_status: true
     })
 
-    EventsAPI
-      .getEvents(path + '/events')
+    ClientAPI
+      .sendGetRequest('/events')
       .then(events => {
         AppDispatcher.dispatch({
           actionType: EventConstants.RECIEVE_EVENTS,
@@ -34,8 +32,8 @@ export default {
   },
 
   getEvent: (id) => {
-    EventsAPI
-      .getEvent(path + '/events/' + id)
+    ClientAPI
+      .sendGetRequest('/events/' + id)
       .then(event => {
         AppDispatcher.dispatch({
           actionType: EventConstants.RECIEVE_EVENT,

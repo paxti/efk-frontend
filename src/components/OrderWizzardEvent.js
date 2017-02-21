@@ -16,24 +16,24 @@ class OrderWizzardEvent extends React.Component {
     return (
       <Form type='compound'>
          <FieldSet>
-            <Grid>
-              <Row cols={8}>
-                <Col cols={1}></Col>
-                <Col cols={6} padded>
-                  <Lookup label='Select event'
-                   defaultSearchText=''
-                   data={ events }
-                   selected={ selectedEvent }
-                   onSelect={ function(selected) { selected && selected.target ? onEventSelect(null) : onEventSelect(selected)} }
-                   lookupFilter={ (entry, text) => entry.label.toUpperCase().indexOf(text.toUpperCase()) === 0 }
-                   listFooter={ <Button icon='add' iconAlign='left'>{'Add new'}</Button> }
-                  />
-                </Col>
-                <Col cols={1}></Col>
-              </Row>
-            </Grid>
-          </FieldSet>
-        </Form>
+          <Grid>
+            <Row cols={8}>
+              <Col cols={1}></Col>
+              <Col cols={6} padded>
+                <Lookup label='Select event'
+                 defaultSearchText=''
+                 data={ events }
+                 selected={ selectedEvent }
+                 onSelect={ function(selected) { selected && selected.target ? onEventSelect(null) : onEventSelect(selected)} }
+                 lookupFilter={ (entry, text) => entry.label.toUpperCase().indexOf(text.toUpperCase()) === 0 }
+                 listFooter={ <Button icon='add' iconAlign='left'>{'Add new'}</Button> }
+                />
+              </Col>
+              <Col cols={1}></Col>
+            </Row>
+          </Grid>
+        </FieldSet>
+      </Form>
     );
   }
 }

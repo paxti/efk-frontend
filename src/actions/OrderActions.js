@@ -2,15 +2,13 @@
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
 import OrderConstants from '../constants/OrderConstants';
-import OrdersAPI from '../utils/OrdersAPI';
-
-const path = "http://localhost:3000/api/v1";
+import ClientAPI from '../utils/ClientAPI';
 
 export default {
 
   recieveOrders: () => {
-    OrdersAPI
-      .getOrders(path + '/order_requests')
+    ClientAPI
+      .sendGetRequest('/order_requests')
       .then(orders => {
         AppDispatcher.dispatch({
           actionType: OrderConstants.RECIEVE_ORDERS,
@@ -26,19 +24,19 @@ export default {
   },
 
   getOrder: (id) => {
-    OrdersAPI
-      .getOrder(path + '/order_requests/' + id)
-      .then(order => {
-        AppDispatcher.dispatch({
-          actionType: OrderConstants.RECIEVE_ORDER,
-          order: order
-        });
-      })
-      .catch(message => {
-        AppDispatcher.dispatch({
-          actionType: OrderConstants.RECIEVE_ORDER_ERROR,
-          message: message
-        });
+    ClientAPI
+    .sendGetRequest('/order_requests/' + id)
+    .then(order => {
+      AppDispatcher.dispatch({
+        actionType: OrderConstants.RECIEVE_ORDER,
+        order: order
       });
+    })
+    .catch(message => {
+      AppDispatcher.dispatch({
+        actionType: OrderConstants.RECIEVE_ORDER_ERROR,
+        message: message
+      });
+    });
   }
 }
