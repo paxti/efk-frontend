@@ -31,6 +31,27 @@ const Actions = {
       });
   },
 
+  fetchStockItemForCategory: (entities) => {
+    entities.map( (entity) => {
+      ClientAPI
+        .sendGetRequest('/stock_items/', {category_id: entity.category.id})
+        .then(categoryStockItems => {
+          AppDispatcher.dispatch({
+            actionType: OrderWizzardConstants.ORDER_WIZZARD_CATEGORY_STOCK_ITEM,
+            categoryStockItems: categoryStockItems,
+            categoryId: entity.category.id,
+            categoryName: entity.category.name
+          });
+        })
+        .catch(message => {
+          AppDispatcher.dispatch({
+            actionType: Constants.RECIEVE_CONFIGURATION_ERROR,
+            message: message
+          });
+        });
+    })
+  },
+
   checkAvailability: (configuration, selectedEvent) => {
 
     AppDispatcher.dispatch({
@@ -52,6 +73,14 @@ const Actions = {
           message: message
         });
       });
+  },
+
+  addItemFromOptions: (categoryId, item) => {
+    AppDispatcher.dispatch({
+      actionType: OrderWizzardConstants.ORDER_WIZZARD_SELECTED_OPTION,
+      categoryId: categoryId,
+      item: item
+    });
   },
 
 

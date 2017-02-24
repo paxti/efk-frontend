@@ -16,6 +16,8 @@ let _orderStockAvailability = { entities: [] };
 let _isStockLoading = true;
 let _reservedFromInventory = [];
 let _rentals = [];
+let _stockItemsInCategories = [];
+let _selectedFromOptions = [];
 
 function emptySelection(){
   _rentals.length = 0;
@@ -46,6 +48,20 @@ function setStockLoadingStatus(status){
   _isStockLoading = status;
 }
 
+
+function addStockItemsByCategories(stockItemsInCategories, categoryId, categoryName){
+
+  let entry = { 'categoryId': categoryId, 'categoryName': categoryName, 'options': stockItemsInCategories };
+  let index = _stockItemsInCategories.findIndex( (stockItem) => { return stockItem.categoryId == categoryId });
+
+  if (index >= 0 ){
+    _stockItemsInCategories[index] = entry;
+  } else {
+    _stockItemsInCategories.push( entry );
+  }
+
+}
+
 function setNecessaryToRent(stockAvalityProblems){
   _.map(stockAvalityProblems, (entity) => {
     _rentals.push({sfid: entity.item_sfid, name: entity.item_name, amount: entity.required_amount})
@@ -56,6 +72,21 @@ function setReservedFromInventory(stockAvality){
   _.map(_.filter(stockAvality.entities, (item) => { return item.avaliable_amount >= item.required_amount }), (entity) => {
     _reservedFromInventory.push({sfid: entity.item_sfid, name: entity.item_name, amount: entity.avaliable_amount - entity.required_amount})
   });
+}
+
+function addFromOption(categoryId, item){
+
+  let index = _selectedFromOptions.findIndex( (category) => {
+    return category.categoryId == categoryId;
+  });
+
+  let category = {categoryId: categoryId, item: item};
+
+  if (index < 0) {
+    _selectedFromOptions.push(category)
+  } else {
+    _selectedFromOptions[index] = category
+  }
 }
 
 /**
@@ -130,6 +161,14 @@ class OrderWizzardStoreClass extends EventEmitter {
     return _reservedFromInventory;
   }
 
+  getStockItemsForCategory(){
+    return _stockItemsInCategories;
+  }
+
+  getItemsFromOptions(){
+    return _selectedFromOptions;
+  }
+
 }
 
 const OrderWizzardStore = new OrderWizzardStoreClass();
@@ -182,6 +221,16 @@ OrderWizzardStore.dispatchToken = AppDispatcher.register(action => {
 
     case OrderWizzardConstants.ORDER_WIZZARD_RENT_NECESSARY:
       setNecessaryToRent(action.stockAvalityProblems);
+      OrderWizzardStore.emitChange();
+      break
+
+    case OrderWizzardConstants.ORDER_WIZZARD_CATEGORY_STOCK_ITEM:
+      addStockItemsByCategories(action.categoryStockItems, action.categoryId, action.categoryName);
+      OrderWizzardStore.emitChange();
+      break
+
+    case OrderWizzardConstants.ORDER_WIZZARD_SELECTED_OPTION:
+      addFromOption(action.categoryId, action.item);
       OrderWizzardStore.emitChange();
       break
 

@@ -2,49 +2,41 @@
 
 import React from 'react';
 
-import {
-  Form, Picklist, PicklistItem
-} from 'react-lightning-design-system';
-
-
 import OrderWizzardActions from '../actions/OrderWizzardActions'
 
 import StandartTableWrapper from '../components/StandartTableWrapper'
 import ModalWrapper from '../components/ModalWrapper'
+import PickListWrapper from '../components/PickListWrapper'
 
 import styles from '../styles/OrderWizzardConfigurationDetails.css'
 
 class OrderWizzardConfigurationDetails extends React.Component {
 
   componentDidMount() {
-    OrderWizzardActions.checkAvailability(this.props.configuration, this.props.selectedEvent)
+    OrderWizzardActions.checkAvailability(this.props.configuration, this.props.selectedEvent);
+    OrderWizzardActions.fetchStockItemForCategory(this.props.configuration.category_set.category_entities);
   }
 
   render() {
 
-    const { configuration, selectedEvent, stockAvalityProblems, isStockLoading, onRentClick } = this.props;
+    const { configuration, selectedEvent, stockAvalityProblems, stockItemsInCategories, itemsFromOptions, isStockLoading, onRentClick, onOptionSelected } = this.props;
 
     const headerNamesItems = ["Name", "Availiable amount" ,"Requiered amount", "Needs to be rented"]
     const fieldsToShow = ["item_name", "avaliable_amount", "required_amount", "need_to_be_rented"]
 
     const isModalOpen = stockAvalityProblems.length != 0
 
-
     const title = isStockLoading ? "Looking for problems" : "Some items are not avaliable"
+
 
     return (
       <div>
 
-        <Form type='horizontal'>
-          {
-            configuration.category_set.category_entities.map( (entity) => {
-                return  <Picklist label={entity.category.name} key={entity.id}>
-                          <PicklistItem value='1' onClick={ () => console.log("selected") }>Picklist Item One</PicklistItem>
-                          <PicklistItem value='2'>Picklist Item Two</PicklistItem>
-                        </Picklist>
-            })
-          }
-        </Form>
+        <PickListWrapper
+          stockItemsInCategories={ stockItemsInCategories }
+          onOptionSelected={ onOptionSelected }
+          selectedOptions= {itemsFromOptions }
+        />
 
         <ModalWrapper
           title={ title }

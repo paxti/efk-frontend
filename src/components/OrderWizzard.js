@@ -34,7 +34,10 @@ class OrderWizzard extends React.Component {
       stockAvalityProblems: [],
       isStockLoading: true,
       rentals: [],
-      reservedFromInventory: []
+      reservedFromInventory: [],
+      stockItemsInCategories: [],
+      itemsFromOptions: []
+
     }
     this.onChange = this.onChange.bind(this);
     this.onEventChange = this.onEventChange.bind(this);
@@ -66,7 +69,9 @@ class OrderWizzard extends React.Component {
       stockAvalityProblems: OrderWizzardStore.getStockAvailabilityProblems(),
       isStockLoading: OrderWizzardStore.isStockLoading(),
       reservedFromInventory: OrderWizzardStore.getReservedFromInventor(),
-      rentals: OrderWizzardStore.getRentals()
+      rentals: OrderWizzardStore.getRentals(),
+      stockItemsInCategories: OrderWizzardStore.getStockItemsForCategory(),
+      itemsFromOptions: OrderWizzardStore.getItemsFromOptions()
     });
   }
 
@@ -110,6 +115,10 @@ class OrderWizzard extends React.Component {
     OrderWizzardActions.rentNecessary(stockAvalityProblems)
   }
 
+  onOptionSelected(categoryId, item){
+    OrderWizzardActions.addItemFromOptions(categoryId, item)
+  }
+
 
   render() {
 
@@ -138,6 +147,9 @@ class OrderWizzard extends React.Component {
         stockAvalityProblems={ this.state.stockAvalityProblems }
         isStockLoading={ this.state.isStockLoading }
         onRentClick={ this.onRentClick }
+        stockItemsInCategories={ this.state.stockItemsInCategories }
+        itemsFromOptions={this.state.itemsFromOptions}
+        onOptionSelected={ this.onOptionSelected }
       />
     },
     {name: 'Rental', component: <Home content="Step 4" />},
@@ -158,7 +170,8 @@ class OrderWizzard extends React.Component {
             selectedEvent={ this.state.selectedEvent }
             selectedConfiguration={ this.state.configurationDetails}
             rentals={ this.state.rentals }
-            reservedFromInventory={ this.state.reservedFromInventory } />
+            reservedFromInventory={ this.state.reservedFromInventory }
+            selectedOptions={ this.state.itemsFromOptions } />
         </Col>
       </Row>
     </Grid>
