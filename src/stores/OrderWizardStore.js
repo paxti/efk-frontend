@@ -1,7 +1,7 @@
 'use strict';
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
-import OrderWizzardConstants from '../constants/OrderWizzardConstants';
+import OrderWizardConstants from '../constants/OrderWizardConstants';
 import Constants from '../constants/Constants';
 import { EventEmitter } from 'events';
 
@@ -183,7 +183,7 @@ function combineBySfid(options, inventory){
 }
 
 
-class OrderWizzardStoreClass extends EventEmitter {
+class OrderWizardStoreClass extends EventEmitter {
 
   emitChange() {
     this.emit(CHANGE_EVENT);
@@ -284,97 +284,97 @@ class OrderWizzardStoreClass extends EventEmitter {
 
 }
 
-const OrderWizzardStore = new OrderWizzardStoreClass();
+const OrderWizardStore = new OrderWizardStoreClass();
 
-OrderWizzardStore.dispatchToken = AppDispatcher.register(action => {
+OrderWizardStore.dispatchToken = AppDispatcher.register(action => {
 
   switch(action.actionType) {
-    case OrderWizzardConstants.ORDER_WIZZARD_SELECT_EVENT:
+    case OrderWizardConstants.ORDER_Wizard_SELECT_EVENT:
       setSelectedEvent(action.selectedEvent);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZARD_RECIVE_CONFIGURATION_DETAILS:
+    case OrderWizardConstants.ORDER_WIZARD_RECIVE_CONFIGURATION_DETAILS:
       emptySelection();
       setSelectedConfiguration(action.selectedConfiguration);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_REMOVE_SELECT_EVENT:
+    case OrderWizardConstants.ORDER_Wizard_REMOVE_SELECT_EVENT:
       setSelectedEvent(null);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_ADD_TO_RENTED:
+    case OrderWizardConstants.ORDER_Wizard_ADD_TO_RENTED:
       addToRented(action.entity, action.amount);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_REMOVE_FROM_RENTED:
+    case OrderWizardConstants.ORDER_Wizard_REMOVE_FROM_RENTED:
       removeFreomRented(action.entity);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.RECIEVE_ORDER_PROBLEMS:
+    case OrderWizardConstants.RECIEVE_ORDER_PROBLEMS:
       setOrderProblems(action.stockAvailability);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_CHECK_AVAILABILITY:
+    case OrderWizardConstants.ORDER_Wizard_CHECK_AVAILABILITY:
       setStockLoadingStatus(action.showLoading);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_CHECK_AVAILABILITY_SUCCESS:
+    case OrderWizardConstants.ORDER_Wizard_CHECK_AVAILABILITY_SUCCESS:
       setStockLoadingStatus(false);
       setOrderProblems(action.stockAvailability);
       setReservedFromInventory(action.stockAvailability);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_RENT_NECESSARY:
+    case OrderWizardConstants.ORDER_Wizard_RENT_NECESSARY:
       setNecessaryToRent(action.stockAvalityProblems);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_CATEGORY_ALL_STOCK_ITEM:
+    case OrderWizardConstants.ORDER_Wizard_CATEGORY_ALL_STOCK_ITEM:
       addStockItemsByCategories(action.categoryStockItems, action.categoryId, action.categoryName);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_SELECTED_OPTION:
+    case OrderWizardConstants.ORDER_Wizard_SELECTED_OPTION:
       addFromOption(action.option);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_RENTAL_FILTER:
+    case OrderWizardConstants.ORDER_Wizard_RENTAL_FILTER:
       setRentalFilter(action.filter);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZARD_RECIVE_CATEGORIES_FOR_STOCK:
+    case OrderWizardConstants.ORDER_WIZARD_RECIVE_CATEGORIES_FOR_STOCK:
       setCategoriesForStock(action.categories);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_CATEGORY_STOCK_ITEM:
+    case OrderWizardConstants.ORDER_Wizard_CATEGORY_STOCK_ITEM:
       setStockItemsInCategory(action.stockItems);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_RENTAL_MODAL_STATE:
+    case OrderWizardConstants.ORDER_Wizard_RENTAL_MODAL_STATE:
       setRentalModalState(action.state, action.objectInModal);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_UPDATE_RENTAL_MODAL_STATE:
+    case OrderWizardConstants.ORDER_Wizard_UPDATE_RENTAL_MODAL_STATE:
       updateRentalModalState(action.object);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
-    case OrderWizzardConstants.ORDER_WIZZARD_UPDATE_RESERVED_FROM_INVENTORY:
+    case OrderWizardConstants.ORDER_Wizard_UPDATE_RESERVED_FROM_INVENTORY:
       updateReservedFromInventory(action.reservedObject);
-      OrderWizzardStore.emitChange();
+      OrderWizardStore.emitChange();
       break
 
     default:
@@ -382,4 +382,4 @@ OrderWizzardStore.dispatchToken = AppDispatcher.register(action => {
 
 });
 
-export default OrderWizzardStore;
+export default OrderWizardStore;

@@ -2,19 +2,19 @@
 
 import React from 'react';
 
-import OrderWizzardActions from '../actions/OrderWizzardActions'
+import OrderWizardActions from '../actions/OrderWizardActions'
 
 import StandartTableWrapper from '../components/StandartTableWrapper'
 import ModalWrapper from '../components/ModalWrapper'
 import PickListWrapper from '../components/PickListWrapper'
 
-import styles from '../styles/OrderWizzardConfigurationDetails.css'
+import styles from '../styles/OrderWizardConfigurationDetails.css'
 
-class OrderWizzardConfigurationDetails extends React.Component {
+class OrderWizardConfigurationDetails extends React.Component {
 
   componentDidMount() {
-    OrderWizzardActions.checkAvailability(this.props.configuration, this.props.selectedEvent);
-    OrderWizzardActions.fetchAllStockItemForCategory(this.props.configuration.category_set.category_entities);
+    OrderWizardActions.checkAvailability(this.props.configuration, this.props.selectedEvent);
+    OrderWizardActions.fetchAllStockItemForCategory(this.props.configuration.category_set.category_entities);
   }
 
   render() {
@@ -62,4 +62,4 @@ class OrderWizzardConfigurationDetails extends React.Component {
   }
 }
 
-export default OrderWizzardConfigurationDetails;
+export default OrderWizardConfigurationDetails;

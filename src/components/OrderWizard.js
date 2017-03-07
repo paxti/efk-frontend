@@ -3,25 +3,25 @@
 import React from 'react';
 import Stepzilla from 'react-stepzilla'
 
-import OrderWizzardEvent from './OrderWizzardEvent'
-import OrderWizzardConfiguration from '../components/OrderWizzardConfiguration'
-import OrderWizzardConfigurationDetails from '../components/OrderWizzardConfigurationDetails'
-import OrderWizzardSidebar from '../components/OrderWizzardSidebar'
+import OrderWizardEvent from './OrderWizardEvent'
+import OrderWizardConfiguration from '../components/OrderWizardConfiguration'
+import OrderWizardConfigurationDetails from '../components/OrderWizardConfigurationDetails'
+import OrderWizardSidebar from '../components/OrderWizardSidebar'
 import Navigation from '../components/Navigation'
 import StandartTableWrapper from '../components/StandartTableWrapper'
-import OrderWizzardRentalTable from '../components/OrderWizzardRentalTable'
-import OrderWizzardReview from '../components/OrderWizzardReview'
+import OrderWizardRentalTable from '../components/OrderWizardRentalTable'
+import OrderWizardReview from '../components/OrderWizardReview'
 import ConfigurationDetails from '../components/ConfigurationDetails'
 import EventDetails from '../components/EventDetails'
 
 import MasterDetails from '../components/MasterDetails'
 import MasterDetailsEmpty from '../components/MasterDetailsEmpty'
 
-import OrderWizzardStore from '../stores/OrderWizzardStore'
+import OrderWizardStore from '../stores/OrderWizardStore'
 import EventStore from '../stores/EventStore'
 import ConfigurationStore from '../stores/ConfigurationStore'
 
-import OrderWizzardActions from '../actions/OrderWizzardActions'
+import OrderWizardActions from '../actions/OrderWizardActions'
 import EventActions from '../actions/EventActions'
 import ConfigurationActions from '../actions/ConfigurationActions'
 import OrderActions from '../actions/OrderActions'
@@ -30,7 +30,7 @@ import {
   Col, Row, Grid, Lookup, Form, FieldSet, Button
 } from 'react-lightning-design-system';
 
-class OrderWizzard extends React.Component {
+class OrderWizard extends React.Component {
 
   constructor() {
     super();
@@ -68,7 +68,7 @@ class OrderWizzard extends React.Component {
    */
 
   componentWillMount() {
-    OrderWizzardStore.addChangeListener(this.onChange);
+    OrderWizardStore.addChangeListener(this.onChange);
     EventStore.addChangeListener(this.onEventChange);
     ConfigurationStore.addChangeListener(this.onConfigurationChange);
   }
@@ -80,35 +80,35 @@ class OrderWizzard extends React.Component {
     /**
      * TODO: Finde better place
      */
-    OrderWizzardActions.fetchCategoriesForStock();
+    OrderWizardActions.fetchCategoriesForStock();
   }
 
   componentWillUnmount() {
-    OrderWizzardStore.removeChangeListener(this.onChange);
+    OrderWizardStore.removeChangeListener(this.onChange);
     EventStore.removeChangeListener(this.onEventChange);
     ConfigurationStore.removeChangeListener(this.onConfigurationChange);
   }
 
   onChange() {
     this.setState({
-      selectedEvent: OrderWizzardStore.getSelectedEvent(),
-      configurationDetails: OrderWizzardStore.getSelectedConfiguration(),
-      stockAvailability: OrderWizzardStore.getStockAvailability(),
-      stockAvalityProblems: OrderWizzardStore.getStockAvailabilityProblems(),
-      isStockLoading: OrderWizzardStore.isStockLoading(),
-      reservedFromInventory: OrderWizzardStore.getReservedFromInventor(),
-      rentals: OrderWizzardStore.getRentals(),
-      stockItemsInCategories: OrderWizzardStore.getStockItemsForCategory(),
-      itemsFromOptions: OrderWizzardStore.getItemsFromOptions(),
-      renatalFilter: OrderWizzardStore.getRentalFilter(),
-      stockItems: OrderWizzardStore.getStockItemsForCategory(),
-      categoriesForStock: OrderWizzardStore.getCategoriesForStock(),
-      stockItemsInCategory: OrderWizzardStore.getStocItemsInCategory(),
-      rentalModal: OrderWizzardStore.getRentalModalState(),
-      rentalModalObject: OrderWizzardStore.getRentalModalObject(),
-      allRentals: OrderWizzardStore.getAllFromRental(),
-      allReserved: OrderWizzardStore.getAllFromInventory(),
-      allEntitiesForNewOrder: OrderWizzardStore.getAllEntitiesForOrder()
+      selectedEvent: OrderWizardStore.getSelectedEvent(),
+      configurationDetails: OrderWizardStore.getSelectedConfiguration(),
+      stockAvailability: OrderWizardStore.getStockAvailability(),
+      stockAvalityProblems: OrderWizardStore.getStockAvailabilityProblems(),
+      isStockLoading: OrderWizardStore.isStockLoading(),
+      reservedFromInventory: OrderWizardStore.getReservedFromInventor(),
+      rentals: OrderWizardStore.getRentals(),
+      stockItemsInCategories: OrderWizardStore.getStockItemsForCategory(),
+      itemsFromOptions: OrderWizardStore.getItemsFromOptions(),
+      renatalFilter: OrderWizardStore.getRentalFilter(),
+      stockItems: OrderWizardStore.getStockItemsForCategory(),
+      categoriesForStock: OrderWizardStore.getCategoriesForStock(),
+      stockItemsInCategory: OrderWizardStore.getStocItemsInCategory(),
+      rentalModal: OrderWizardStore.getRentalModalState(),
+      rentalModalObject: OrderWizardStore.getRentalModalObject(),
+      allRentals: OrderWizardStore.getAllFromRental(),
+      allReserved: OrderWizardStore.getAllFromInventory(),
+      allEntitiesForNewOrder: OrderWizardStore.getAllEntitiesForOrder()
     });
   }
 
@@ -133,7 +133,7 @@ class OrderWizzard extends React.Component {
    */
 
   onEventSelect(selectedEvent){
-    OrderWizzardActions.setEvent(selectedEvent)
+    OrderWizardActions.setEvent(selectedEvent)
   }
 
   /**
@@ -141,7 +141,7 @@ class OrderWizzard extends React.Component {
    */
 
   onConfigurationSelect(selectedConfiguration, selectedEvent){
-    OrderWizzardActions.setConfiguration(selectedConfiguration, selectedEvent);
+    OrderWizardActions.setConfiguration(selectedConfiguration, selectedEvent);
   }
 
   /**
@@ -149,35 +149,35 @@ class OrderWizzard extends React.Component {
    */
 
   onRentClick(stockAvalityProblems){
-    OrderWizzardActions.rentNecessary(stockAvalityProblems)
+    OrderWizardActions.rentNecessary(stockAvalityProblems)
   }
 
   onOptionSelected(option){
-    OrderWizzardActions.addItemFromOptions(option)
+    OrderWizardActions.addItemFromOptions(option)
   }
 
   onChangeRentailFilter(filter){
-    OrderWizzardActions.setRentalFilter(filter);
-    OrderWizzardActions.fetchStockItemForCategory(filter);
+    OrderWizardActions.setRentalFilter(filter);
+    OrderWizardActions.fetchStockItemForCategory(filter);
   }
 
   onRentShowModal(entity){
-    OrderWizzardActions.setRentalModelState(true, entity);
+    OrderWizardActions.setRentalModelState(true, entity);
   }
 
   onRentalModalHide(){
-    OrderWizzardActions.setRentalModelState(false);
+    OrderWizardActions.setRentalModelState(false);
   }
 
   onRentalModalObjectUpdate(event){
     let obj = {};
     obj[event.target.id] = event.target.value
-    OrderWizzardActions.updateCurrentRentalModalObject(obj);
+    OrderWizardActions.updateCurrentRentalModalObject(obj);
     event.preventDefault();
   }
 
   onAddToRent(reservedObject){
-    OrderWizzardActions.updateReservedFromInventory(reservedObject);
+    OrderWizardActions.updateReservedFromInventory(reservedObject);
   }
 
   putNewOrder(event, configuration, entities){
@@ -200,7 +200,7 @@ class OrderWizzard extends React.Component {
     const steps = [
       {
         name: 'Select event', component: <MasterDetailsEmpty
-          sidebar={<OrderWizzardSidebar
+          sidebar={<OrderWizardSidebar
             selectedEvent={ this.state.selectedEvent }
             selectedConfiguration={ this.state.configurationDetails}
             rentals={ this.state.rentals }
@@ -208,7 +208,7 @@ class OrderWizzard extends React.Component {
             selectedOptions={ this.state.itemsFromOptions } />
           }>
 
-          <OrderWizzardEvent
+          <OrderWizardEvent
              onEventSelect={ this.onEventSelect }
              selectedEvent={ this.state.selectedEvent }
              events={ this.state.events }
@@ -219,7 +219,7 @@ class OrderWizzard extends React.Component {
       {
         name: 'Select configuration',
         component: <MasterDetailsEmpty
-          sidebar={<OrderWizzardSidebar
+          sidebar={<OrderWizardSidebar
             selectedEvent={ this.state.selectedEvent }
             selectedConfiguration={ this.state.configurationDetails}
             rentals={ this.state.rentals }
@@ -227,7 +227,7 @@ class OrderWizzard extends React.Component {
             selectedOptions={ this.state.itemsFromOptions } />
           }>
 
-          <OrderWizzardConfiguration
+          <OrderWizardConfiguration
             configurations={ this.state.configurations }
             setSelectedEvent={ this.state.selectedEvent }
             onShowDetails={ this.onShowDetails }
@@ -239,7 +239,7 @@ class OrderWizzard extends React.Component {
     {
       name: 'Configuration availability',
       component: <MasterDetailsEmpty
-        sidebar={<OrderWizzardSidebar
+        sidebar={<OrderWizardSidebar
           selectedEvent={ this.state.selectedEvent }
           selectedConfiguration={ this.state.configurationDetails}
           rentals={ this.state.rentals }
@@ -247,7 +247,7 @@ class OrderWizzard extends React.Component {
           selectedOptions={ this.state.itemsFromOptions } />
         }>
 
-        <OrderWizzardConfigurationDetails
+        <OrderWizardConfigurationDetails
           configuration={this.state.configurationDetails}
           selectedEvent={ this.state.selectedEvent }
           stockAvalityProblems={ this.state.stockAvalityProblems }
@@ -271,7 +271,7 @@ class OrderWizzard extends React.Component {
            names={ this.state.categoriesForStock }
            onChangeFilter={ this.onChangeRentailFilter }
         />}
-        sidebar={<OrderWizzardSidebar
+        sidebar={<OrderWizardSidebar
           selectedEvent={ this.state.selectedEvent }
           selectedConfiguration={ this.state.configurationDetails}
           rentals={ this.state.rentals }
@@ -279,7 +279,7 @@ class OrderWizzard extends React.Component {
           selectedOptions={ this.state.itemsFromOptions } />
         }>
 
-        <OrderWizzardRentalTable
+        <OrderWizardRentalTable
           data={ this.state.stockItemsInCategory }
           reservedFromInventory={ this.state.reservedFromInventory }
           rentalModalObject={ this.state.rentalModalObject }
@@ -294,7 +294,7 @@ class OrderWizzard extends React.Component {
     },
     {
       name: 'Review',
-      component: <OrderWizzardReview
+      component: <OrderWizardReview
         allEntities={ this.state.allEntitiesForNewOrder }
         rentals={ this.state.allRentals }
         inventory={ this.state.allReserved }
@@ -313,4 +313,4 @@ class OrderWizzard extends React.Component {
 }
 
 
-export default OrderWizzard;
+export default OrderWizard;

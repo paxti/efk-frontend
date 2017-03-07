@@ -14,7 +14,7 @@ import styles from '../styles/StandartTableWrapper.css'
 
 
 
-class OrderWizzardRentalTable extends React.Component {
+class OrderWizardRentalTable extends React.Component {
 
   constructor() {
     super();
@@ -100,4 +100,4 @@ class OrderWizzardRentalTable extends React.Component {
   }
 }
 
-export default OrderWizzardRentalTable;
+export default OrderWizardRentalTable;

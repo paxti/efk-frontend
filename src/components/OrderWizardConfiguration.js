@@ -6,9 +6,9 @@ import {
   Col, Row, Grid, Lookup, Form, FieldSet, Button, MediaObject
 } from 'react-lightning-design-system';
 
-import styles from '../styles/OrderWizzardConfiguration.css'
+import styles from '../styles/OrderWizardConfiguration.css'
 
-class OrderWizzardConfiguration extends React.Component {
+class OrderWizardConfiguration extends React.Component {
 
   render() {
 
@@ -49,4 +49,4 @@ class OrderWizzardConfiguration extends React.Component {
   }
 }
 
-export default OrderWizzardConfiguration;
+export default OrderWizardConfiguration;

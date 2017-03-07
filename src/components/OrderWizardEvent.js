@@ -6,9 +6,9 @@ import {
   Col, Row, Grid, Lookup, Form, FieldSet, Button
 } from 'react-lightning-design-system';
 
-import styles from '../styles/OrderWizzardEvent.css'
+import styles from '../styles/OrderWizardEvent.css'
 
-class OrderWizzardEvent extends React.Component {
+class OrderWizardEvent extends React.Component {
   render() {
 
     const { selectedEvent, events, onEventSelect } = this.props;
@@ -38,4 +38,4 @@ class OrderWizzardEvent extends React.Component {
   }
 }
 
-export default OrderWizzardEvent;
+export default OrderWizardEvent;

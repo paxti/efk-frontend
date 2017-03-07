@@ -4,12 +4,12 @@ import React from 'react';
 
 import { Grid, Row, Col } from 'react-lightning-design-system'
 
-import OrderWizzardActions from '../actions/OrderWizzardActions'
+import OrderWizardActions from '../actions/OrderWizardActions'
 
 class MasterDetails extends React.Component {
 
   componentDidMount() {
-    OrderWizzardActions.fetchStockItemForCategory(this.props.filterId);
+    OrderWizardActions.fetchStockItemForCategory(this.props.filterId);
   }
 
   render() {

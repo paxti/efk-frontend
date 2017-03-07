@@ -2,14 +2,14 @@
 
 import AppDispatcher from '../dispatchers/AppDispatcher.js';
 import Constants from '../constants/Constants'
-import OrderWizzardConstants from '../constants/OrderWizzardConstants'
+import OrderWizardConstants from '../constants/OrderWizardConstants'
 import ClientAPI from '../utils/ClientAPI';
 
 const Actions = {
 
   setEvent: (selectedEvent) => {
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_SELECT_EVENT,
+      actionType: OrderWizardConstants.ORDER_Wizard_SELECT_EVENT,
       selectedEvent: selectedEvent
     });
   },
@@ -19,7 +19,7 @@ const Actions = {
       .sendGetRequest('/stock_items/categories/')
       .then(categories => {
         AppDispatcher.dispatch({
-          actionType: OrderWizzardConstants.ORDER_WIZARD_RECIVE_CATEGORIES_FOR_STOCK,
+          actionType: OrderWizardConstants.ORDER_WIZARD_RECIVE_CATEGORIES_FOR_STOCK,
           categories: categories
         });
       })
@@ -36,7 +36,7 @@ const Actions = {
       .sendGetRequest('/configurations/' + selectedConfiguration.id)
       .then(configuration => {
         AppDispatcher.dispatch({
-          actionType: OrderWizzardConstants.ORDER_WIZARD_RECIVE_CONFIGURATION_DETAILS,
+          actionType: OrderWizardConstants.ORDER_WIZARD_RECIVE_CONFIGURATION_DETAILS,
           selectedConfiguration: configuration
         });
       })
@@ -57,7 +57,7 @@ const Actions = {
       .sendGetRequest('/stock_items/', filter)
       .then(stockItems => {
         AppDispatcher.dispatch({
-          actionType: OrderWizzardConstants.ORDER_WIZZARD_CATEGORY_STOCK_ITEM,
+          actionType: OrderWizardConstants.ORDER_Wizard_CATEGORY_STOCK_ITEM,
           stockItems: stockItems,
 
         });
@@ -76,7 +76,7 @@ const Actions = {
         .sendGetRequest('/stock_items/', {category_id: entity.category.id})
         .then(categoryStockItems => {
           AppDispatcher.dispatch({
-            actionType: OrderWizzardConstants.ORDER_WIZZARD_CATEGORY_ALL_STOCK_ITEM,
+            actionType: OrderWizardConstants.ORDER_Wizard_CATEGORY_ALL_STOCK_ITEM,
             categoryStockItems: categoryStockItems,
             categoryId: entity.category.id,
             categoryName: entity.category.name
@@ -94,7 +94,7 @@ const Actions = {
   checkAvailability: (configuration, selectedEvent) => {
 
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_CHECK_AVAILABILITY,
+      actionType: OrderWizardConstants.ORDER_Wizard_CHECK_AVAILABILITY,
       show_loading: true
     });
 
@@ -102,13 +102,13 @@ const Actions = {
       .sendGetRequest('/boms/' + configuration.bom.id + '/stock?event_id=' + selectedEvent.id)
       .then(stockAvailability => {
         AppDispatcher.dispatch({
-          actionType: OrderWizzardConstants.ORDER_WIZZARD_CHECK_AVAILABILITY_SUCCESS,
+          actionType: OrderWizardConstants.ORDER_Wizard_CHECK_AVAILABILITY_SUCCESS,
           stockAvailability: stockAvailability
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: Constants.ORDER_WIZZARD_CHECK_AVAILABILITY_ERROR,
+          actionType: Constants.ORDER_Wizard_CHECK_AVAILABILITY_ERROR,
           message: message
         });
       });
@@ -116,28 +116,28 @@ const Actions = {
 
   addItemFromOptions: (option) => {
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_SELECTED_OPTION,
+      actionType: OrderWizardConstants.ORDER_Wizard_SELECTED_OPTION,
       option: option
     });
   },
 
   rentNecessary: (stockAvalityProblems) => {
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_RENT_NECESSARY,
+      actionType: OrderWizardConstants.ORDER_Wizard_RENT_NECESSARY,
       stockAvalityProblems: stockAvalityProblems
     });
   },
 
   setRentalFilter: (rentalFilter) => {
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_RENTAL_FILTER,
+      actionType: OrderWizardConstants.ORDER_Wizard_RENTAL_FILTER,
       filter: rentalFilter
     });
   },
 
   setRentalModelState: (state, entity = {}) => {
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_RENTAL_MODAL_STATE,
+      actionType: OrderWizardConstants.ORDER_Wizard_RENTAL_MODAL_STATE,
       state: state,
       objectInModal: entity
     });
@@ -145,21 +145,21 @@ const Actions = {
 
   updateCurrentRentalModalObject: (object) => {
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_UPDATE_RENTAL_MODAL_STATE,
+      actionType: OrderWizardConstants.ORDER_Wizard_UPDATE_RENTAL_MODAL_STATE,
       object: object
     });
   },
 
   updateReservedFromInventory: (reservedObject) => {
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_UPDATE_RESERVED_FROM_INVENTORY,
+      actionType: OrderWizardConstants.ORDER_Wizard_UPDATE_RESERVED_FROM_INVENTORY,
       reservedObject: reservedObject
     });
   },
 
   removeEvent: () => {
     AppDispatcher.dispatch({
-      actionType: OrderWizzardConstants.ORDER_WIZZARD_REMOVE_SELECT_EVENT
+      actionType: OrderWizardConstants.ORDER_Wizard_REMOVE_SELECT_EVENT
     });
   }
 };

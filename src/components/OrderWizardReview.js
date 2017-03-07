@@ -11,13 +11,13 @@ import {
 import PageHeaderWrapper from '../components/PageHeaderWrapper'
 import StandartTableWrapper from '../components/StandartTableWrapper'
 
-import styles from '../styles/OrderWizzardReview.css'
+import styles from '../styles/OrderWizardReview.css'
 
 /**
- * OrderWizzardReview component
+ * OrderWizardReview component
  */
 
-class OrderWizzardReview extends React.Component {
+class OrderWizardReview extends React.Component {
 
 
   render() {
@@ -67,4 +67,4 @@ class OrderWizzardReview extends React.Component {
   }
 }
 
-export default OrderWizzardReview;
+export default OrderWizardReview;

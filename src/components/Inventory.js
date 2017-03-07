@@ -5,8 +5,8 @@ import React from 'react'
 import StockItemActions from '../actions/StockItemActions';
 import StockItemStore from '../stores/StockItemStore';
 
-import OrderWizzardActions from '../actions/OrderWizzardActions'
-import OrderWizzardStore from '../stores/OrderWizzardStore'
+import OrderWizardActions from '../actions/OrderWizardActions'
+import OrderWizardStore from '../stores/OrderWizardStore'
 
 import PageHeaderWrapper from './PageHeaderWrapper'
 import StandartTableWrapper from './StandartTableWrapper'
@@ -30,21 +30,21 @@ class Inventory extends React.Component {
   }
 
   componentWillMount() {
-    OrderWizzardStore.addChangeListener(this.onChange);
+    OrderWizardStore.addChangeListener(this.onChange);
   }
 
   componentDidMount() {
-    OrderWizzardActions.fetchCategoriesForStock();
+    OrderWizardActions.fetchCategoriesForStock();
   }
 
   componentWillUnmount() {
-    OrderWizzardStore.removeChangeListener(this.onChange);
+    OrderWizardStore.removeChangeListener(this.onChange);
   }
 
   onChange() {
     this.setState({
-      stockItems: OrderWizzardStore.getStocItemsInCategory(),
-      categoriesForStock: OrderWizzardStore.getCategoriesForStock(),
+      stockItems: OrderWizardStore.getStocItemsInCategory(),
+      categoriesForStock: OrderWizardStore.getCategoriesForStock(),
     });
   }
 
@@ -55,8 +55,8 @@ class Inventory extends React.Component {
   }
 
   onChangeRentailFilter(filter){
-    OrderWizzardActions.setRentalFilter(filter);
-    OrderWizzardActions.fetchStockItemForCategory(filter);
+    OrderWizardActions.setRentalFilter(filter);
+    OrderWizardActions.fetchStockItemForCategory(filter);
   }
 
   render() {

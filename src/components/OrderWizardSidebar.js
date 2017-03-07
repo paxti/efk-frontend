@@ -2,9 +2,9 @@
 
 import React from 'react';
 
-import styles from '../styles/OrderWizzardSidebar.css'
+import styles from '../styles/OrderWizardSidebar.css'
 
-class OrderWizzardSidebar extends React.Component {
+class OrderWizardSidebar extends React.Component {
   render() {
 
     const { selectedEvent, selectedConfiguration, reservedFromInventory, rentals, selectedOptions} = this.props;
@@ -33,4 +33,4 @@ class OrderWizzardSidebar extends React.Component {
   }
 }
 
-export default OrderWizzardSidebar;
+export default OrderWizardSidebar;
