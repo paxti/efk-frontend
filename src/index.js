@@ -9,8 +9,12 @@ import LoginStore from './stores/LoginStore';
 const auth = new AuthService('Nixjergdebr8vH7eRYni7MXK3gQSKtTK', 'gatewayexhibits.auth0.com');
 
 const requireAuth = (nextState, replace) => {
+
+  console.log("require login");
+
   if (!auth.loggedIn()) {
-    replace({ pathname: '/login' })
+    auth.logout();
+    replace({ pathname: '/login' });
   }
 }
 
@@ -44,14 +48,14 @@ ReactDOM.render(
       <IndexRedirect to="/login" />
       <Route path="/login" component={Login} />
       <Route path="/home" component={MainApp}>
-        <Route path="/home/dashboard" component={Dashboard} />
-        <Route path="/home/make-order" component={OrderWizard} />
-        <Route path="/home/configurations" component={Configurations} />
-        <Route path="/home/orders">
-           <IndexRoute component={Orders}/>
+        <Route path="/home/dashboard" component={Dashboard} onEnter={requireAuth} />
+        <Route path="/home/make-order" component={OrderWizard} onEnter={requireAuth} />
+        <Route path="/home/configurations" component={Configurations} onEnter={requireAuth} />
+        <Route path="/home/orders" onEnter={requireAuth} >
+           <IndexRoute component={Orders} />
            <Route path=":orderId" component={OrderDetails} />
         </Route>
-        <Route path="/home/inventory" component={Inventory} />
+        <Route path="/home/inventory" component={Inventory} onEnter={requireAuth} />
       </Route>
     </Route>
   </Router>

@@ -2,6 +2,7 @@
 
 import React, { PropTypes as T } from 'react'
 import { EventEmitter } from 'events'
+import { isTokenExpired } from './jwtHelper'
 import auth0 from 'auth0-js'
 import LoginStore from '../stores/LoginStore'
 import LoginActions from '../actions/LoginActions'
@@ -34,29 +35,6 @@ export default class AuthService extends EventEmitter {
       if (authResult && authResult.idToken && authResult.accessToken){
         LoginActions.loginUser( authResult.idToken, authResult.accessToken);
         browserHistory.replace('/home/dashboard');
-      }
-    })
-  }
-
-  parseHash(hash) {
-    this.auth0.parseHash({ hash }, (err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        this.setToken(authResult.accessToken, authResult.idToken)
-
-        console.log("Step 1")
-
-        this.auth0.client.userInfo(authResult.accessToken, (error, profile) => {
-          if (error) {
-            console.log('Error loading the Profile', error)
-          } else {
-            // this.setProfile(profile);
-            console.log("sdfsdfsdfsd")
-            // console.log(profile)
-          }
-        })
-        // browserHistory.replace('/home/dashboard')
-      } else if (authResult && authResult.error) {
-        alert('Error: ' + authResult.error)
       }
     })
   }
