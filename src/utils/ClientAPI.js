@@ -18,6 +18,19 @@ export default {
           resolve(JSON.parse(response.text));
         })
     });
+  },
+
+  sendPostRequest: (url, payload) => {
+    return new Promise((resolve, reject) => {
+      request
+        .post(basePath + url)
+        .send(payload)
+        .set('Authorization', 'Bearer ' + LoginStore.getJwt())
+        .end((err, response) => {
+          if (err) reject(err);
+          resolve(JSON.parse(response.text));
+        })
+    });
   }
 
 }

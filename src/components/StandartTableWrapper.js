@@ -8,16 +8,20 @@ import {
 
 import styles from '../styles/StandartTableWrapper.css'
 
+function getValueByDotNotation(obj, path) {
+ return new Function('_', 'return _.' + path)(obj);
+}
+
 class StandartTableWrapper extends React.Component {
   render() {
 
     const { headers, data, fields } = this.props;
-
+    
     return (
       <Table bordered>
         <TableHeader>
           <TableRow>
-            { headers.map( (name, id) => <TableHeaderColumn key={ id }>{ name }</TableHeaderColumn>) }
+            { headers.map( (name, id) => <TableHeaderColumn key={ 'h' + id }>{ name }</TableHeaderColumn>) }
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -26,7 +30,7 @@ class StandartTableWrapper extends React.Component {
              <TableRow key={ dataId }>
                {
                  fields.map( (field, fieldId) => (
-                   <TableRowColumn key={ fieldId }>{entity[field]}</TableRowColumn>
+                   <TableRowColumn key={ dataId + '.' + fieldId }>{ getValueByDotNotation(entity, field) }</TableRowColumn>
                  ))
                }
              </TableRow>

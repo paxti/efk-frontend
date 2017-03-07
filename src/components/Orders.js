@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import { Router, Route, Link, browserHistory } from 'react-router'
+
 import Sidebar from './Sidebar'
 import DataTable from './DataTable'
 import EventsBox from './EventsBox'
@@ -41,7 +43,7 @@ class Orders extends React.Component {
   }
 
   componentDidMount() {
-    OrderActions.recieveOrders();
+    OrderActions.fetchOrders();
   }
 
   componentWillUnmount() {
@@ -82,9 +84,10 @@ class Orders extends React.Component {
               <TableBody>
 
               {this.state.orders.map(function(order, index){
-                return <TableRow key={order["id"]}>
-                  <TableRowColumn>{order["sfid"]}</TableRowColumn>
-                  <TableRowColumn>{order["id"]}</TableRowColumn>
+                return <TableRow key={order.id}>
+                  <TableRowColumn>{order.sfid}</TableRowColumn>
+                  <TableRowColumn>{order.id}</TableRowColumn>
+                  <TableRowColumn><Link to={`/home/orders/${order.id}`}>Details</Link></TableRowColumn>
                 </TableRow>;
               })}
 
@@ -92,6 +95,7 @@ class Orders extends React.Component {
 
             </Table>
           </PageHeaderContainer>
+          {this.props.childre}
         </div>
         <div className="slds-col slds-large-size--4-of-12">
           <EventsBox />

@@ -52,7 +52,7 @@ OrderStore.dispatchToken = AppDispatcher.register(action => {
       break
 
     case OrderConstants.RECIEVE_ORDER:
-      setOrder(action.contact);
+      setOrder(action.order);
       OrderStore.emitChange();
       break
 

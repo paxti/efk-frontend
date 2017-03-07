@@ -9,9 +9,10 @@ import {
 import styles from '../styles/ModalWrapper.css'
 
 class ModalWrapper extends React.Component {
+
   render() {
 
-    const { children, title, isLoading, onClickOk, showing  } = this.props;
+    const { children, size, title, isLoading, onClickOk, showing, buttons  } = this.props;
 
     const { Header, Content, Footer } = Modal;
 
@@ -23,7 +24,7 @@ class ModalWrapper extends React.Component {
     return (
       <Modal
         opened={ showing }
-        size={ 'large' }
+        size={ size }
         >
         <Header title={ title } closeButton={ false } />
         <Content className={`${styles.min_height} slds-p-around--small slds-is-relative`}>
@@ -31,9 +32,16 @@ class ModalWrapper extends React.Component {
           {spinner}
         </Content>
         <Footer>
-          <Button type='brand' label='Contact sales representative' />
-          <Button type='neutral' label='Cancel' />
-          <Button type='brand' label='Rent' onClick={ () => onClickOk() } />
+          {
+            buttons.map( (button, index) => {
+              return <Button
+                key={index}
+                type={button.type}
+                label={button.label}
+                onClick={ () => button.onClick() }
+              />
+            })
+          }
         </Footer>
       </Modal>
     );

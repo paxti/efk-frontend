@@ -6,7 +6,7 @@ import ClientAPI from '../utils/ClientAPI';
 
 export default {
 
-  recieveConfigurations: () => {
+  receiveConfigurations: () => {
     ClientAPI
       .sendGetRequest('/configurations')
       .then(configurations => {

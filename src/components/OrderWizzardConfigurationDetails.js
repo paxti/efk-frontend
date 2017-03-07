@@ -14,7 +14,7 @@ class OrderWizzardConfigurationDetails extends React.Component {
 
   componentDidMount() {
     OrderWizzardActions.checkAvailability(this.props.configuration, this.props.selectedEvent);
-    OrderWizzardActions.fetchStockItemForCategory(this.props.configuration.category_set.category_entities);
+    OrderWizzardActions.fetchAllStockItemForCategory(this.props.configuration.category_set.category_entities);
   }
 
   render() {
@@ -28,6 +28,11 @@ class OrderWizzardConfigurationDetails extends React.Component {
 
     const title = isStockLoading ? "Looking for problems" : "Some items are not avaliable"
 
+    const buttons = [
+      {type: 'brand', label: 'Cancel', onClick: () => {}},
+      {type: 'brand', label: 'Ok', onClick: () => {}},
+      {type: 'brand', label: 'Rent', onClick: () => onRentClick(stockAvalityProblems) }
+    ]
 
     return (
       <div>
@@ -40,8 +45,9 @@ class OrderWizzardConfigurationDetails extends React.Component {
 
         <ModalWrapper
           title={ title }
+          size="large"
+          buttons={ buttons }
           isLoading={ isStockLoading }
-          onClickOk={ () => onRentClick(stockAvalityProblems) }
           showing={ isModalOpen }>
 
           <StandartTableWrapper

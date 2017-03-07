@@ -2,45 +2,79 @@
 
 import React from 'react'
 
-import Sidebar from './Sidebar'
-import DataTable from './DataTable'
-import EventsBox from './EventsBox'
-import PageHeaderContainer from './PageHeaderContainer'
+import ConfigurationActions from '../actions/ConfigurationActions';
+import ConfigurationStore from '../stores/ConfigurationStore';
 
-import {
-  PageHeader,
-  PageHeaderHeading,
-  PageHeaderHeadingTitle,
-  PageHeaderDetailLabel,
-  Icon, DropdownButton, MenuItem, Grid
-} from 'react-lightning-design-system'
+import PageHeaderWrapper from './PageHeaderWrapper'
+import StandartTableWrapper from './StandartTableWrapper'
+
+import { Grid, Row, Col } from 'react-lightning-design-system'
 
 import styles from '../styles/Configurations.css'
 
 class Configurations extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      configurations: []
+    }
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount() {
+    ConfigurationStore.addChangeListener(this.onChange);
+  }
+
+  componentDidMount() {
+    ConfigurationActions.receiveConfigurations();
+  }
+
+  componentWillUnmount() {
+    ConfigurationStore.removeChangeListener(this.onChange);
+  }
+
+  onChange() {
+    this.setState({
+      configurations: ConfigurationStore.getConfigurations()
+    });
+  }
+
   render() {
+
+    const headers = ["Name", "SFID" ];
+    const fieldsToShow = ["name", "sfid"];
+
+    const details = [{
+        label: "Total", title: "sd34234", text: "Total: " + " items"
+      }
+    ];
+
     return (
-      <div className="slds-grid slds-grid--vertical-stretch">
-        <div className="slds-col slds-large-size--2-of-12">
-          <Sidebar  />
-        </div>
-        <div className="slds-col slds-large-size--10-of-12">
-          <PageHeaderContainer
-            legend="Test legend"
-            header="Configurations"
-            info="some info here (3)">
-              <DataTable />
-            </PageHeaderContainer>
-        </div>
-      </div>
+      <Grid>
+        <Row cols={12}>
+          <Col cols={2} padded>
+
+          </Col>
+          <Col cols={6}>
+            <PageHeaderWrapper
+              legend={ "Configurations" }
+              title="Title"
+              detailItems={ details }
+            />
+            <StandartTableWrapper
+              fields={ fieldsToShow }
+              headers={ headers }
+              data={ this.state.configurations }
+            />
+          </Col>
+          <Col cols={4}>
+
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
-
-Configurations.displayName = 'Configurations';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default Configurations;

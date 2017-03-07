@@ -24,7 +24,8 @@ export default class AuthService extends EventEmitter {
       realm: 'Username-Password-Authentication',
       username,
       password,
-      scope: 'openid user_metadata'
+      audience: 'https://efk-1.herokuapp.com/',
+      scope: 'openid'
     }, (err, authResult) => {
       if (err) {
         alert('Error: ' + err.description)

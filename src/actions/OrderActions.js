@@ -6,7 +6,7 @@ import ClientAPI from '../utils/ClientAPI';
 
 export default {
 
-  recieveOrders: () => {
+  fetchOrders: () => {
     ClientAPI
       .sendGetRequest('/order_requests')
       .then(orders => {
@@ -23,7 +23,7 @@ export default {
       });
   },
 
-  getOrder: (id) => {
+  fetchOrder: (id) => {
     ClientAPI
     .sendGetRequest('/order_requests/' + id)
     .then(order => {
@@ -37,6 +37,20 @@ export default {
         actionType: OrderConstants.RECIEVE_ORDER_ERROR,
         message: message
       });
+    });
+  },
+
+  putOrder: (payload) => {
+    ClientAPI
+    .sendPostRequest('/order_requests', payload)
+    .then(orderRequest => {
+      AppDispatcher.dispatch({
+        actionType: OrderConstants.ORDER_POSTED,
+        orderRequest: orderRequest
+      });
+    })
+    .catch(message => {
+      console.log(message);
     });
   }
 }

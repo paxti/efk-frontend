@@ -21,7 +21,6 @@ const parseAuthHash = (nextState, replace) => {
 }
 
 import Main from './components/Main';
-import Home from './components/Home';
 import Login from './components/Login';
 import MainApp from './components/MainApp';
 import ThreeColumnsWrapper from './components/ThreeColumnsWrapper'
@@ -34,7 +33,9 @@ import Orders from './components/Orders'
 import Dashboard from './components/Dashboard'
 import Inventory from './components/Inventory'
 import Configurations from './components/Configurations'
+import OrderWrapper from './components/OrderWrapper'
 import OrderWizzard from './components/OrderWizzard'
+import OrderDetails from './components/OrderDetails'
 
 
 ReactDOM.render(
@@ -46,7 +47,10 @@ ReactDOM.render(
         <Route path="/home/dashboard" component={Dashboard} />
         <Route path="/home/make-order" component={OrderWizzard} />
         <Route path="/home/configurations" component={Configurations} />
-        <Route path="/home/orders" component={Orders} />
+        <Route path="/home/orders">
+           <IndexRoute component={Orders}/>
+           <Route path=":orderId" component={OrderDetails} />
+        </Route>
         <Route path="/home/inventory" component={Inventory} />
       </Route>
     </Route>
