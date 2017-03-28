@@ -6,10 +6,11 @@ import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
 
-function setUser(profile, token) {
+function setUser(profile, token, refreshToken) {
   if (!localStorage.getItem('id_token')) {
     localStorage.setItem('profile', JSON.stringify(profile));
     localStorage.setItem('id_token', token);
+    localStorage.setItem('refresh_token', refreshToken);
   }
 }
 
@@ -45,6 +46,10 @@ class LoginStoreClass extends EventEmitter {
   getJwt() {
     return localStorage.getItem('id_token');
   }
+
+  getRefreshToken() {
+    return localStorage.getItem('refresh_token');
+  }
 }
 
 const AuthStore = new LoginStoreClass();
@@ -54,7 +59,7 @@ AuthStore.dispatchToken = AppDispatcher.register(action => {
   switch(action.actionType) {
 
     case LoginActions.LOG_IN:
-      setUser(action.profile, action.token);
+      setUser(action.profile, action.token, action.refreshToken);
       AuthStore.emitChange();
       break
 

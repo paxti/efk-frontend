@@ -9,9 +9,6 @@ import LoginStore from './stores/LoginStore';
 const auth = new AuthService('Nixjergdebr8vH7eRYni7MXK3gQSKtTK', 'gatewayexhibits.auth0.com');
 
 const requireAuth = (nextState, replace) => {
-
-  console.log("require login");
-
   if (!auth.loggedIn()) {
     auth.logout();
     replace({ pathname: '/login' });

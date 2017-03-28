@@ -14,7 +14,8 @@ export default class AuthService extends EventEmitter {
 
     this.auth0 = new auth0.WebAuth({
       clientID: clientId,
-      domain: domain
+      domain: domain,
+      responseType: 'token id_token'
     })
 
     this.login = this.login.bind(this)
@@ -25,15 +26,15 @@ export default class AuthService extends EventEmitter {
       realm: 'Username-Password-Authentication',
       username,
       password,
-      audience: 'https://efk-1.herokuapp.com/',
-      scope: 'openid'
+      audience: 'https://gatewayexhibits.auth0.com/api/v2/',
+      scope: 'openid profile read:current_user offline_access',
     }, (err, authResult) => {
       if (err) {
         alert('Error: ' + err.description)
         return
       }
       if (authResult && authResult.idToken && authResult.accessToken){
-        LoginActions.loginUser( authResult.idToken, authResult.accessToken);
+        LoginActions.loginUser( authResult.idToken, authResult.accessToken, authResult.refreshToken );
         browserHistory.replace('/home/dashboard');
       }
     })
@@ -44,21 +45,6 @@ export default class AuthService extends EventEmitter {
     return !!token && !isTokenExpired(token)
   }
 
-  setToken(accessToken, idToken) {
-    localStorage.setItem('access_token', accessToken)
-    localStorage.setItem('id_token', idToken)
-  }
-
-  setProfile(profile) {
-    localStorage.setItem('profile', JSON.stringify(profile))
-    this.emit('profile_updated', profile)
-  }
-
-  getProfile() {
-    const profile = localStorage.getItem('profile')
-    return profile ? JSON.parse(localStorage.profile) : {}
-  }
-
   getToken() {
     return localStorage.getItem('id_token')
   }
@@ -66,6 +52,7 @@ export default class AuthService extends EventEmitter {
   logout() {
     localStorage.removeItem('id_token')
     localStorage.removeItem('profile')
+    localStorage.removeItem('refresh_token')
   }
 
 }

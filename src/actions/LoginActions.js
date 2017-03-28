@@ -5,12 +5,13 @@ import LoginActions from '../constants/LoginActions'
 
 const Actions = {
 
-  loginUser(profile, token) {
+  loginUser(profile, token, refreshToken) {
 
     AppDispatcher.dispatch({
       actionType: LoginActions.LOG_IN,
       token: token,
-      profile: profile
+      profile: profile,
+      refreshToken: refreshToken
     });
   },
 
