@@ -22,11 +22,11 @@ class MainApp extends React.Component {
     return (
       <div className="index">
         <MainMenu appName="EFK">
-          <MenuItem name="Home" title="Home" path="/home/dashboard" />
-          <MenuItem name="Make order" title="Make order" path="/home/make-order" />
-          <MenuItem name="Configurations" title="Configurations" path="/home/configurations" />
-          <MenuItem name="Orders" title="Orders" path="/home/orders"/>
-          <MenuItem name="Inventory" title="Inventory" path="/home/inventory" />
+          <MenuItem to="/home/dashboard" index={true}>Home</MenuItem>
+          <MenuItem to="/home/make-order">Make order</MenuItem>
+          <MenuItem to="/home/configurations">Configurations</MenuItem>
+          <MenuItem to="/home/orders">Orders</MenuItem>
+          <MenuItem to="/home/inventory">Inventory</MenuItem>
         </MainMenu>
 
         <div className="main-area"> {children} </div>
