@@ -1,11 +1,13 @@
 'use strict';
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
-import OrderWizardConstants from '../constants/OrderWizardConstants';
-import Constants from '../constants/Constants';
+import { NetworkConstants, OrderWizardConstants } from '../constants/Constants';
 import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
+
+let _inventoryRequestStatus = true;
+let _categoriesRequestStatus = true;
 
 let _selectedEvent = null;
 let _selectedConfiguration = null;
@@ -22,6 +24,14 @@ let _stockItemsInCategory = []
 let _renatlModalState = false;
 let _renatlModalObject = {};
 
+
+function setInventoryRequestStatus(requestStatus){
+  _inventoryRequestStatus = requestStatus;
+}
+
+function setCategoriesRequestStatus(requestStatus){
+  _categoriesRequestStatus = requestStatus;
+}
 
 function emptySelection(){
   _rentals.length = 0;
@@ -197,6 +207,17 @@ class OrderWizardStoreClass extends EventEmitter {
     this.removeListener(CHANGE_EVENT, callback)
   }
 
+  /**
+   *
+   */
+  getInventoryRequestStatus() {
+    return _inventoryRequestStatus;
+  }
+
+  getCategoriesRequestStatus() {
+    return _categoriesRequestStatus;
+  }
+
   getSelectedEvent() {
     return _selectedEvent;
   }
@@ -278,7 +299,8 @@ class OrderWizardStoreClass extends EventEmitter {
 
   getAllEntitiesForOrder(){
     return Object.assign([],
-       combineBySfid(_selectedFromOptions, _reservedFromInventory).map( (object) => Object.assign(object, { provider: 'inventory' }))
+       combineBySfid(_selectedFromOptions, _reservedFromInventory)
+        .map( (object) => Object.assign(object, { provider: 'inventory' }))
      ).concat(_rentals.map( (object) => Object.assign(object, {provider: 'rental' } )));
   }
 
@@ -289,90 +311,109 @@ const OrderWizardStore = new OrderWizardStoreClass();
 OrderWizardStore.dispatchToken = AppDispatcher.register(action => {
 
   switch(action.actionType) {
-    case OrderWizardConstants.ORDER_Wizard_SELECT_EVENT:
+
+    case OrderWizardConstants.SET_EVENT:
       setSelectedEvent(action.selectedEvent);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_WIZARD_RECIVE_CONFIGURATION_DETAILS:
+    case NetworkConstants.RECEIVE_CONFIGURATION_DETAILS:
       emptySelection();
       setSelectedConfiguration(action.selectedConfiguration);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_REMOVE_SELECT_EVENT:
+    case OrderWizardConstants.REMOVE_SELECTED_EVENT:
       setSelectedEvent(null);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_ADD_TO_RENTED:
+    case OrderWizardConstants.ADD_TO_RENATAL:
       addToRented(action.entity, action.amount);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_REMOVE_FROM_RENTED:
+    case OrderWizardConstants.REMOVE_FROM_RENTAL:
       removeFreomRented(action.entity);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.RECIEVE_ORDER_PROBLEMS:
+    case NetworkConstants.RECIEVE_ORDER_PROBLEMS:
       setOrderProblems(action.stockAvailability);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_CHECK_AVAILABILITY:
+    case NetworkConstants.RECEIVE_STOCK_AVAILABILITY:
       setStockLoadingStatus(action.showLoading);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_CHECK_AVAILABILITY_SUCCESS:
+    case NetworkConstants.RECEIVE_STOCK_AVAILABILITY_SUCCESS:
       setStockLoadingStatus(false);
       setOrderProblems(action.stockAvailability);
       setReservedFromInventory(action.stockAvailability);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_RENT_NECESSARY:
+    case OrderWizardConstants.ADD_NECESSARY_TO_RENTED:
       setNecessaryToRent(action.stockAvalityProblems);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_CATEGORY_ALL_STOCK_ITEM:
+    case OrderWizardConstants.ADD_ALL_STOCK_ITEM_BY_CATEGORY:
       addStockItemsByCategories(action.categoryStockItems, action.categoryId, action.categoryName);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_SELECTED_OPTION:
+    case OrderWizardConstants.ADD_SELECTED_OPTION_FROM_OPTIONS:
       addFromOption(action.option);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_RENTAL_FILTER:
+    case OrderWizardConstants.SET_RENTAL_FILTER:
       setRentalFilter(action.filter);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_WIZARD_RECIVE_CATEGORIES_FOR_STOCK:
+    /**
+     * Categories for stock
+     */
+    case NetworkConstants.RECEIVE_CATEGORIES_FOR_STOCK:
+      setCategoriesRequestStatus(action.isLoading);
+      OrderWizardStore.emitChange();
+      break
+
+    case NetworkConstants.RECEIVE_CATEGORIES_FOR_STOCK_SUCCESS:
       setCategoriesForStock(action.categories);
+      setCategoriesRequestStatus(false);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_CATEGORY_STOCK_ITEM:
+      /**
+       * CInventory
+       */
+    case NetworkConstants.RECEIVE_STOCK_ITEMS_FOR_CATEGORY_SUCCESS:
       setStockItemsInCategory(action.stockItems);
+      setInventoryRequestStatus(false);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_RENTAL_MODAL_STATE:
+    case NetworkConstants.RECEIVE_STOCK_ITEMS_FOR_CATEGORY:
+      setInventoryRequestStatus(action.isLoading);
+      OrderWizardStore.emitChange();
+      break;
+
+    case OrderWizardConstants.SET_STATE_IN_MODAL_IN_RENTAL:
       setRentalModalState(action.state, action.objectInModal);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_UPDATE_RENTAL_MODAL_STATE:
+    case OrderWizardConstants.UPDATE_RENTAL_MODAL:
       updateRentalModalState(action.object);
       OrderWizardStore.emitChange();
       break
 
-    case OrderWizardConstants.ORDER_Wizard_UPDATE_RESERVED_FROM_INVENTORY:
+    case OrderWizardConstants.ADD_TO_RESERVED_FOR_INVENTORY:
       updateReservedFromInventory(action.reservedObject);
       OrderWizardStore.emitChange();
       break

@@ -3,41 +3,45 @@
 import React from 'react';
 
 import {
-  Modal, Button, Table, TableHeader, TableBody, TableRow, TableRowColumn, TableHeaderColumn, Spinner
+  Table, TableHeader, TableBody, TableRow, TableHeaderColumn 
 } from 'react-lightning-design-system';
 
-import styles from '../styles/StandartTableWrapper.css'
+import NetworkLoader from './NetworkLoader'
+import StandartTableColumn from './StandartTableColumn'
 
-function getValueByDotNotation(obj, path) {
- return new Function('_', 'return _.' + path)(obj);
-}
+import styles from '../styles/StandartTableWrapper.css'
 
 class StandartTableWrapper extends React.Component {
   render() {
 
-    const { headers, data, fields } = this.props;
-    
+    const { headers, data, fields, isLoading } = this.props;
+
     return (
-      <Table bordered>
-        <TableHeader>
-          <TableRow>
-            { headers.map( (name, id) => <TableHeaderColumn key={ 'h' + id }>{ name }</TableHeaderColumn>) }
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {
-            data.map( (entity, dataId) => (
-             <TableRow key={ dataId }>
-               {
-                 fields.map( (field, fieldId) => (
-                   <TableRowColumn key={ dataId + '.' + fieldId }>{ getValueByDotNotation(entity, field) }</TableRowColumn>
-                 ))
-               }
-             </TableRow>
-           ))
-         }
-        </TableBody>
-      </Table>
+      <NetworkLoader isLoading={ isLoading }>
+        <Table bordered>
+          <TableHeader>
+            <TableRow>
+              { headers.map( (name, id) => <TableHeaderColumn key={ 'h' + id }>{ name }</TableHeaderColumn>) }
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {
+              data.map( (entity, dataId) => (
+               <TableRow key={ dataId }>
+                 {
+                   fields.map( (field, fieldId) => (
+                     <StandartTableColumn
+                        key={ dataId + '.' + fieldId }
+                        entity={ entity }
+                        field={ field } />
+                   ))
+                 }
+               </TableRow>
+             ))
+           }
+          </TableBody>
+        </Table>
+      </NetworkLoader>
     );
   }
 }

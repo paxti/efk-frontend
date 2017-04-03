@@ -1,7 +1,7 @@
 'use strict';
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
-import LoginActions from '../constants/LoginActions';
+import { NetworkConstants } from '../constants/Constants';
 import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
@@ -58,12 +58,12 @@ AuthStore.dispatchToken = AppDispatcher.register(action => {
 
   switch(action.actionType) {
 
-    case LoginActions.LOG_IN:
+    case NetworkConstants.LOG_IN:
       setUser(action.profile, action.token, action.refreshToken);
       AuthStore.emitChange();
       break
 
-    case LoginActions.LOG_OUT:
+    case NetworkConstants.LOG_OUT:
       removeUser();
       AuthStore.emitChange();
       break

@@ -1,7 +1,7 @@
 'use strict';
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
-import Constants from '../constants/Constants';
+import { NetworkConstants } from '../constants/Constants';
 import ClientAPI from '../utils/ClientAPI';
 
 export default {
@@ -11,13 +11,13 @@ export default {
       .sendGetRequest('/stock_items')
       .then(stockItems => {
         AppDispatcher.dispatch({
-          actionType: Constants.STOCK_ITEMS_FETCH,
+          actionType: NetworkConstants.RECIEVE_STOCK_ITEMS,
           stockItems: stockItems
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: Constants.RECIEVE_CONFIGURATIONS_ERROR,
+          actionType: NetworkConstants.RECIEVE_CONFIGURATIONS_ERROR,
           message: message,
           request_status: false
         });

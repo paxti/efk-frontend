@@ -24,7 +24,9 @@ class Inventory extends React.Component {
     this.state = {
       stockItems: [],
       categoriesForStock: [],
-      filterId: -1
+      filterId: -1,
+      isInventoryLoading: true,
+      isCategoriesLoading: true
     }
     this.onChange = this.onChange.bind(this);
   }
@@ -45,6 +47,9 @@ class Inventory extends React.Component {
     this.setState({
       stockItems: OrderWizardStore.getStocItemsInCategory(),
       categoriesForStock: OrderWizardStore.getCategoriesForStock(),
+      isInventoryLoading: OrderWizardStore.getInventoryRequestStatus(),
+      isCategoriesLoading: OrderWizardStore.getCategoriesRequestStatus(),
+      filterId: OrderWizardStore.getRentalFilter()
     });
   }
 
@@ -62,7 +67,11 @@ class Inventory extends React.Component {
   render() {
 
     const headers = ["Name", "Amount", "Category" ];
-    const fieldsToShow = ["item.name", "amount", "item.category.name"];
+    const fieldsToShow = [
+      { type: "field", path: "item.name"},
+      { type: "field", path: "amount"},
+      { type: "field", path: "item.category.name"}
+    ];
 
     const details = [
       {
@@ -75,11 +84,11 @@ class Inventory extends React.Component {
         content="Step 4"
         filterId={ this.state.filterId }
         navigation={<Navigation
-           filterId={ this.state.filterId  }
-           active={ true }
-           names={ this.state.categoriesForStock }
-           onChangeFilter={ this.onChangeRentailFilter }
-        />}
+             filterId={ this.state.filterId  }
+             active={ true }
+             names={ this.state.categoriesForStock }
+             onChangeFilter={ this.onChangeRentailFilter }
+             isLoading= { this.state.isCategoriesLoading }/>}
         sidebar={<div></div>}>
 
         <div>
@@ -88,11 +97,12 @@ class Inventory extends React.Component {
             title="Title"
             detailItems={ details }
           />
-          <StandartTableWrapper
-            fields={ fieldsToShow }
-            headers={ headers }
-            data={ this.state.stockItems }
-          />
+            <StandartTableWrapper
+              fields={ fieldsToShow }
+              headers={ headers }
+              data={ this.state.stockItems }
+              isLoading= { this.state.isInventoryLoading }
+            />
         </div>
 
 

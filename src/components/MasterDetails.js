@@ -6,6 +6,8 @@ import { Grid, Row, Col } from 'react-lightning-design-system'
 
 import OrderWizardActions from '../actions/OrderWizardActions'
 
+import styles from '../styles/MasterDetails.css'
+
 class MasterDetails extends React.Component {
 
   componentDidMount() {
@@ -19,13 +21,13 @@ class MasterDetails extends React.Component {
     return (
       <Grid color>
         <Row cols={12}>
-          <Col cols={2}>
+          <Col cols={2} className={styles.limit_loader}>
             {navigation}
           </Col>
-          <Col cols={7}>
+          <Col cols={7} className={styles.limit_loader}>
             { React.cloneElement(children, { filter: filterId }) }
           </Col>
-          <Col cols={3}>
+          <Col cols={3} className={styles.limit_loader}>
             {sidebar}
           </Col>
         </Row>

@@ -1,7 +1,7 @@
 'use strict';
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
-import Constants from '../constants/Constants';
+import { NetworkConstants } from '../constants/Constants';
 import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
@@ -38,7 +38,7 @@ StockItemStore.dispatchToken = AppDispatcher.register(action => {
 
   switch(action.actionType) {
 
-    case Constants.STOCK_ITEMS_FETCH:
+    case NetworkConstants.RECIEVE_STOCK_ITEMS_SUCCESS:
       setStockItems(action.stockItems);
       StockItemStore.emitChange();
       break

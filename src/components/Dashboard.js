@@ -2,6 +2,9 @@
 
 import React from 'react';
 
+import EventActions from '../actions/EventActions';
+import EventStore from '../stores/EventStore';
+
 import Sidebar from './Sidebar'
 import TwoByTwoWrapper from './TwoByTwoWrapper'
 import EventsBox from './EventsBox'
@@ -10,6 +13,36 @@ import PageHeaderContainer from './PageHeaderContainer'
 import styles from '../styles/Dashboard.css'
 
 class Dashboard extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      events: [],
+      isLoading: true
+    }
+    this.onChange = this.onChange.bind(this);
+  }
+
+  componentWillMount() {
+    EventStore.addChangeListener(this.onChange);
+  }
+
+  componentDidMount() {
+    EventActions.recieveEvents();
+  }
+
+  componentWillUnmount() {
+    EventStore.removeChangeListener(this.onChange);
+  }
+
+  onChange() {
+    this.setState({
+      events: EventStore.getEvents(),
+      isLoading: EventStore.isRequestPending()
+    });
+  }
+
+
   render() {
     return (
       <div>
@@ -27,7 +60,9 @@ class Dashboard extends React.Component {
             </PageHeaderContainer>
           </div>
           <div className="slds-col slds-large-size--4-of-12">
-            <EventsBox />
+            <EventsBox
+              isLoading={this.state.isLoading}
+              events={this.state.events} />
           </div>
         </div>
       </div>
@@ -36,9 +71,5 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.displayName = 'Dashboard';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default Dashboard;

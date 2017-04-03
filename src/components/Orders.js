@@ -7,23 +7,15 @@ import { Router, Route, Link, browserHistory } from 'react-router'
 import Sidebar from './Sidebar'
 import DataTable from './DataTable'
 import EventsBox from './EventsBox'
+import StandartTableWrapper from './StandartTableWrapper'
+import PageHeaderWrapper from './PageHeaderWrapper'
+
 import PageHeaderContainer from './PageHeaderContainer'
 import OrderActions from '../actions/OrderActions';
 import OrderStore from '../stores/OrderStore';
 
 import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHeaderColumn,
-  TableRowColumn,
-  TableRowColumnActions,
-  PageHeader,
-  PageHeaderHeading,
-  PageHeaderHeadingTitle,
-  PageHeaderDetailLabel,
-  Icon, DropdownButton, MenuItem, Grid
+  Grid, Col, Row
 } from 'react-lightning-design-system'
 
 import styles from '../styles/Orders.css'
@@ -52,55 +44,48 @@ class Orders extends React.Component {
 
   onChange() {
     this.setState({
-      orders: OrderStore.getOrders()
+      orders: OrderStore.getOrders(),
+      isLoading: OrderStore.getOrdersRequestStatus()
     });
   }
 
   render() {
 
-    const titles = ['SFID', 'Details'];
+    const headers = ["Id", "SFID" ];
+    const fieldsToShow = [
+      { type: 'field', path: "id"},
+      { type: 'field', path: "sfid"},
+      { type: 'link', path: "sfid", linkPath: '/home/orders/', linkId: 'id', title: 'Details'},
+      { type: 'button', path: "sfid", linkPath: '/home/orders/', linkId: 'id', title: 'Details' }
+    ];
 
+    const details = [{
+        label: "Total", title: "sd34234", text: "Total: " + " items"
+      }
+    ];
     return (
-      <div className="slds-grid slds-grid--vertical-stretch">
-        <div className="slds-col slds-large-size--2-of-12">
-          <Sidebar  />
-        </div>
-        <div className="slds-col slds-large-size--6-of-12">
-          <PageHeaderContainer
-            legend="Test legend"
-            header="Orders"
-            info="some info here (3)">
-
-
-            <Table bordered >
-              <TableHeader>
-                <TableRow>
-                  {titles.map(function(title, index){
-                    return  <TableHeaderColumn key={index}>{title}</TableHeaderColumn>;
-                  })}
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-
-              {this.state.orders.map(function(order, index){
-                return <TableRow key={order.id}>
-                  <TableRowColumn>{order.sfid}</TableRowColumn>
-                  <TableRowColumn>{order.id}</TableRowColumn>
-                  <TableRowColumn><Link to={`/home/orders/${order.id}`}>Details</Link></TableRowColumn>
-                </TableRow>;
-              })}
-
-              </TableBody>
-
-            </Table>
-          </PageHeaderContainer>
-          {this.props.childre}
-        </div>
-        <div className="slds-col slds-large-size--4-of-12">
-          <EventsBox />
-        </div>
-      </div>
+      <Grid>
+        <Row cols={12}>
+          <Col cols={2} padded>
+            <Sidebar  />
+          </Col>
+          <Col cols={6}>
+            <PageHeaderWrapper
+              legend={ "Orders" }
+              title="Title"
+              detailItems={ details }
+            />
+            <StandartTableWrapper
+              fields={ fieldsToShow }
+              headers={ headers }
+              data={ this.state.orders }
+              isLoading= { this.state.isLoading }
+            />
+          </Col>
+          <Col cols={4}>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }

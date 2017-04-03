@@ -1,14 +1,14 @@
 'use strict';
 
 import AppDispatcher from '../dispatchers/AppDispatcher.js';
-import LoginActions from '../constants/LoginActions'
+import { NetworkConstants } from '../constants/Constants'
 
 const Actions = {
 
   loginUser(profile, token, refreshToken) {
 
     AppDispatcher.dispatch({
-      actionType: LoginActions.LOG_IN,
+      actionType: NetworkConstants.LOG_IN,
       token: token,
       profile: profile,
       refreshToken: refreshToken
@@ -17,7 +17,7 @@ const Actions = {
 
   logoutUser() {
     AppDispatcher.dispatch({
-      actionType: LOG_OUT
+      actionType: NetworkConstants.LOG_OUT
     });
   }
 

@@ -17,7 +17,8 @@ class Configurations extends React.Component {
   constructor() {
     super();
     this.state = {
-      configurations: []
+      configurations: [],
+      isLoading: true
     }
     this.onChange = this.onChange.bind(this);
   }
@@ -36,14 +37,18 @@ class Configurations extends React.Component {
 
   onChange() {
     this.setState({
-      configurations: ConfigurationStore.getConfigurations()
+      configurations: ConfigurationStore.getConfigurations(),
+      isLoading: ConfigurationStore.getConfigurationsRequestStatus()
     });
   }
 
   render() {
 
     const headers = ["Name", "SFID" ];
-    const fieldsToShow = ["name", "sfid"];
+    const fieldsToShow = [
+      { type: "field", path: "name"},
+      { type: "field", path: "sfid"}
+    ];
 
     const details = [{
         label: "Total", title: "sd34234", text: "Total: " + " items"
@@ -66,6 +71,7 @@ class Configurations extends React.Component {
               fields={ fieldsToShow }
               headers={ headers }
               data={ this.state.configurations }
+              isLoading= { this.state.isLoading }
             />
           </Col>
           <Col cols={4}>

@@ -1,7 +1,7 @@
 'use strict';
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
-import EventConstants from '../constants/EventConstants';
+import { NetworkConstants } from '../constants/Constants';
 import { EventEmitter } from 'events';
 
 const CHANGE_EVENT = 'change';
@@ -70,30 +70,30 @@ EventStore.dispatchToken = AppDispatcher.register(action => {
 
   switch(action.actionType) {
 
-    case EventConstants.SENT_EVENTS_REQUEST:
+    case NetworkConstants.SENT_EVENTS_REQUEST:
       setEvents([], action.request_status);
       EventStore.emitChange();
       break
 
-    case EventConstants.RECIEVE_EVENTS:
+    case NetworkConstants.RECIEVE_EVENTS:
       setEvents(action.events, action.request_status);
       EventStore.emitChange();
       break
 
-    case EventConstants.RECIEVE_EVENT:
+    case NetworkConstants.RECIEVE_EVENT:
       setEvents(action.events, action.request_status);
       EventStore.emitChange();
       break
 
-    case EventConstants.RECIEVE_EVENT_ERROR:
+    case NetworkConstants.RECIEVE_EVENT_DETAILS_ERROR:
       setEvents(action.events, action.request_status);
-      alert(action.message);
+      console.log(action);
       EventStore.emitChange();
       break
 
-    case EventConstants.RECIEVE_EVENTS_ERROR:
+    case NetworkConstants.RECIEVE_EVENTS_ERROR:
       setEvents(action.events, action.request_status);
-      alert(action.message);
+      console.log(action);
       EventStore.emitChange();
       break
 

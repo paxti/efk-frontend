@@ -1,7 +1,7 @@
 'use strict';
 
 import AppDispatcher from '../dispatchers/AppDispatcher';
-import EventConstants from '../constants/EventConstants';
+import { NetworkConstants } from '../constants/Constants';
 import ClientAPI from '../utils/ClientAPI';
 
 export default {
@@ -9,7 +9,7 @@ export default {
   recieveEvents: () => {
 
     AppDispatcher.dispatch({
-      actionType: EventConstants.SENT_EVENTS_REQUEST,
+      actionType: NetworkConstants.SENT_EVENTS_REQUEST,
       request_status: true
     })
 
@@ -17,14 +17,14 @@ export default {
       .sendGetRequest('/events')
       .then(events => {
         AppDispatcher.dispatch({
-          actionType: EventConstants.RECIEVE_EVENTS,
+          actionType: NetworkConstants.RECIEVE_EVENTS,
           events: events,
           request_status: false
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: EventConstants.RECIEVE_EVENTS_ERROR,
+          actionType: NetworkConstants.RECIEVE_EVENTS_ERROR,
           message: message,
           request_status: false
         });
@@ -36,13 +36,13 @@ export default {
       .sendGetRequest('/events/' + id)
       .then(event => {
         AppDispatcher.dispatch({
-          actionType: EventConstants.RECIEVE_EVENT,
+          actionType: NetworkConstants.RECIEVE_EVENT,
           event: event
         });
       })
       .catch(message => {
         AppDispatcher.dispatch({
-          actionType: EventConstants.RECIEVE_EVENT_ERROR,
+          actionType: NetworkConstants.RECIEVE_EVENT_DETAILS_ERROR,
           message: message
         });
       });
