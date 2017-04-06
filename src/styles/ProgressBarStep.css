@@ -1,0 +1,10 @@
+.step_text {
+  position: absolute;
+  width: 200px;
+  top: 20px;
+  margin-left: -100px;
+}
+
+.adapt_progress span {
+  margin-left: -108px;
+}
