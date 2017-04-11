@@ -56,7 +56,7 @@ class Orders extends React.Component {
       { type: 'field', path: "id"},
       { type: 'field', path: "sfid"},
       { type: 'link', path: "sfid", linkPath: '/home/orders/', linkId: 'id', title: 'Details'},
-      { type: 'button', path: "sfid", linkPath: '/home/orders/', linkId: 'id', title: 'Details' }
+      { type: 'button_link', path: "sfid", linkPath: '/home/orders/', linkId: 'id', title: 'Details' }
     ];
 
     const details = [{

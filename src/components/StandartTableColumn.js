@@ -19,6 +19,10 @@ function changeLocation(entity, field) {
   browserHistory.push(getLinkPath(entity, field));
 }
 
+function callAction(entity, field) {
+  field.callback(entity);
+}
+
 function buildColumnField(entity, field) {
 
   let title = getValue(entity, field.path);
@@ -28,8 +32,11 @@ function buildColumnField(entity, field) {
     case 'link':
       return  <Link to={getLinkPath(entity, field)}>{ field.title }</Link>;
 
-    case 'button':
+    case 'button_link':
       return <Button type="brand" onClick={ () => changeLocation(entity, field) }>{ field.title }</Button>;
+
+    case 'button_action':
+      return <Button type="brand" onClick={ () => callAction(entity, field) }>{ field.title }</Button>;
 
     default: return title;
   }
