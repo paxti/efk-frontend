@@ -87,13 +87,11 @@ EventStore.dispatchToken = AppDispatcher.register(action => {
 
     case NetworkConstants.RECIEVE_EVENT_DETAILS_ERROR:
       setEvents(action.events, action.request_status);
-      console.log(action);
       EventStore.emitChange();
       break
 
     case NetworkConstants.RECIEVE_EVENTS_ERROR:
       setEvents(action.events, action.request_status);
-      console.log(action);
       EventStore.emitChange();
       break
 

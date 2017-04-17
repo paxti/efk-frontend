@@ -4,11 +4,8 @@ import React from 'react';
 
 import {
   PageHeader, PageHeaderHeading, PageHeaderDetail, PageHeaderDetailItem,
-  PageHeaderDetailLabel, PageHeaderDetailBody,
-  Icon, Text, ButtonGroup, Button
+  PageHeaderDetailLabel, Icon, Text, ButtonGroup, Button
 } from 'react-lightning-design-system';
-
-import styles from '../styles/PageHeaderWrapper.css'
 
 /**
  * PageHeaderWrapper component

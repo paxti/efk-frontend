@@ -1,31 +1,21 @@
 'use strict';
 
 import React from 'react';
-import Stepzilla from 'react-stepzilla'
 
 import Wizard from  './Wizard'
-import ProgressBar from  './ProgressBar'
-
-import ItemForm from './ItemForm'
 import ModalWrapperReserveForm from './ModalWrapperReserveForm'
-
 import TableWrapperWithHeader from './TableWrapperWithHeader'
-
 import WizardStepContainer from './WizardStepContainer'
 
 import OrderWizardEvent from './OrderWizardEvent'
 import OrderWizardConfiguration from '../components/OrderWizardConfiguration'
 import OrderWizardConfigurationDetails from '../components/OrderWizardConfigurationDetails'
-import OrderWizardSidebar from '../components/OrderWizardSidebar'
-import Navigation from '../components/Navigation'
-import StandartTableWrapper from '../components/StandartTableWrapper'
-import OrderWizardRentalTable from '../components/OrderWizardRentalTable'
-import OrderWizardReview from '../components/OrderWizardReview'
-import ConfigurationDetails from '../components/ConfigurationDetails'
-import EventDetails from '../components/EventDetails'
+import OrderWizardSidebar from './OrderWizardSidebar'
+import Navigation from './Navigation'
+import ConfigurationDetails from './ConfigurationDetails'
 
-import MasterDetails from '../components/MasterDetails'
-import MasterDetailsEmpty from '../components/MasterDetailsEmpty'
+import MasterDetails from './MasterDetails'
+import MasterDetailsEmpty from './MasterDetailsEmpty'
 
 import OrderWizardStore from '../stores/OrderWizardStore'
 import EventStore from '../stores/EventStore'
@@ -35,10 +25,6 @@ import OrderWizardActions from '../actions/OrderWizardActions'
 import EventActions from '../actions/EventActions'
 import ConfigurationActions from '../actions/ConfigurationActions'
 import OrderActions from '../actions/OrderActions'
-
-import {
-  Col, Row, Grid, Lookup, Form, FieldSet, Button
-} from 'react-lightning-design-system';
 
 class OrderWizard extends React.Component {
 

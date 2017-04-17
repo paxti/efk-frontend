@@ -8,8 +8,6 @@ import StandartTableWrapper from '../components/StandartTableWrapper'
 import ModalWrapper from '../components/ModalWrapper'
 import PickListWrapper from '../components/PickListWrapper'
 
-import styles from '../styles/OrderWizardConfigurationDetails.css'
-
 class OrderWizardConfigurationDetails extends React.Component {
 
   componentDidMount() {
@@ -46,8 +44,7 @@ class OrderWizardConfigurationDetails extends React.Component {
         <PickListWrapper
           stockItemsInCategories={ stockItemsInCategories }
           onOptionSelected={ onOptionSelected }
-          selectedOptions= {itemsFromOptions }
-        />
+          selectedOptions= {itemsFromOptions } />
 
         <ModalWrapper
           title={ title }
@@ -59,8 +56,8 @@ class OrderWizardConfigurationDetails extends React.Component {
           <StandartTableWrapper
             fields={ fieldsToShow }
             headers={ headerNamesItems }
-            data={ stockAvalityProblems }
-          />
+            data={ stockAvalityProblems } />
+
         </ModalWrapper>
 
       </div>

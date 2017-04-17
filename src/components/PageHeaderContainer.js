@@ -3,14 +3,13 @@
 import React from 'react';
 
 import {
+  Grid,
   PageHeader,
   PageHeaderHeading,
   PageHeaderHeadingTitle,
   PageHeaderDetailLabel,
-  Icon, DropdownButton, MenuItem, Grid
+  Icon
 } from 'react-lightning-design-system';
-
-import styles from '../styles/PageHeaderContainer.css'
 
 class PageHeaderContainer extends React.Component {
   render() {
@@ -33,12 +32,11 @@ class PageHeaderContainer extends React.Component {
             figure={
               <Icon
                 category="standard"
-                icon="opportunity"
-              />
+                icon="opportunity" />
             }
           />
       </PageHeader>
-      {children}
+      { children }
     </div>
     );
   }

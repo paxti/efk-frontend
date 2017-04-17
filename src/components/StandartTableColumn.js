@@ -26,7 +26,6 @@ function callAction(entity, field) {
 function buildColumnField(entity, field) {
 
   let title = getValue(entity, field.path);
-  let res = title;
 
   switch(field.type){
     case 'link':

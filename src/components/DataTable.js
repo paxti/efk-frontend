@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import { Link } from 'react-router'
 
 import {
   Table,
@@ -9,10 +8,7 @@ import {
   TableBody,
   TableRow,
   TableHeaderColumn,
-  TableRowColumn,
-  TableRowColumnActions,
-  DropdownButton,
-  MenuItem,
+  TableRowColumn
 } from 'react-lightning-design-system';
 
 import styles from '../styles/DataTable.css'
@@ -25,7 +21,7 @@ class DataTable extends React.Component {
           <TableHeader>
             <TableRow>
               {this.props.titles.map(function(title, index){
-                return  <TableHeaderColumn>{title}</TableHeaderColumn>;
+                return <TableHeaderColumn>{title}</TableHeaderColumn>;
               })}
             </TableRow>
           </TableHeader>
@@ -43,11 +39,5 @@ class DataTable extends React.Component {
     );
   }
 }
-
-DataTable.displayName = 'DataTable';
-
-// Uncomment properties you need
-// MenuItemComponent.propTypes = {};
-// MenuItemComponent.defaultProps = {};
 
 export default DataTable;

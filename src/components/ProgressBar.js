@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import { Icon } from 'react-lightning-design-system'
-
 import ProgressBarStep from  './ProgressBarStep'
 
 import styles from '../styles/ProgressBar.css'
@@ -22,7 +20,7 @@ class ProgressBar extends React.Component {
                       isActive={index == activeStep}
                       isComplited={complited.includes(index)}
                       onClick={ () => onChangeStep(index) }>
-                        {stepName}
+                        { stepName }
                     </ProgressBarStep>
           })}
         </ol>

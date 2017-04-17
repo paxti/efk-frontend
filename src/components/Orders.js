@@ -2,20 +2,13 @@
 
 import React from 'react';
 
-import { Router, Route, Link, browserHistory } from 'react-router'
-
 import Sidebar from './Sidebar'
-import DataTable from './DataTable'
-import EventsBox from './EventsBox'
-
 import TableWrapperWithHeader from './TableWrapperWithHeader'
 
 import OrderActions from '../actions/OrderActions';
 import OrderStore from '../stores/OrderStore';
 
-import {
-  Grid, Col, Row
-} from 'react-lightning-design-system'
+import { Grid, Col, Row } from 'react-lightning-design-system'
 
 import styles from '../styles/Orders.css'
 

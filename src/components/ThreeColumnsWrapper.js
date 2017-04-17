@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import styles from '../styles/ThreeColumnsWrapper.css'
-
 class ThreeColumnsWrapper extends React.Component {
   render() {
 

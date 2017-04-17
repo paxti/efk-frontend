@@ -1,15 +1,14 @@
 'use strict';
 
 import React from 'react';
-import { Link, IndexLink, withRouter} from 'react-router'
+import { Link, withRouter} from 'react-router'
 
 import styles from '../styles/MenuItem.css'
 
 class MenuItem extends React.Component {
   render() {
 
-    const { router } = this.context
-    const { index, to, children, ...props } = this.props
+    const { index, to, children, ...props } = this.props;
 
     const isActive = props.router.isActive(to) ? 'slds-is-active' : '';
 

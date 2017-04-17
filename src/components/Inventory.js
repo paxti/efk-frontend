@@ -2,9 +2,6 @@
 
 import React from 'react'
 
-import StockItemActions from '../actions/StockItemActions';
-import StockItemStore from '../stores/StockItemStore';
-
 import OrderWizardActions from '../actions/OrderWizardActions'
 import OrderWizardStore from '../stores/OrderWizardStore'
 

@@ -34,19 +34,21 @@ class PickListWrapper extends React.Component {
       <Form type='horizontal'>
         {
           stockItemsInCategories.map( (category, index) => {
-            return  <Picklist value={ test(selectedOptions, category.categoryId) } label={category.categoryName} key={category.categoryId}>
-                    {
-                      category.options.map( (option) => {
-                        return  <PicklistItem
-                                  value={ option.item.sfid }
-                                  key={ index + '.' + option.item.sfid }
-                                  onClick={ () => onOptionSelected(option) }
-                                >
-                                    {option.item.name}
-                                </PicklistItem>
-                      })
-                    }
-                    </Picklist>
+            return <Picklist
+                      value={ test(selectedOptions, category.categoryId) }
+                      label={category.categoryName}
+                      key={category.categoryId}>
+                        {
+                          category.options.map( (option) => {
+                            return  <PicklistItem
+                                      value={ option.item.sfid }
+                                      key={ index + '.' + option.item.sfid }
+                                      onClick={ () => onOptionSelected(option) }>
+                                        {option.item.name}
+                                    </PicklistItem>
+                          })
+                        }
+                  </Picklist>
         })
       }
     </Form>

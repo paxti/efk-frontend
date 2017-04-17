@@ -3,7 +3,7 @@
 import React from 'react';
 
 import {
-  Col, Row, Grid, Lookup, Form, FieldSet, Button, MediaObject
+  Col, Row, Grid, Form, FieldSet, Button, MediaObject
 } from 'react-lightning-design-system';
 
 import styles from '../styles/OrderWizardConfiguration.css'
@@ -13,11 +13,6 @@ class OrderWizardConfiguration extends React.Component {
   render() {
 
     const { configurations, selectedEvent, onShowDetails, onSelectConfiguration } = this.props;
-
-
-    const mediaText = `Sit nulla est ex deserunt exercitation anim occaecat.
-    Nostrud ullamco deserunt aute id consequat veniam incididunt duis in sint irure nisi.
-    Mollit officia cillum Lorem ullamco minim nostrud elit officia tempor esse quis.`;
 
     return (
       <Form type='compound'>

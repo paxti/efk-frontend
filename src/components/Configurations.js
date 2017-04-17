@@ -9,8 +9,6 @@ import TableWrapperWithHeader from './TableWrapperWithHeader'
 
 import { Grid, Row, Col } from 'react-lightning-design-system'
 
-import styles from '../styles/Configurations.css'
-
 class Configurations extends React.Component {
 
   constructor() {

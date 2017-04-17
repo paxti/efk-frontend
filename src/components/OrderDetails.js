@@ -5,28 +5,7 @@ import React from 'react';
 import OrderActions from '../actions/OrderActions';
 import OrderStore from '../stores/OrderStore';
 
-import {
-  Text,
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHeaderColumn,
-  TableRowColumn,
-  TableRowColumnActions,
-  PageHeaderDetail,
-  PageHeaderDetailItem,
-  PageHeaderDetailBody,
-  PageHeader,
-  PageHeaderHeading,
-  PageHeaderHeadingTitle,
-  PageHeaderDetailLabel,
-  Icon, DropdownButton, MenuItem, Grid
-} from 'react-lightning-design-system'
-
 import PageHeaderContainer from '../components/PageHeaderContainer'
-
-import styles from '../styles/OrderDetails.css'
 
 class OrderDetails extends React.Component {
 

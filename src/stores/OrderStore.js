@@ -78,12 +78,10 @@ OrderStore.dispatchToken = AppDispatcher.register(action => {
       break
 
     case NetworkConstants.RECIEVE_ORDER_ERROR:
-      console.log(action);
       OrderStore.emitChange();
       break
 
     case NetworkConstants.RECIEVE_ORDER_ERROR:
-      console.log(action);
       OrderStore.emitChange();
       break
 

@@ -2,17 +2,7 @@
 
 import React from 'react';
 
-import BoxFiller from  './BoxFiller'
 import ProgressBar from  './ProgressBar'
-
-import { Grid, Row, Col } from 'react-lightning-design-system'
-
-
-
-import OrderWizardSidebar from  './OrderWizardSidebar'
-
-import WizardStepContainer from  './WizardStepContainer'
-import OrderWizardEvent from  './OrderWizardEvent'
 
 import styles from '../styles/Wizard.css'
 

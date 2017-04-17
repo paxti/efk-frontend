@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Grid, Row, Col, Icon, Spinner } from 'react-lightning-design-system'
+import { Button } from 'react-lightning-design-system'
 
 import styles from '../styles/WizardStepContainer.css'
 
@@ -19,8 +19,8 @@ class WizarStepContainer extends React.Component {
           { compToRender }
         </div>
         <div>
-          <button type="button" className="slds-button slds-button--neutral">Previous</button>
-          <button type="button" className="slds-button slds-button--brand">Next</button>
+          <Button type="brand" label="Previous" />
+          <Button type="neutral" label="Next" />
         </div>
       </div>
     );

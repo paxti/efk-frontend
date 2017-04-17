@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import ReactDOM from 'react-dom'
 
 import {
   Table, TableHeader, TableBody, TableRow, TableRowColumn, TableHeaderColumn, Spinner, Button
@@ -9,10 +8,6 @@ import {
 
 import ModalWrapper from '../components/ModalWrapper'
 import RentalForm from '../components/RentalForm'
-
-import styles from '../styles/StandartTableWrapper.css'
-
-
 
 class OrderWizardRentalTable extends React.Component {
 
@@ -69,7 +64,6 @@ class OrderWizardRentalTable extends React.Component {
     }
 
     return (
-
       <div>
         <Table bordered>
           <TableHeader>
@@ -92,9 +86,7 @@ class OrderWizardRentalTable extends React.Component {
            }
           </TableBody>
         </Table>
-
-        {modal}
-
+        { modal }
       </div>
     );
   }

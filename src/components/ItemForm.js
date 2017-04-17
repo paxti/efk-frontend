@@ -31,7 +31,7 @@ class ItemForm extends React.Component {
   render() {
 
     const { imgSrc, entity, error } = this.props;
-    const { name, amount, rented, item } = entity;
+    const { amount, rented, item } = entity;
 
     return (
       <Grid>

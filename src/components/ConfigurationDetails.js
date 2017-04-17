@@ -13,7 +13,7 @@ import styles from '../styles/ConfigurationDetails.css'
 class ConfigurationDetails extends React.Component {
   render() {
 
-    const { configurationDetails, content } = this.props;
+    const { configurationDetails } = this.props;
 
     return (
       <div>
@@ -23,8 +23,7 @@ class ConfigurationDetails extends React.Component {
         <MediaObject figureCenter={ <img
             src={ configurationDetails.img_path }
             alt='Placeholder'
-            style={{ height: 200 }}
-            />
+            style={{ height: 200 }} />
         }/>
       </div>
     );

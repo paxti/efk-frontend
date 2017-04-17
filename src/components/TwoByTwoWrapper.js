@@ -2,8 +2,6 @@
 
 import React from 'react'
 
-import styles from '../styles/TwoByTwoWrapper.css'
-
 import BoxFiller from './BoxFiller'
 
 class TwoByTwoWrapper extends React.Component {
