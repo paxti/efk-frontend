@@ -24,7 +24,7 @@ class EventsBox extends React.Component {
                 <div className={styles.event_box_header}>
                   <div className={styles.event_box_header_container}>
                      <Icon category='standard' icon='event' className='slds-m-right--small' />
-                     <div className={styles.event_box_title}>Current Events ({events.length})</div>
+                     <div className={styles.event_box_title}>Current Events ({ events.length })</div>
                   </div>
                 </div>
               </Col>
