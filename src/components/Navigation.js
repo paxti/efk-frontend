@@ -14,8 +14,8 @@ class Navigation extends React.Component {
 
     return (
       <NetworkLoader isLoading={ isLoading }>
-        <div className="slds-grid slds-grid--vertical slds-navigation-list--vertical">
-          <h2 className="slds-text-title--caps slds-p-around--medium" id="entity-header">Filters</h2>
+        <div className="slds-grid slds-grid--vertical slds-navigation-list--vertical slds-border--right">
+          <h2 className="slds-text-title--caps slds-p-around--medium">Filters</h2>
           <ul>
             {
               names.map( (option, index) => {

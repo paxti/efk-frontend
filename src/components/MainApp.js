@@ -4,6 +4,7 @@ import React, { PropTypes as T } from 'react'
 import MainMenu from './MainMenu.js'
 import MenuItem from './MenuItem.js'
 
+import styles from '../styles/MainApp.css'
 
 class MainApp extends React.Component {
 
@@ -20,7 +21,7 @@ class MainApp extends React.Component {
     }
 
     return (
-      <div className="index">
+      <div className={styles.index}>
         <MainMenu appName="EFK">
           <MenuItem to="/home/dashboard" index={true}>Home</MenuItem>
           <MenuItem to="/home/make-order">Make order</MenuItem>
@@ -29,7 +30,7 @@ class MainApp extends React.Component {
           <MenuItem to="/home/inventory">Inventory</MenuItem>
         </MainMenu>
 
-        <div className="main-area"> {children} </div>
+        <div className={styles.main_app}> {children} </div>
       </div>
     );
   }

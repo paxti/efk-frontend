@@ -10,7 +10,7 @@ class MainMenu extends React.Component {
 
     return (
 
-      <header className={`${styles.main_header} + slds-global-header_container`}>
+      <header className="slds-global-header_container">
         <a href="javascript:void(0);" className="slds-assistive-text slds-assistive-text--focus">Skip to Navigation</a>
         <a href="javascript:void(0);" className="slds-assistive-text slds-assistive-text--focus">Skip to Main Content</a>
         <div className="slds-global-header slds-grid slds-grid--align-spread">

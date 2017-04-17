@@ -9,9 +9,8 @@ class NavigationItem extends React.Component {
     const { name, active, onClick } = this.props;
 
     return (
-      <li className={active? 'slds-is-active' : null}>
-        <a onClick={ onClick }
-          className="slds-navigation-list--vertical__action slds-text-link--reset" aria-describedby="entity-header">
+      <li className={ active ? 'slds-is-active' : null }>
+        <a onClick={ onClick } className="slds-navigation-list--vertical__action slds-text-link--reset">
           {name}
         </a>
       </li>
