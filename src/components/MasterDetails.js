@@ -19,8 +19,8 @@ class MasterDetails extends React.Component {
     const { navigation, sidebar, children, filterId } = this.props;
 
     return (
-      <Grid color>
-        <Row cols={12}>
+      <Grid className={styles.full_height}>
+        <Row cols={12} nowrap>
           <Col cols={2} className={styles.limit_loader}>
             {navigation}
           </Col>

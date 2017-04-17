@@ -3,7 +3,7 @@
 import React from 'react';
 
 import {
-  Table, TableHeader, TableBody, TableRow, TableHeaderColumn 
+  Table, TableHeader, TableBody, TableRow, TableHeaderColumn
 } from 'react-lightning-design-system';
 
 import NetworkLoader from './NetworkLoader'

@@ -8,8 +8,8 @@ import StockItemStore from '../stores/StockItemStore';
 import OrderWizardActions from '../actions/OrderWizardActions'
 import OrderWizardStore from '../stores/OrderWizardStore'
 
-import PageHeaderWrapper from './PageHeaderWrapper'
-import StandartTableWrapper from './StandartTableWrapper'
+import TableWrapperWithHeader from './TableWrapperWithHeader'
+
 import MasterDetails from './MasterDetails'
 import Navigation from './Navigation'
 
@@ -45,7 +45,7 @@ class Inventory extends React.Component {
 
   onChange() {
     this.setState({
-      stockItems: OrderWizardStore.getStocItemsInCategory(),
+      stockItems: OrderWizardStore.getStockItemsInCategory(),
       categoriesForStock: OrderWizardStore.getCategoriesForStock(),
       isInventoryLoading: OrderWizardStore.getInventoryRequestStatus(),
       isCategoriesLoading: OrderWizardStore.getCategoriesRequestStatus(),
@@ -91,20 +91,14 @@ class Inventory extends React.Component {
              isLoading= { this.state.isCategoriesLoading }/>}
         sidebar={<div></div>}>
 
-        <div>
-          <PageHeaderWrapper
-            legend={ "Configurations" }
-            title="Title"
-            detailItems={ details }
-          />
-            <StandartTableWrapper
-              fields={ fieldsToShow }
-              headers={ headers }
-              data={ this.state.stockItems }
-              isLoading= { this.state.isInventoryLoading }
-            />
-        </div>
-
+        <TableWrapperWithHeader
+          legend={ "Configurations" }
+          title={ "Title 456" }
+          details={ details }
+          fields={ fieldsToShow }
+          headers={ headers }
+          data={ this.state.stockItems }
+          isLoading={ this.state.isInventoryLoading } />
 
       </MasterDetails>
     );

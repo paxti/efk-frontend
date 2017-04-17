@@ -5,8 +5,7 @@ import React from 'react'
 import ConfigurationActions from '../actions/ConfigurationActions';
 import ConfigurationStore from '../stores/ConfigurationStore';
 
-import PageHeaderWrapper from './PageHeaderWrapper'
-import StandartTableWrapper from './StandartTableWrapper'
+import TableWrapperWithHeader from './TableWrapperWithHeader'
 
 import { Grid, Row, Col } from 'react-lightning-design-system'
 
@@ -58,21 +57,20 @@ class Configurations extends React.Component {
     return (
       <Grid>
         <Row cols={12}>
-          <Col cols={2} padded>
+          <Col cols={2}>
 
           </Col>
           <Col cols={6}>
-            <PageHeaderWrapper
-              legend={ "Configurations" }
-              title="Title"
-              detailItems={ details }
-            />
-            <StandartTableWrapper
-              fields={ fieldsToShow }
-              headers={ headers }
-              data={ this.state.configurations }
-              isLoading= { this.state.isLoading }
-            />
+
+          <TableWrapperWithHeader
+            legend={ "Configurations" }
+            title={ "Title 456" }
+            details={ details }
+            fields={ fieldsToShow }
+            headers={ headers }
+            data={ this.state.configurations }
+            isLoading={ this.state.isLoading } />
+
           </Col>
           <Col cols={4}>
 

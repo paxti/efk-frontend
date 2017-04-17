@@ -1,3 +1,7 @@
 .limit_loader {
   position: relative;
 }
+
+.full_height {
+  height: 100%;
+}
