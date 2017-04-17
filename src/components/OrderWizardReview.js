@@ -22,10 +22,14 @@ class OrderWizardReview extends React.Component {
 
   render() {
 
-    const { configuration, event, inventory, rentals, selectedEvent, selectedConfiguration,  allEntities, onPutOrder } = this.props;
+    const { configuration, selectedConfiguration, event, inventory, rentals, selectedEvent,  allEntities, onPutOrder } = this.props;
 
-    const headerNamesItems = ["Name", "Amount" ,"Provider" ]
-    const fieldsToShow = ["name", "amount", "provider"]
+    const headerNamesItems = ["Name", "Amount" ,"Provider" ];
+    const fieldsToShow = [
+      {type: "field", path: "name"},
+      {type: "field", path: "amount"},
+      {type: "field", path: "provider"}
+    ];
 
     const buttons = [{type: 'brand', name: 'Put order', onClick: () => onPutOrder(selectedEvent, selectedConfiguration, allEntities)}];
     const detailItems = [{

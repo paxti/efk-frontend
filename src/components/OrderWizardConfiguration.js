@@ -26,7 +26,8 @@ class OrderWizardConfiguration extends React.Component {
 
               <Row cols={3}>
 
-              {configurations.map(function(configuration) {
+              {
+                configurations.map(function(configuration) {
                 return <Col cols={1} key={configuration.id}>
                         <MediaObject figureCenter={ <img
                             src={ configuration.img_path }
@@ -36,10 +37,11 @@ class OrderWizardConfiguration extends React.Component {
                         }>
                           <p>{ configuration.name }</p>
                           <Button type='brand' onClick={ () => onShowDetails(configuration) }> Details </Button>
-                          <Button type='brand' onClick={ () => onSelectConfiguration(configuration, selectedEvent) }> Select </Button>
+                          <Button type='brand' onClick={ () => onSelectConfiguration(configuration) }> Select </Button>
                         </MediaObject>
                       </Col>;
-              })}
+                })
+              }
 
               </Row>
             </Grid>

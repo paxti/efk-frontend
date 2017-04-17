@@ -13,16 +13,22 @@ import styles from '../styles/OrderWizardConfigurationDetails.css'
 class OrderWizardConfigurationDetails extends React.Component {
 
   componentDidMount() {
-    OrderWizardActions.checkAvailability(this.props.configuration, this.props.selectedEvent);
-    OrderWizardActions.fetchAllStockItemForCategory(this.props.configuration.category_set.category_entities);
+    //TODO: Nessesary execute only ONCE
+    OrderWizardActions.fetchConfigurationDetails(this.props.selectedConfiguration);
+    OrderWizardActions.checkAvailability(this.props.selectedConfiguration, this.props.selectedEvent);
   }
 
   render() {
 
-    const { configuration, selectedEvent, stockAvalityProblems, stockItemsInCategories, itemsFromOptions, isStockLoading, onRentClick, onOptionSelected } = this.props;
+    const { selectedConfiguration, selectedEvent, stockAvalityProblems, stockItemsInCategories, itemsFromOptions, isStockLoading, onRentClick, onOptionSelected } = this.props;
 
     const headerNamesItems = ["Name", "Availiable amount" ,"Requiered amount", "Needs to be rented"]
-    const fieldsToShow = ["item_name", "avaliable_amount", "required_amount", "need_to_be_rented"]
+    const fieldsToShow = [
+        { type: "field", path: "item_name"},
+        { type: "field", path: "avaliable_amount"},
+        { type: "field", path: "required_amount"},
+        { type: "field", path: "need_to_be_rented"},
+    ];
 
     const isModalOpen = stockAvalityProblems.length != 0
 

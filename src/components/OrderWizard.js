@@ -3,6 +3,16 @@
 import React from 'react';
 import Stepzilla from 'react-stepzilla'
 
+import Wizard from  './Wizard'
+import ProgressBar from  './ProgressBar'
+
+import ItemForm from './ItemForm'
+import ModalWrapperReserveForm from './ModalWrapperReserveForm'
+
+import TableWrapperWithHeader from './TableWrapperWithHeader'
+
+import WizardStepContainer from './WizardStepContainer'
+
 import OrderWizardEvent from './OrderWizardEvent'
 import OrderWizardConfiguration from '../components/OrderWizardConfiguration'
 import OrderWizardConfigurationDetails from '../components/OrderWizardConfigurationDetails'
@@ -35,28 +45,37 @@ class OrderWizard extends React.Component {
   constructor() {
     super();
     this.state = {
+      currentStep: 1,
+
       selectedEvent: null,
       events: [],
+
+      selectedConfiguration: null,
       configurations: [],
-      configurationDetails: null,
+
       stockAvailability: { entities: [] },
       stockAvalityProblems: [],
+
       isStockLoading: true,
       rentals: [],
       reservedFromInventory: [],
       stockItemsInCategories: [],
       itemsFromOptions: [],
       renatalFilter: -1,
+      reviewFilter: -1,
       stockItems: [],
       categoriesForStock: [],
       stockItemsInCategory: [],
       rentalModal: false,
-      rentalModalObject: {},
+      rentalModalObject: { item: {}},
       allRentals: [],
       allReserved: [],
-      allEntitiesForNewOrder: []
-
+      allEntitiesForNewOrder: [],
+      stockItemsInCategoryWithReserved: [],
+      reviewSourcesNames: [{name: 'All', id: -1}, {name: 'From inventory', id: 'inventory'}, {name: 'Rentals', id: 'rental'}],
+      newOrderReviewFilteredData: []
     }
+
     this.onChange = this.onChange.bind(this);
     this.onEventChange = this.onEventChange.bind(this);
     this.onConfigurationChange = this.onConfigurationChange.bind(this);
@@ -92,7 +111,7 @@ class OrderWizard extends React.Component {
   onChange() {
     this.setState({
       selectedEvent: OrderWizardStore.getSelectedEvent(),
-      configurationDetails: OrderWizardStore.getSelectedConfiguration(),
+      selectedConfiguration: OrderWizardStore.getSelectedConfiguration(),
       stockAvailability: OrderWizardStore.getStockAvailability(),
       stockAvalityProblems: OrderWizardStore.getStockAvailabilityProblems(),
       isStockLoading: OrderWizardStore.isStockLoading(),
@@ -101,14 +120,17 @@ class OrderWizard extends React.Component {
       stockItemsInCategories: OrderWizardStore.getStockItemsForCategory(),
       itemsFromOptions: OrderWizardStore.getItemsFromOptions(),
       renatalFilter: OrderWizardStore.getRentalFilter(),
+      reviewFilter: OrderWizardStore.getReviewFilter(),
       stockItems: OrderWizardStore.getStockItemsForCategory(),
       categoriesForStock: OrderWizardStore.getCategoriesForStock(),
-      stockItemsInCategory: OrderWizardStore.getStocItemsInCategory(),
+      stockItemsInCategory: OrderWizardStore.getStockItemsInCategory(),
       rentalModal: OrderWizardStore.getRentalModalState(),
       rentalModalObject: OrderWizardStore.getRentalModalObject(),
       allRentals: OrderWizardStore.getAllFromRental(),
       allReserved: OrderWizardStore.getAllFromInventory(),
-      allEntitiesForNewOrder: OrderWizardStore.getAllEntitiesForOrder()
+      allEntitiesForNewOrder: OrderWizardStore.getAllEntitiesForOrder(),
+      stockItemsInCategoryWithReserved: OrderWizardStore.getStockItemsInCategoryWithReserved(),
+      newOrderReviewFilteredData: OrderWizardStore.getNewOrderReviewFilteredData()
     });
   }
 
@@ -140,8 +162,8 @@ class OrderWizard extends React.Component {
    * Callbacks for configuration page
    */
 
-  onConfigurationSelect(selectedConfiguration, selectedEvent){
-    OrderWizardActions.setConfiguration(selectedConfiguration, selectedEvent);
+  onConfigurationSelect(selectedConfiguration){
+    OrderWizardActions.setSelectedConfiguration(selectedConfiguration);
   }
 
   /**
@@ -161,19 +183,24 @@ class OrderWizard extends React.Component {
     OrderWizardActions.fetchStockItemForCategory(filter);
   }
 
+  onChangeReviewFilter(filter) {
+    OrderWizardActions.setReviewFilter(filter);
+  }
+
   onRentShowModal(entity){
     OrderWizardActions.setRentalModelState(true, entity);
   }
 
-  onRentalModalHide(){
-    OrderWizardActions.setRentalModelState(false);
+  onRentalModalClose(){
+    OrderWizardActions.setRentalModelState(false, {item: {}});
   }
 
-  onRentalModalObjectUpdate(event){
-    let obj = {};
-    obj[event.target.id] = event.target.value
-    OrderWizardActions.updateCurrentRentalModalObject(obj);
-    event.preventDefault();
+  onRentalAdjust(){
+    OrderWizardActions.updateRental();
+  }
+
+  onChangeRentalAmount(entity){
+    OrderWizardActions.updateCurrentRentalModalObject(Object.assign({}, entity));
   }
 
   onAddToRent(reservedObject){
@@ -197,70 +224,106 @@ class OrderWizard extends React.Component {
 
   render() {
 
+    const headers = ['Name', 'Total', 'Reserved', 'Action'];
+
+    const fields = [
+      {type: 'field', path: 'item.name'},
+      {type: 'field', path: 'amount'},
+      {type: 'field', path: 'rented'},
+      {type: 'button_action', title: 'Adjust amount', callback: this.onRentShowModal }
+    ]
+
+    const details = [
+      { label: "Total", title: "sd34234", text: "Total: " + " items" }
+    ];
+
+    const buttons = [
+      {type: 'brand', label: 'Cancel', onClick: this.onRentalModalClose },
+      {type: 'brand', label: 'Ok', onClick: this.onRentalAdjust },
+    ]
+
+
+    const headersForReviewStep = ["Name", "Amount" ,"Provider" ];
+    const fieldsForReviewStep = [
+      {type: "field", path: "name"},
+      {type: "field", path: "amount"},
+      {type: "field", path: "provider"}
+    ];
+
+    const detailsForReviewStep = [{
+        label: "Reserved from inventory", title: "sd34234", text: "Total: " + this.state.allReserved.length + " items"
+      },{
+        label: "Mast be rented", title: "1111111111", text:  "Total: " + this.state.allRentals.length + " items"
+      }
+    ];
+
     const steps = [
       {
         name: 'Select event', component: <MasterDetailsEmpty
           sidebar={<OrderWizardSidebar
             selectedEvent={ this.state.selectedEvent }
-            selectedConfiguration={ this.state.configurationDetails}
+            selectedConfiguration={ this.state.selectedConfiguration}
             rentals={ this.state.rentals }
             reservedFromInventory={ this.state.reservedFromInventory }
             selectedOptions={ this.state.itemsFromOptions } />
           }>
 
-          <OrderWizardEvent
-             onEventSelect={ this.onEventSelect }
-             selectedEvent={ this.state.selectedEvent }
-             events={ this.state.events }
-           />
-
+          <WizardStepContainer>
+            <OrderWizardEvent
+               onEventSelect={ this.onEventSelect }
+               selectedEvent={ this.state.selectedEvent }
+               events={ this.state.events } />
+           </WizardStepContainer>
         </MasterDetailsEmpty >
+
       },
       {
         name: 'Select configuration',
         component: <MasterDetailsEmpty
           sidebar={<OrderWizardSidebar
             selectedEvent={ this.state.selectedEvent }
-            selectedConfiguration={ this.state.configurationDetails}
+            selectedConfiguration={ this.state.selectedConfiguration}
             rentals={ this.state.rentals }
             reservedFromInventory={ this.state.reservedFromInventory }
             selectedOptions={ this.state.itemsFromOptions } />
           }>
 
-          <OrderWizardConfiguration
-            configurations={ this.state.configurations }
-            setSelectedEvent={ this.state.selectedEvent }
-            onShowDetails={ this.onShowDetails }
-            onSelectConfiguration={ this.onConfigurationSelect }
-          />
+          <WizardStepContainer>
+            <OrderWizardConfiguration
+              configurations={ this.state.configurations }
+              setSelectedEvent={ this.state.selectedEvent }
+              onShowDetails={ this.onShowDetails }
+              onSelectConfiguration={ this.onConfigurationSelect } />
+          </WizardStepContainer>
 
         </MasterDetailsEmpty >
-    },
-    {
+      },
+      {
       name: 'Configuration availability',
       component: <MasterDetailsEmpty
         sidebar={<OrderWizardSidebar
           selectedEvent={ this.state.selectedEvent }
-          selectedConfiguration={ this.state.configurationDetails}
+          selectedConfiguration={ this.state.selectedConfiguration}
           rentals={ this.state.rentals }
           reservedFromInventory={ this.state.reservedFromInventory }
           selectedOptions={ this.state.itemsFromOptions } />
         }>
-
-        <OrderWizardConfigurationDetails
-          configuration={this.state.configurationDetails}
-          selectedEvent={ this.state.selectedEvent }
-          stockAvalityProblems={ this.state.stockAvalityProblems }
-          isStockLoading={ this.state.isStockLoading }
-          onRentClick={ this.onRentClick }
-          stockItemsInCategories={ this.state.stockItemsInCategories }
-          itemsFromOptions={this.state.itemsFromOptions}
-          onOptionSelected={ this.onOptionSelected }
-        />
+          <WizardStepContainer>
+            <OrderWizardConfigurationDetails
+              selectedConfiguration={this.state.selectedConfiguration}
+              selectedEvent={ this.state.selectedEvent }
+              stockAvalityProblems={ this.state.stockAvalityProblems }
+              isStockLoading={ this.state.isStockLoading }
+              onRentClick={ this.onRentClick }
+              stockItemsInCategories={ this.state.stockItemsInCategories }
+              itemsFromOptions={ this.state.itemsFromOptions }
+              onOptionSelected={ this.onOptionSelected }
+            />
+          </WizardStepContainer>
 
       </MasterDetailsEmpty >
-    },
-    {
+      },
+      {
       name: 'Rental',
       component: <MasterDetails
         content="Step 4"
@@ -273,42 +336,72 @@ class OrderWizard extends React.Component {
         />}
         sidebar={<OrderWizardSidebar
           selectedEvent={ this.state.selectedEvent }
-          selectedConfiguration={ this.state.configurationDetails}
+          selectedConfiguration={ this.state.selectedConfiguration}
           rentals={ this.state.rentals }
           reservedFromInventory={ this.state.reservedFromInventory }
           selectedOptions={ this.state.itemsFromOptions } />
         }>
+          <WizardStepContainer>
 
-        <OrderWizardRentalTable
-          data={ this.state.stockItemsInCategory }
-          reservedFromInventory={ this.state.reservedFromInventory }
-          rentalModalObject={ this.state.rentalModalObject }
-          rentalModalState={ this.state.rentalModal }
-          onAddToRent={ this.onAddToRent }
-          onRentShowModal={ this.onRentShowModal }
-          onRentHideModal={ this.onRentalModalHide }
-          onRentalModalObjectUpdate={ this.onRentalModalObjectUpdate }
-        />
+          <div>
+            <ModalWrapperReserveForm
+              title={ "Rent additional" }
+              size="medium"
+              buttons={ buttons }
+              isLoading={ false }
+              isShowing={ this.state.rentalModal }
+              entity={ this.state.rentalModalObject }
+              onChange={ this.onChangeRentalAmount } />
+
+            <TableWrapperWithHeader
+              legend={ "Configurations" }
+              title={ "Title 456" }
+              details={ details }
+              fields={ fields }
+              headers={ headers }
+              data={ this.state.stockItemsInCategoryWithReserved }
+              isLoading={ false } />
+            </div>
+
+          </WizardStepContainer>
 
       </MasterDetails>
-    },
-    {
+      },
+      {
       name: 'Review',
-      component: <OrderWizardReview
-        allEntities={ this.state.allEntitiesForNewOrder }
-        rentals={ this.state.allRentals }
-        inventory={ this.state.allReserved }
-        onPutOrder={ this.putNewOrder }
-        selectedEvent={ this.state.selectedEvent }
-        selectedConfiguration={ this.state.configurationDetails }
-        event={ <EventDetails eventDetails={ this.state.selectedEvent } /> }
-        configuration={ <ConfigurationDetails configurationDetails={ this.state.configurationDetails }/> }
-      />
-    }
+      component: <MasterDetails
+        content="Step 4"
+        filterId={ this.state.reviewFilter }
+        navigation={<Navigation
+           filterId={ this.state.reviewFilter }
+           active={ true }
+           names={ this.state.reviewSourcesNames }
+           onChangeFilter={ this.onChangeReviewFilter }
+        />}
+        sidebar={<div></div> }>
+          <WizardStepContainer>
+
+          <div>
+            <TableWrapperWithHeader
+              legend={ "Configurations" }
+              title={ "Title 456" }
+              details={ detailsForReviewStep }
+              fields={ fieldsForReviewStep }
+              headers={ headersForReviewStep }
+              data={ this.state.newOrderReviewFilteredData }
+              isLoading={ false } />
+            </div>
+
+          </WizardStepContainer>
+      </MasterDetails>
+      }
+
   ];
 
   return (
-    <Stepzilla steps={steps}/>
+    <div>
+      <Wizard steps={steps} />
+    </div>
   )}
 }
 

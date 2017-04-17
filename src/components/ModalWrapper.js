@@ -12,7 +12,7 @@ class ModalWrapper extends React.Component {
 
   render() {
 
-    const { children, size, title, isLoading, onClickOk, showing, buttons  } = this.props;
+    const { children, size, title, isLoading, onClickOk, showing, buttons } = this.props;
 
     const { Header, Content, Footer } = Modal;
 

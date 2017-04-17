@@ -19,10 +19,12 @@ let _rentals = [];
 let _stockItemsInCategories = [];
 let _selectedFromOptions = [];
 let _rentalFilter = -1;
+let _reviewFilter = -1;
 let _categoriesForStock = [];
 let _stockItemsInCategory = []
 let _renatlModalState = false;
-let _renatlModalObject = {};
+let _renatlModalObject = {item: {}};
+let _newOrderReviewFiltredData = [];
 
 
 function setInventoryRequestStatus(requestStatus){
@@ -79,7 +81,7 @@ function addStockItemsByCategories(stockItemsInCategories, categoryId, categoryN
 function setNecessaryToRent(stockAvalityProblems){
 
   stockAvalityProblems.map( (entity) =>  {
-    _rentals.push({sfid: entity.item_sfid, name: entity.item_name, amount: entity.required_amount, requiredAmount: entity.required_amount})
+    _rentals.push(buildInventoryItem(entity))
   })
 }
 
@@ -88,7 +90,9 @@ function setReservedFromInventory(stockAvality){
   stockAvality.entities.filter( (item) => {
     return item.avaliable_amount >= item.required_amount
   }).map( (entity) => {
-    _reservedFromInventory.push({sfid: entity.item_sfid, name: entity.item_name, amount: entity.required_amount, requiredAmount: entity.required_amount})
+    if (findIndexBySfid(_reservedFromInventory, entity.item_sfid) < 0) {
+      _reservedFromInventory.push(buildInventoryItem(entity))
+    }
   })
 }
 
@@ -110,6 +114,23 @@ function setRentalFilter(filter){
   _rentalFilter = filter;
 }
 
+function setReviewFilter(filter){
+  _reviewFilter = filter;
+}
+
+function setNewOrderReviewFiltredData(filter) {
+
+  let data = combineForNewOrder(_selectedFromOptions, _reservedFromInventory, _rentals);
+
+  if (filter == -1) {
+    _newOrderReviewFiltredData = data;
+  } else {
+    _newOrderReviewFiltredData = data.filter( (object) => {
+      return object.provider === filter;
+    })
+  }
+}
+
 function setCategoriesForStock(categories){
   _categoriesForStock = categories;
   _categoriesForStock.unshift({name: 'All', id: -1})
@@ -124,8 +145,8 @@ function setRentalModalState(state, entity){
   _renatlModalObject = Object.assign({}, entity);
 }
 
-function updateRentalModalState(object){
-  _renatlModalObject.amount = object.amount;
+function updateRentalModalState(entity){
+  _renatlModalObject = Object.assign({}, entity);
 }
 
 function updateReservedFromInventory(reservedObject){
@@ -151,12 +172,54 @@ function updateReservedFromInventory(reservedObject){
     _reservedFromInventory[index] = updatedReservedObject;
   }
 }
+
+function updateRentalsFromModal(){
+
+  let index = findIndexBySfid(_reservedFromInventory, _renatlModalObject.item.sfid);
+  if (index > 0 ) {
+
+    if (_renatlModalObject.rented == 0){
+      _reservedFromInventory.splice(index, 1)
+    } else {
+      _reservedFromInventory[index].amount = _renatlModalObject.rented
+    }
+
+  } else {
+
+    // TODO: Should be new factory
+    let newRenal = {
+      amount: _renatlModalObject.rented,
+      name: _renatlModalObject.item.name,
+      provider: 'inventory',
+      required_amount: 0,
+      sfid: _renatlModalObject.item.sfid
+    }
+
+    _reservedFromInventory.push(newRenal);
+
+  }
+
+  //TODO: function to set null
+  _renatlModalObject = { item: {} };
+  _renatlModalState = false;
+}
+
+
 /**
  * Utils functions
  */
 
+function buildInventoryItem(entity){
+  return {
+    sfid: entity.item_sfid,
+    name: entity.item_name,
+    amount: entity.required_amount,
+    requiredAmount: entity.required_amount
+  }
+}
+
 function calcNecessaryToRentAmount(entity){
-  return entity.avaliable_amount > 0 ? entity.required_amount - entity.avaliable_amount :  entity.required_amount
+  return entity.avaliable_amount > 0 ? entity.required_amount - entity.avaliable_amount :  entity.required_amount;
 }
 
 function findRentalAmount(rentals, entity){
@@ -190,6 +253,24 @@ function combineBySfid(options, inventory){
     }
   })
   return newInventory;
+}
+
+function findIndexBySfid(allReserved, sfid) {
+  return allReserved.findIndex( (reservedObject) => {
+     return reservedObject.sfid === sfid
+  });
+}
+
+function findReservedForItem(allReserved, item) {
+  let indexOfReserved = findIndexBySfid(allReserved, item.sfid);
+  return indexOfReserved < 0 ? 0 : allReserved[indexOfReserved].amount;
+}
+
+function combineForNewOrder(options, inventory, rentals) {
+  return Object.assign([],
+     combineBySfid(options, inventory)
+      .map( (object) => Object.assign(object, { provider: 'inventory' }))
+   ).concat(rentals.map( (object) => Object.assign(object, {provider: 'rental' } )));
 }
 
 
@@ -235,7 +316,6 @@ class OrderWizardStoreClass extends EventEmitter {
   }
 
   getStockAvailabilityProblems(){
-
     return _orderStockAvailability.entities.filter( (item) => {
       return item.avaliable_amount < item.required_amount && calcNecessaryToRentAmount(item) > findRentalAmount(_rentals, item)
     }).map( (entity) => {
@@ -273,12 +353,37 @@ class OrderWizardStoreClass extends EventEmitter {
     return _rentalFilter;
   }
 
+  getReviewFilter(){
+    return _reviewFilter;
+  }
+
+  getNewOrderReviewFilteredData() {
+
+    let data = combineForNewOrder(_selectedFromOptions, _reservedFromInventory, _rentals);
+
+    if (_reviewFilter == -1) {
+      return data;
+    } else {
+      return data.filter( (object) => {
+        return object.provider === _reviewFilter;
+      })
+    }
+  }
+
   getCategoriesForStock(){
     return _categoriesForStock;
   }
 
-  getStocItemsInCategory(){
+  getStockItemsInCategory(){
     return _stockItemsInCategory;
+  }
+
+  getStockItemsInCategoryWithReserved() {
+    return _stockItemsInCategory.map( (stockItem, index) => Object.assign(
+      {},
+      stockItem,
+      { rented: findReservedForItem(_reservedFromInventory, stockItem.item) }
+    ))
   }
 
   getRentalModalState(){
@@ -298,12 +403,8 @@ class OrderWizardStoreClass extends EventEmitter {
   }
 
   getAllEntitiesForOrder(){
-    return Object.assign([],
-       combineBySfid(_selectedFromOptions, _reservedFromInventory)
-        .map( (object) => Object.assign(object, { provider: 'inventory' }))
-     ).concat(_rentals.map( (object) => Object.assign(object, {provider: 'rental' } )));
+    return combineForNewOrder(_selectedFromOptions, _reservedFromInventory, _rentals);
   }
-
 }
 
 const OrderWizardStore = new OrderWizardStoreClass();
@@ -315,65 +416,74 @@ OrderWizardStore.dispatchToken = AppDispatcher.register(action => {
     case OrderWizardConstants.SET_EVENT:
       setSelectedEvent(action.selectedEvent);
       OrderWizardStore.emitChange();
-      break
+      break;
 
-    case NetworkConstants.RECEIVE_CONFIGURATION_DETAILS:
-      emptySelection();
+    case OrderWizardConstants.SET_CONFIGURATION:
       setSelectedConfiguration(action.selectedConfiguration);
       OrderWizardStore.emitChange();
-      break
+      break;
+
+    case NetworkConstants.RECIEVE_CONFIGURATION_DETAILS_SUCCESS:
+      setSelectedConfiguration(action.configurationDetails);
+      OrderWizardStore.emitChange();
+      break;
 
     case OrderWizardConstants.REMOVE_SELECTED_EVENT:
       setSelectedEvent(null);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case OrderWizardConstants.ADD_TO_RENATAL:
       addToRented(action.entity, action.amount);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case OrderWizardConstants.REMOVE_FROM_RENTAL:
       removeFreomRented(action.entity);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case NetworkConstants.RECIEVE_ORDER_PROBLEMS:
       setOrderProblems(action.stockAvailability);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case NetworkConstants.RECEIVE_STOCK_AVAILABILITY:
       setStockLoadingStatus(action.showLoading);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case NetworkConstants.RECEIVE_STOCK_AVAILABILITY_SUCCESS:
       setStockLoadingStatus(false);
       setOrderProblems(action.stockAvailability);
       setReservedFromInventory(action.stockAvailability);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case OrderWizardConstants.ADD_NECESSARY_TO_RENTED:
       setNecessaryToRent(action.stockAvalityProblems);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case OrderWizardConstants.ADD_ALL_STOCK_ITEM_BY_CATEGORY:
       addStockItemsByCategories(action.categoryStockItems, action.categoryId, action.categoryName);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case OrderWizardConstants.ADD_SELECTED_OPTION_FROM_OPTIONS:
       addFromOption(action.option);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case OrderWizardConstants.SET_RENTAL_FILTER:
       setRentalFilter(action.filter);
       OrderWizardStore.emitChange();
-      break
+      break;
+
+    case OrderWizardConstants.SET_REVIEW_FILTER:
+      setReviewFilter(action.filter);
+      OrderWizardStore.emitChange();
+      break;
 
     /**
      * Categories for stock
@@ -381,13 +491,13 @@ OrderWizardStore.dispatchToken = AppDispatcher.register(action => {
     case NetworkConstants.RECEIVE_CATEGORIES_FOR_STOCK:
       setCategoriesRequestStatus(action.isLoading);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case NetworkConstants.RECEIVE_CATEGORIES_FOR_STOCK_SUCCESS:
       setCategoriesForStock(action.categories);
       setCategoriesRequestStatus(false);
       OrderWizardStore.emitChange();
-      break
+      break;
 
       /**
        * CInventory
@@ -396,27 +506,32 @@ OrderWizardStore.dispatchToken = AppDispatcher.register(action => {
       setStockItemsInCategory(action.stockItems);
       setInventoryRequestStatus(false);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case NetworkConstants.RECEIVE_STOCK_ITEMS_FOR_CATEGORY:
       setInventoryRequestStatus(action.isLoading);
       OrderWizardStore.emitChange();
       break;
 
-    case OrderWizardConstants.SET_STATE_IN_MODAL_IN_RENTAL:
+    case OrderWizardConstants.SHOW_RENTAL_MODAL:
       setRentalModalState(action.state, action.objectInModal);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case OrderWizardConstants.UPDATE_RENTAL_MODAL:
       updateRentalModalState(action.object);
       OrderWizardStore.emitChange();
-      break
+      break;
 
     case OrderWizardConstants.ADD_TO_RESERVED_FOR_INVENTORY:
       updateReservedFromInventory(action.reservedObject);
       OrderWizardStore.emitChange();
-      break
+      break;
+
+    case OrderWizardConstants.UPDATE_RENTALS_FROM_MODAL:
+      updateRentalsFromModal();
+      OrderWizardStore.emitChange();
+      break;
 
     default:
   }

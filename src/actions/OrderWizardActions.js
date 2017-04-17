@@ -14,6 +14,13 @@ const Actions = {
     });
   },
 
+  setSelectedConfiguration: (selectedConfiguration) => {
+    AppDispatcher.dispatch({
+      actionType: OrderWizardConstants.SET_CONFIGURATION,
+      selectedConfiguration: selectedConfiguration
+    });
+  },
+
   fetchCategoriesForStock: () => {
 
     AppDispatcher.dispatch({
@@ -42,7 +49,7 @@ const Actions = {
    * @param {[type]} selectedConfiguration [description]
    * @param {[type]} selectedEvent         [description]
    */
-  setConfiguration: (selectedConfiguration, selectedEvent) => {
+  fetchConfigurationDetails: (selectedConfiguration) => {
 
     AppDispatcher.dispatch({
       actionType: NetworkConstants.RECIEVE_CONFIGURATION_DETAILS,
@@ -54,8 +61,30 @@ const Actions = {
       .then(configuration => {
         AppDispatcher.dispatch({
           actionType: NetworkConstants.RECIEVE_CONFIGURATION_DETAILS_SUCCESS,
-          selectedConfiguration: configuration
+          configurationDetails: configuration
         });
+
+
+
+        configuration.category_set.category_entities.map( (entity) => {
+          ClientAPI
+            .sendGetRequest('/stock_items/', {category_id: entity.category.id})
+            .then(categoryStockItems => {
+              AppDispatcher.dispatch({
+                actionType: OrderWizardConstants.ADD_ALL_STOCK_ITEM_BY_CATEGORY,
+                categoryStockItems: categoryStockItems,
+                categoryId: entity.category.id,
+                categoryName: entity.category.name
+              });
+            })
+            .catch(message => {
+              AppDispatcher.dispatch({
+                actionType: NetworkConstants.RECEIVE_STOCK_ITEMS_FOR_CATEGORY_ERROR,
+                message: message
+              });
+            });
+        })
+
       })
       .catch(message => {
         AppDispatcher.dispatch({
@@ -120,7 +149,7 @@ const Actions = {
    * @param  {[type]} selectedEvent [description]
    * @return {[type]}               [description]
    */
-  checkAvailability: (configuration, selectedEvent) => {
+  checkAvailability: (selectedConfiguration, selectedEvent) => {
 
     AppDispatcher.dispatch({
       actionType: NetworkConstants.RECEIVE_STOCK_AVAILABILITY,
@@ -128,7 +157,7 @@ const Actions = {
     });
 
     ClientAPI
-      .sendGetRequest('/boms/' + configuration.bom.id + '/stock?event_id=' + selectedEvent.id)
+      .sendGetRequest('/boms/' + selectedConfiguration.bom.id + '/stock?event_id=' + selectedEvent.id)
       .then(stockAvailability => {
         AppDispatcher.dispatch({
           actionType: NetworkConstants.RECEIVE_STOCK_AVAILABILITY_SUCCESS,
@@ -164,9 +193,16 @@ const Actions = {
     });
   },
 
+  setReviewFilter: (filter) => {
+    AppDispatcher.dispatch({
+      actionType: OrderWizardConstants.SET_REVIEW_FILTER,
+      filter: filter
+    });
+  },
+
   setRentalModelState: (state, entity = {}) => {
     AppDispatcher.dispatch({
-      actionType: OrderWizardConstants.SET_STATE_IN_MODAL_IN_RENTAL,
+      actionType: OrderWizardConstants.SHOW_RENTAL_MODAL,
       state: state,
       objectInModal: entity
     });
@@ -177,6 +213,12 @@ const Actions = {
       actionType: OrderWizardConstants.UPDATE_RENTAL_MODAL,
       object: object
     });
+  },
+
+  updateRental: () => {
+    AppDispatcher.dispatch({
+        actionType: OrderWizardConstants.UPDATE_RENTALS_FROM_MODAL
+    })
   },
 
   updateReservedFromInventory: (reservedObject) => {
