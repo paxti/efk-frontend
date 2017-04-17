@@ -1,0 +1,9 @@
+.step_container {
+  height: 100%;
+}
+
+.content_wrapper{
+  height: calc(100% - 50px);
+  margin-bottom: 20px;
+  overflow-y: auto;
+}
