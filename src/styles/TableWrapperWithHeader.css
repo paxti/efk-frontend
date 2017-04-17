@@ -1,0 +1,13 @@
+.container {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.upper, .lower{
+    display: table-row;
+}
+
+.upper{
+    height: 135px;
+}
