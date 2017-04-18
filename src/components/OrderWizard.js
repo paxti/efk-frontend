@@ -7,6 +7,8 @@ import ModalWrapperReserveForm from './ModalWrapperReserveForm'
 import TableWrapperWithHeader from './TableWrapperWithHeader'
 import WizardStepContainer from './WizardStepContainer'
 
+import OrderWizardGraphicsSet from './OrderWizardGraphicsSet'
+
 import OrderWizardEvent from './OrderWizardEvent'
 import OrderWizardConfiguration from '../components/OrderWizardConfiguration'
 import OrderWizardConfigurationDetails from '../components/OrderWizardConfigurationDetails'
@@ -36,8 +38,11 @@ class OrderWizard extends React.Component {
       selectedEvent: null,
       events: [],
 
-      selectedConfiguration: null,
+      selectedConfiguration: {},
       configurations: [],
+
+      graphicsSets: [],
+      selectedGraphicsSet: {},
 
       stockAvailability: { entities: [] },
       stockAvalityProblems: [],
@@ -98,6 +103,8 @@ class OrderWizard extends React.Component {
     this.setState({
       selectedEvent: OrderWizardStore.getSelectedEvent(),
       selectedConfiguration: OrderWizardStore.getSelectedConfiguration(),
+      graphicsSets: OrderWizardStore.getGraphicsSets(),
+      selectedGraphicsSet: OrderWizardStore.getSelectedGraphicsSet(),
       stockAvailability: OrderWizardStore.getStockAvailability(),
       stockAvalityProblems: OrderWizardStore.getStockAvailabilityProblems(),
       isStockLoading: OrderWizardStore.isStockLoading(),
@@ -128,7 +135,7 @@ class OrderWizard extends React.Component {
 
   onConfigurationChange() {
     this.setState({
-      configurations: ConfigurationStore.getConfigurations(),
+      configurations: ConfigurationStore.getConfigurations()
     });
   }
 
@@ -150,6 +157,13 @@ class OrderWizard extends React.Component {
 
   onConfigurationSelect(selectedConfiguration){
     OrderWizardActions.setSelectedConfiguration(selectedConfiguration);
+  }
+
+  /**
+   * Callbacks for graphics set page
+   */
+  onSelectGraphicsSet(selectedGraphicsSet){
+    OrderWizardActions.setSelectedGraphicsSet(selectedGraphicsSet);
   }
 
   /**
@@ -268,7 +282,8 @@ class OrderWizard extends React.Component {
         component: <MasterDetailsEmpty
           sidebar={<OrderWizardSidebar
             selectedEvent={ this.state.selectedEvent }
-            selectedConfiguration={ this.state.selectedConfiguration}
+            selectedConfiguration={ this.state.selectedConfiguration }
+            selectedGraphicsSet={ this.state.selectedGraphicsSet }
             rentals={ this.state.rentals }
             reservedFromInventory={ this.state.reservedFromInventory }
             selectedOptions={ this.state.itemsFromOptions } />
@@ -285,11 +300,36 @@ class OrderWizard extends React.Component {
         </MasterDetailsEmpty >
       },
       {
+        name: 'Select graphics set',
+        component: <MasterDetailsEmpty
+          sidebar={<OrderWizardSidebar
+            selectedEvent={ this.state.selectedEvent }
+            selectedConfiguration={ this.state.selectedConfiguration }
+            selectedGraphicsSet={ this.state.selectedGraphicsSet }
+            rentals={ this.state.rentals }
+            reservedFromInventory={ this.state.reservedFromInventory }
+            selectedOptions={ this.state.itemsFromOptions } />
+          }>
+
+          <WizardStepContainer>
+
+            <OrderWizardGraphicsSet
+              selectedConfiguration={ this.state.selectedConfiguration }
+              graphicsSets={ this.state.graphicsSets }
+              onShowDetails={ this.onShowDetails }
+              onSelectGraphicsSet={ this.onSelectGraphicsSet } />
+
+          </WizardStepContainer>
+
+        </MasterDetailsEmpty >
+      },
+      {
       name: 'Configuration availability',
       component: <MasterDetailsEmpty
         sidebar={<OrderWizardSidebar
           selectedEvent={ this.state.selectedEvent }
-          selectedConfiguration={ this.state.selectedConfiguration}
+          selectedConfiguration={ this.state.selectedConfiguration }
+          selectedGraphicsSet={ this.state.selectedGraphicsSet }
           rentals={ this.state.rentals }
           reservedFromInventory={ this.state.reservedFromInventory }
           selectedOptions={ this.state.itemsFromOptions } />
@@ -322,7 +362,8 @@ class OrderWizard extends React.Component {
         />}
         sidebar={<OrderWizardSidebar
           selectedEvent={ this.state.selectedEvent }
-          selectedConfiguration={ this.state.selectedConfiguration}
+          selectedConfiguration={ this.state.selectedConfiguration }
+          selectedGraphicsSet={ this.state.selectedGraphicsSet }
           rentals={ this.state.rentals }
           reservedFromInventory={ this.state.reservedFromInventory }
           selectedOptions={ this.state.itemsFromOptions } />

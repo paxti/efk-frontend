@@ -11,6 +11,8 @@ let _categoriesRequestStatus = true;
 
 let _selectedEvent = null;
 let _selectedConfiguration = null;
+let _graphicsSets = [];
+let _graphicsSet = {};
 let _rentedEntities = [];
 let _orderStockAvailability = { entities: [] };
 let _isStockLoading = true;
@@ -46,6 +48,14 @@ function setSelectedEvent(event) {
 
 function setSelectedConfiguration(configuration) {
   _selectedConfiguration = configuration;
+}
+
+function setGraphicsSets(graphicsSets) {
+  _graphicsSets = graphicsSets;
+}
+
+function setSelectedGraphicsSet(selectedGraphicsSet) {
+  _graphicsSet = selectedGraphicsSet;
 }
 
 function setOrderProblems(stockAvailability) {
@@ -307,6 +317,14 @@ class OrderWizardStoreClass extends EventEmitter {
     return _selectedConfiguration;
   }
 
+  getGraphicsSets() {
+    return _graphicsSets;
+  }
+
+  getSelectedGraphicsSet(){
+    return _graphicsSet;
+  }
+
   getRentedEntities() {
     return _rentedEntities;
   }
@@ -423,8 +441,14 @@ OrderWizardStore.dispatchToken = AppDispatcher.register(action => {
       OrderWizardStore.emitChange();
       break;
 
+    case OrderWizardConstants.SET_GRAPHICS_SET:
+      setSelectedGraphicsSet(action.selectedGraphicsSet);
+      OrderWizardStore.emitChange();
+      break;
+
     case NetworkConstants.RECIEVE_CONFIGURATION_DETAILS_SUCCESS:
       setSelectedConfiguration(action.configurationDetails);
+      setGraphicsSets(action.configurationDetails.graphics_sets);
       OrderWizardStore.emitChange();
       break;
 

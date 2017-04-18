@@ -21,6 +21,13 @@ const Actions = {
     });
   },
 
+  setSelectedGraphicsSet: (graphicsSets) => {
+    AppDispatcher.dispatch({
+      actionType: OrderWizardConstants.SET_GRAPHICS_SET,
+      selectedGraphicsSet: graphicsSets
+    });
+  },
+
   fetchCategoriesForStock: () => {
 
     AppDispatcher.dispatch({
@@ -39,6 +46,36 @@ const Actions = {
       .catch(message => {
         AppDispatcher.dispatch({
           actionType: NetworkConstants.RECEIVE_CATEGORIES_FOR_STOCK_ERROR,
+          message: message
+        });
+      });
+  },
+
+  /**
+   * [setConfiguration description]
+   * @param {[type]} selectedConfiguration [description]
+   * @param {[type]} selectedEvent         [description]
+   */
+  fetchConfigurationDetailsOnly: (selectedConfiguration) => {
+
+    console.log(selectedConfiguration);
+
+    AppDispatcher.dispatch({
+      actionType: NetworkConstants.RECIEVE_CONFIGURATION_DETAILS,
+      show_loading: true
+    });
+
+    ClientAPI
+      .sendGetRequest('/configurations/' + selectedConfiguration.id)
+      .then(configuration => {
+        AppDispatcher.dispatch({
+          actionType: NetworkConstants.RECIEVE_CONFIGURATION_DETAILS_SUCCESS,
+          configurationDetails: configuration
+        });
+      })
+      .catch(message => {
+        AppDispatcher.dispatch({
+          actionType: NetworkConstants.RECIEVE_CONFIGURATION_DETAILS_ERROR,
           message: message
         });
       });
