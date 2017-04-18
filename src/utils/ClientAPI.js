@@ -3,7 +3,7 @@
 import request from 'superagent/lib/client';
 import LoginStore from '../stores/LoginStore'
 
-const basePath = "http://localhost:3000/api/v1";
+const basePath = 'http://localhost:3000/api/v1';
 
 export default {
 

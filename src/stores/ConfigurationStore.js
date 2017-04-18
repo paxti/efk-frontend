@@ -8,7 +8,7 @@ const CHANGE_EVENT = 'change';
 
 let _configurations = [];
 let _configuration = {};
-let _configurationsRequestStatus = true
+let _configurationsRequestStatus = true;
 
 function setConfigurations(configurations) {
   _configurations = configurations;
@@ -70,11 +70,6 @@ ConfigurationStore.dispatchToken = AppDispatcher.register(action => {
       setConfigurationsRequestStatus(false);
       ConfigurationStore.emitChange();
       console.log(action);
-      break
-
-    case NetworkConstants.RECIEVE_CONFIGURATION_DETAILS_SUCCESS:
-      setConfiguration(action.configuration);
-      ConfigurationStore.emitChange();
       break
 
     case NetworkConstants.RECIEVE_CONFIGURATION_DETAILS_ERROR:
