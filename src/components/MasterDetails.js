@@ -25,7 +25,11 @@ class MasterDetails extends React.Component {
             {navigation}
           </Col>
           <Col cols={7} className={styles.limit_loader}>
-            { React.cloneElement(children, { filter: filterId }) }
+            { navigation && filterId ? (
+              React.cloneElement(children, { filter: filterId })
+            ): (
+              children
+            )}
           </Col>
           <Col cols={3} className={styles.limit_loader}>
             {sidebar}
@@ -36,5 +40,11 @@ class MasterDetails extends React.Component {
   }
 }
 
+MasterDetails.propTypes = {
+  sidebar: React.PropTypes.element,
+  children: React.PropTypes.element.isRequired,
+  navigation: React.PropTypes.element,
+  filterId: React.PropTypes.number
+};
 
 export default MasterDetails;

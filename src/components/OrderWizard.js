@@ -9,6 +9,8 @@ import WizardStepContainer from './WizardStepContainer'
 
 import OrderWizardGraphicsSet from './OrderWizardGraphicsSet'
 
+import OrderStepContainer from './OrderStepContainer'
+
 import OrderWizardEvent from './OrderWizardEvent'
 import OrderWizardConfiguration from '../components/OrderWizardConfiguration'
 import OrderWizardConfigurationDetails from '../components/OrderWizardConfigurationDetails'
@@ -17,7 +19,6 @@ import Navigation from './Navigation'
 import ConfigurationDetails from './ConfigurationDetails'
 
 import MasterDetails from './MasterDetails'
-import MasterDetailsEmpty from './MasterDetailsEmpty'
 
 import OrderWizardStore from '../stores/OrderWizardStore'
 import EventStore from '../stores/EventStore'
@@ -259,175 +260,100 @@ class OrderWizard extends React.Component {
 
     const steps = [
       {
-        name: 'Select event', component: <MasterDetailsEmpty
-          sidebar={<OrderWizardSidebar
-            selectedEvent={ this.state.selectedEvent }
-            selectedConfiguration={ this.state.selectedConfiguration}
-            rentals={ this.state.rentals }
-            reservedFromInventory={ this.state.reservedFromInventory }
-            selectedOptions={ this.state.itemsFromOptions } />
-          }>
-
-          <WizardStepContainer>
-            <OrderWizardEvent
-               onEventSelect={ this.onEventSelect }
-               selectedEvent={ this.state.selectedEvent }
-               events={ this.state.events } />
-           </WizardStepContainer>
-        </MasterDetailsEmpty >
-
+        name: 'Select event',
+        component: <OrderWizardEvent
+          onEventSelect={ this.onEventSelect }
+          selectedEvent={ this.state.selectedEvent }
+          events={ this.state.events } />
       },
       {
         name: 'Select configuration',
-        component: <MasterDetailsEmpty
-          sidebar={<OrderWizardSidebar
-            selectedEvent={ this.state.selectedEvent }
-            selectedConfiguration={ this.state.selectedConfiguration }
-            selectedGraphicsSet={ this.state.selectedGraphicsSet }
-            rentals={ this.state.rentals }
-            reservedFromInventory={ this.state.reservedFromInventory }
-            selectedOptions={ this.state.itemsFromOptions } />
-          }>
-
-          <WizardStepContainer>
-            <OrderWizardConfiguration
-              configurations={ this.state.configurations }
-              setSelectedEvent={ this.state.selectedEvent }
-              onShowDetails={ this.onShowDetails }
-              onSelectConfiguration={ this.onConfigurationSelect } />
-          </WizardStepContainer>
-
-        </MasterDetailsEmpty >
+        component: <OrderWizardConfiguration
+          configurations={ this.state.configurations }
+          setSelectedEvent={ this.state.selectedEvent }
+          onShowDetails={ this.onShowDetails }
+          onSelectConfiguration={ this.onConfigurationSelect } />
       },
       {
         name: 'Select graphics set',
-        component: <MasterDetailsEmpty
-          sidebar={<OrderWizardSidebar
-            selectedEvent={ this.state.selectedEvent }
-            selectedConfiguration={ this.state.selectedConfiguration }
-            selectedGraphicsSet={ this.state.selectedGraphicsSet }
-            rentals={ this.state.rentals }
-            reservedFromInventory={ this.state.reservedFromInventory }
-            selectedOptions={ this.state.itemsFromOptions } />
-          }>
-
-          <WizardStepContainer>
-
-            <OrderWizardGraphicsSet
-              selectedConfiguration={ this.state.selectedConfiguration }
-              graphicsSets={ this.state.graphicsSets }
-              onShowDetails={ this.onShowDetails }
-              onSelectGraphicsSet={ this.onSelectGraphicsSet } />
-
-          </WizardStepContainer>
-
-        </MasterDetailsEmpty >
-      },
-      {
-      name: 'Configuration availability',
-      component: <MasterDetailsEmpty
-        sidebar={<OrderWizardSidebar
-          selectedEvent={ this.state.selectedEvent }
+        component: <OrderWizardGraphicsSet
           selectedConfiguration={ this.state.selectedConfiguration }
-          selectedGraphicsSet={ this.state.selectedGraphicsSet }
-          rentals={ this.state.rentals }
-          reservedFromInventory={ this.state.reservedFromInventory }
-          selectedOptions={ this.state.itemsFromOptions } />
-        }>
-          <WizardStepContainer>
-            <OrderWizardConfigurationDetails
-              selectedConfiguration={this.state.selectedConfiguration}
-              selectedEvent={ this.state.selectedEvent }
-              stockAvalityProblems={ this.state.stockAvalityProblems }
-              isStockLoading={ this.state.isStockLoading }
-              onRentClick={ this.onRentClick }
-              stockItemsInCategories={ this.state.stockItemsInCategories }
-              itemsFromOptions={ this.state.itemsFromOptions }
-              onOptionSelected={ this.onOptionSelected }
-            />
-          </WizardStepContainer>
-
-      </MasterDetailsEmpty >
+          graphicsSets={ this.state.graphicsSets }
+          onShowDetails={ this.onShowDetails }
+          onSelectGraphicsSet={ this.onSelectGraphicsSet } />
       },
       {
-      name: 'Rental',
-      component: <MasterDetails
-        content="Step 4"
-        filterId={ this.state.renatalFilter }
-        navigation={<Navigation
+        name: 'Configuration availability',
+        component: <OrderWizardConfigurationDetails
+          selectedConfiguration={this.state.selectedConfiguration }
+          selectedEvent={ this.state.selectedEvent }
+          stockAvalityProblems={ this.state.stockAvalityProblems }
+          isStockLoading={ this.state.isStockLoading }
+          onRentClick={ this.onRentClick }
+          stockItemsInCategories={ this.state.stockItemsInCategories }
+          itemsFromOptions={ this.state.itemsFromOptions }
+          onOptionSelected={ this.onOptionSelected }/>
+      },
+      {
+        name: 'Rental',
+        filterId: this.state.renatalFilter,
+        component: <div>
+          <ModalWrapperReserveForm
+            title={ "Rent additional" }
+            size="medium"
+            buttons={ buttons }
+            isLoading={ false }
+            isShowing={ this.state.rentalModal }
+            entity={ this.state.rentalModalObject }
+            onChange={ this.onChangeRentalAmount } />
+
+          <TableWrapperWithHeader
+            legend={ "Configurations" }
+            title={ "Title 456" }
+            details={ details }
+            fields={ fields }
+            headers={ headers }
+            data={ this.state.stockItemsInCategoryWithReserved }
+            isLoading={ false } />
+        </div>,
+        navigation: <Navigation
            filterId={ this.state.renatalFilter }
            active={ true }
            names={ this.state.categoriesForStock }
-           onChangeFilter={ this.onChangeRentailFilter }
-        />}
-        sidebar={<OrderWizardSidebar
-          selectedEvent={ this.state.selectedEvent }
-          selectedConfiguration={ this.state.selectedConfiguration }
-          selectedGraphicsSet={ this.state.selectedGraphicsSet }
-          rentals={ this.state.rentals }
-          reservedFromInventory={ this.state.reservedFromInventory }
-          selectedOptions={ this.state.itemsFromOptions } />
-        }>
-          <WizardStepContainer>
-
-          <div>
-            <ModalWrapperReserveForm
-              title={ "Rent additional" }
-              size="medium"
-              buttons={ buttons }
-              isLoading={ false }
-              isShowing={ this.state.rentalModal }
-              entity={ this.state.rentalModalObject }
-              onChange={ this.onChangeRentalAmount } />
-
-            <TableWrapperWithHeader
-              legend={ "Configurations" }
-              title={ "Title 456" }
-              details={ details }
-              fields={ fields }
-              headers={ headers }
-              data={ this.state.stockItemsInCategoryWithReserved }
-              isLoading={ false } />
-            </div>
-
-          </WizardStepContainer>
-
-      </MasterDetails>
+           onChangeFilter={ this.onChangeRentailFilter } />
       },
       {
       name: 'Review',
-      component: <MasterDetails
-        content="Step 4"
-        filterId={ this.state.reviewFilter }
-        navigation={<Navigation
-           filterId={ this.state.reviewFilter }
-           active={ true }
-           names={ this.state.reviewSourcesNames }
-           onChangeFilter={ this.onChangeReviewFilter }
-        />}
-        sidebar={<div></div> }>
-          <WizardStepContainer>
-
-          <div>
-            <TableWrapperWithHeader
-              legend={ "Configurations" }
-              title={ "Title 456" }
-              details={ detailsForReviewStep }
-              fields={ fieldsForReviewStep }
-              headers={ headersForReviewStep }
-              data={ this.state.newOrderReviewFilteredData }
-              isLoading={ false } />
-            </div>
-
-          </WizardStepContainer>
-      </MasterDetails>
+      component: <div>
+        <TableWrapperWithHeader
+          legend={ "Configurations" }
+          title={ "Title 456" }
+          details={ detailsForReviewStep }
+          fields={ fieldsForReviewStep }
+          headers={ headersForReviewStep }
+          data={ this.state.newOrderReviewFilteredData }
+          isLoading={ false } />
+        </div>,
+      filterId: this.state.reviewFilter,
+      navigation: <Navigation
+         filterId={ this.state.reviewFilter }
+         active={ true }
+         names={ this.state.reviewSourcesNames }
+         onChangeFilter={ this.onChangeReviewFilter } />
       }
 
   ];
 
   return (
     <div>
-      <Wizard steps={steps} />
+      <Wizard
+        steps={ steps }
+        selectedEvent={ this.state.selectedEvent }
+        selectedConfiguration={ this.state.selectedConfiguration }
+        selectedGraphicsSet={ this.state.selectedGraphicsSet }
+        rentals={ this.state.rentals }
+        reservedFromInventory={ this.state.reservedFromInventory }
+        selectedOptions={ this.state.itemsFromOptions } />
     </div>
   )}
 }

@@ -11,6 +11,8 @@ class WizarStepContainer extends React.Component {
 
   render() {
 
+    const { nextStep, previousStep } = this.props;
+
     let compToRender = React.cloneElement(this.props.children);
 
     return (
@@ -19,12 +21,17 @@ class WizarStepContainer extends React.Component {
           { compToRender }
         </div>
         <div>
-          <Button type="brand" label="Previous" />
-          <Button type="neutral" label="Next" />
+          <Button type="neutral" label="Previous" onClick={ () => previousStep() } />
+          <Button type="brand" label="Next" onClick={ () => nextStep() } />
         </div>
       </div>
     );
   }
+}
+
+WizarStepContainer.PropTypes = {
+  nextStep: React.PropTypes.func.isRequired,
+  previousStep: React.PropTypes.func.isRequired
 }
 
 export default WizarStepContainer;

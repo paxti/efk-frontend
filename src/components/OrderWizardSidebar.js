@@ -10,7 +10,7 @@ class OrderWizardSidebar extends React.Component {
     const { selectedEvent, selectedConfiguration, reservedFromInventory, rentals, selectedOptions, selectedGraphicsSet} = this.props;
 
     return (
-      <div className={`${styles.min_height} + slds-grid slds-grid--vertical-align-center slds-grid--align-center`}>
+      <div className={`${styles.min_height} slds-grid slds-grid--vertical-align-center slds-grid--align-center`}>
         <div className="slds_box">
           <h1>Selected event: { selectedEvent == null ? '' : selectedEvent.label }</h1>
           <h1>Selected configuration: { selectedConfiguration == null ? '' : selectedConfiguration.name }</h1>
