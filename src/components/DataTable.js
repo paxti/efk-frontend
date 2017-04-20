@@ -27,8 +27,7 @@ class DataTable extends React.Component {
           </TableHeader>
           <TableBody>
             {this.props.data.map(function(order, index){
-              return
-                <TableRow key={order["id"]}>
+              return <TableRow key={order["id"]}>
                   <TableRowColumn>{order["sfid"]}</TableRowColumn>
                   <TableRowColumn>{order["id"]}</TableRowColumn>
                 </TableRow>;

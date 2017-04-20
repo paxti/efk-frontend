@@ -31,7 +31,7 @@ class PageHeaderWrapper extends React.Component {
         <PageHeaderHeading
           legend={ legend }
           title={ title }
-          figure={ <Icon category='standart' icon={ icon } size='large' /> }
+          figure={ <Icon icon={ icon } size='large' category='standard' icon='opportunity' /> }
           rightActions={(
             <ButtonGroup>
               {

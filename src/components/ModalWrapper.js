@@ -24,8 +24,8 @@ class ModalWrapper extends React.Component {
     return (
       <Modal
         opened={ showing }
-        size={ size }
-        >
+        size={ size }>
+        
         <Header title={ title } closeButton={ false } />
         <Content className={`${styles.min_height} slds-p-around--small slds-is-relative`}>
           {children}

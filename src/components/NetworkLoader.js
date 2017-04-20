@@ -19,4 +19,9 @@ class NetworkLoader extends React.Component {
   }
 }
 
+NetworkLoader.PropTypes = {
+  isLoading: React.PropTypes.bool.isRequired,
+  children: React.PropTypes.element.isRequired
+}
+
 export default NetworkLoader;

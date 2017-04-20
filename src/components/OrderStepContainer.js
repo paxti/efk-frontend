@@ -38,7 +38,7 @@ class OrderStepContainer extends React.Component {
           nextStep={ nextStep }
           previousStep={ previousStep }>
 
-          {children}
+          { children }
 
         </WizardStepContainer>
 
