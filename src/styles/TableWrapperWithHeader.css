@@ -1,13 +1,17 @@
 .container {
-  display: table;
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.upper, .lower{
-    display: table-row;
+.container > div {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
 }
 
-.upper{
-    height: 135px;
+/* TODO: is there is a better way*/
+.lower {
+  height: calc(100% - 136px);
 }

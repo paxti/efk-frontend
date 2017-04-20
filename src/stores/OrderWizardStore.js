@@ -446,6 +446,10 @@ OrderWizardStore.dispatchToken = AppDispatcher.register(action => {
       OrderWizardStore.emitChange();
       break;
 
+    case NetworkConstants.RECIEVE_CONFIGURATION_DETAILS:
+      OrderWizardStore.emitChange();
+      break;
+
     case NetworkConstants.RECIEVE_CONFIGURATION_DETAILS_SUCCESS:
       setSelectedConfiguration(action.configurationDetails);
       setGraphicsSets(action.configurationDetails.graphics_sets);

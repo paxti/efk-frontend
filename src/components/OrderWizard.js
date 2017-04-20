@@ -3,22 +3,15 @@
 import React from 'react';
 
 import Wizard from  './Wizard'
-import ModalWrapperReserveForm from './ModalWrapperReserveForm'
 import TableWrapperWithHeader from './TableWrapperWithHeader'
-import WizardStepContainer from './WizardStepContainer'
-
 import OrderWizardGraphicsSet from './OrderWizardGraphicsSet'
 
-import OrderStepContainer from './OrderStepContainer'
 
 import OrderWizardEvent from './OrderWizardEvent'
 import OrderWizardConfiguration from '../components/OrderWizardConfiguration'
 import OrderWizardConfigurationDetails from '../components/OrderWizardConfigurationDetails'
-import OrderWizardSidebar from './OrderWizardSidebar'
 import Navigation from './Navigation'
-import ConfigurationDetails from './ConfigurationDetails'
-
-import MasterDetails from './MasterDetails'
+import OrderWizardReserve from './OrderWizardReserve'
 
 import OrderWizardStore from '../stores/OrderWizardStore'
 import EventStore from '../stores/EventStore'
@@ -65,7 +58,9 @@ class OrderWizard extends React.Component {
       allEntitiesForNewOrder: [],
       stockItemsInCategoryWithReserved: [],
       reviewSourcesNames: [{name: 'All', id: -1}, {name: 'From inventory', id: 'inventory'}, {name: 'Rentals', id: 'rental'}],
-      newOrderReviewFilteredData: []
+      newOrderReviewFilteredData: [],
+
+      inventoryInCategoryRequestStatus: true
     }
 
     this.onChange = this.onChange.bind(this);
@@ -124,7 +119,8 @@ class OrderWizard extends React.Component {
       allReserved: OrderWizardStore.getAllFromInventory(),
       allEntitiesForNewOrder: OrderWizardStore.getAllEntitiesForOrder(),
       stockItemsInCategoryWithReserved: OrderWizardStore.getStockItemsInCategoryWithReserved(),
-      newOrderReviewFilteredData: OrderWizardStore.getNewOrderReviewFilteredData()
+      newOrderReviewFilteredData: OrderWizardStore.getNewOrderReviewFilteredData(),
+      inventoryInCategoryRequestStatus: OrderWizardStore.getInventoryRequestStatus()
     });
   }
 
@@ -225,22 +221,22 @@ class OrderWizard extends React.Component {
 
   render() {
 
-    const headers = ['Name', 'Total', 'Reserved', 'Action'];
+    const headersForInventory = ['Name', 'Total', 'Reserved', 'Action'];
 
-    const fields = [
+    const fieldsForInventory = [
       {type: 'field', path: 'item.name'},
       {type: 'field', path: 'amount'},
       {type: 'field', path: 'rented'},
       {type: 'button_action', title: 'Adjust amount', callback: this.onRentShowModal }
     ]
 
-    const details = [
-      { label: "Total", title: "sd34234", text: "Total: " + " items" }
+    const detailsForInventory = [
+      { label: 'Total', title: 'sd34234', text: 'Total: ' + ' items' }
     ];
 
-    const buttons = [
+    const buttonsForInventoryModal = [
       {type: 'brand', label: 'Cancel', onClick: this.onRentalModalClose },
-      {type: 'brand', label: 'Ok', onClick: this.onRentalAdjust },
+      {type: 'brand', label: 'Ok', onClick: this.onRentalAdjust }
     ]
 
 
@@ -297,25 +293,20 @@ class OrderWizard extends React.Component {
       {
         name: 'Rental',
         filterId: this.state.renatalFilter,
-        component: <div>
-          <ModalWrapperReserveForm
-            title={ "Rent additional" }
-            size="medium"
-            buttons={ buttons }
-            isLoading={ false }
-            isShowing={ this.state.rentalModal }
-            entity={ this.state.rentalModalObject }
-            onChange={ this.onChangeRentalAmount } />
-
-          <TableWrapperWithHeader
-            legend={ "Configurations" }
-            title={ "Title 456" }
-            details={ details }
-            fields={ fields }
-            headers={ headers }
-            data={ this.state.stockItemsInCategoryWithReserved }
-            isLoading={ false } />
-        </div>,
+        component: <OrderWizardReserve
+          modalTitle={ 'Rent additional' }
+          modalButtons={ buttonsForInventoryModal }
+          modalStatus={ this.state.rentalModal }
+          modalObject={ this.state.rentalModalObject }
+          onChangeModal={ this.onChangeRentalAmount }
+          tableLegend={ 'Reserve from inventory' }
+          tableName={ 'Some name here' }
+          tableDetails={ detailsForInventory }
+          tableFields={ fieldsForInventory }
+          tableHeaders={ headersForInventory }
+          tableData={ this.state.stockItemsInCategoryWithReserved }
+          isLoading={ this.state.inventoryInCategoryRequestStatus }
+        />,
         navigation: <Navigation
            filterId={ this.state.renatalFilter }
            active={ true }
@@ -324,16 +315,14 @@ class OrderWizard extends React.Component {
       },
       {
       name: 'Review',
-      component: <div>
-        <TableWrapperWithHeader
+      component: <TableWrapperWithHeader
           legend={ "Configurations" }
           title={ "Title 456" }
           details={ detailsForReviewStep }
           fields={ fieldsForReviewStep }
           headers={ headersForReviewStep }
           data={ this.state.newOrderReviewFilteredData }
-          isLoading={ false } />
-        </div>,
+          isLoading={ false } />,
       filterId: this.state.reviewFilter,
       navigation: <Navigation
          filterId={ this.state.reviewFilter }
@@ -345,7 +334,6 @@ class OrderWizard extends React.Component {
   ];
 
   return (
-    <div>
       <Wizard
         steps={ steps }
         selectedEvent={ this.state.selectedEvent }
@@ -354,7 +342,6 @@ class OrderWizard extends React.Component {
         rentals={ this.state.rentals }
         reservedFromInventory={ this.state.reservedFromInventory }
         selectedOptions={ this.state.itemsFromOptions } />
-    </div>
   )}
 }
 

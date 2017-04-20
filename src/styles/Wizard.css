@@ -1,17 +1,12 @@
 .container {
-  display: table;
+  /*display: table;*/
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.upper, .lower {
-  display: table-row;
-}
-
+/* TODO: is there is a better way*/
 .lower {
-  height: 100%;
-}
-
-.upper {
-    height: 70px;
+  height: calc(100% - 82px);
 }

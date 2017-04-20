@@ -20,7 +20,7 @@ class MasterDetails extends React.Component {
 
     return (
       <Grid className={styles.full_height}>
-        <Row cols={12} nowrap>
+        <Row cols={12} nowrap className={styles.full_height}>
           <Col cols={2} className={styles.limit_loader}>
             {navigation}
           </Col>
